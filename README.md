@@ -52,20 +52,20 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 <img src="https://user-images.githubusercontent.com/71819961/118116821-59e28200-b41d-11eb-904e-bf8ef99d2c5c.png" width="500">
 
 ### Recommendations
-1) A user is able to view and upload photos within our database and “Like” / “Dislike” / “Save” photos (Figure 1). This will affect the "score" of the photo. The rate of growth of score is modelled after a logarithmic graph so new photos still have a chance of being recommended. All photos start off with an equal score.
+1) A user is able to view and upload photos within our database and “Like” / “Dislike” / “Save” photos. This will affect the "score" of the photo. The rate of growth of score is modelled after a logarithmic graph so new photos still have a chance of being recommended. All photos start off with an equal score.
 2) The higher a particular photo's score, the higher its visibility amongst other users.
 
 <img src="https://user-images.githubusercontent.com/71819961/118116824-5bac4580-b41d-11eb-818a-005884ee23c4.png" width="500">
 
 ### Tagging
 1) Our Image Recognition software views photos and assigns tags within our database.
-2) The more users like a photo with certain tags (Figure 2) the more these types of photos are shown to that user.
+2) The more users like a photo with certain tags the more these types of photos are shown to that user.
 
 <img src="https://user-images.githubusercontent.com/71819961/118116790-4d5e2980-b41d-11eb-95f8-54057af4bb1f.png" width="500">
 
 ### Profile Creation & Chat
 1) Users are able to create profiles to show off their traits. They can also alter their preferred tags from here.
-2) Should two users (Figure 3) share common traits (Preferred Tags / Location / Etc..), are “open to meeting” and have liked each other's photos. Our application will notify these two accounts and open a chat room (Figure 4) for them to connect.
+2) Should two users share common traits (Preferred Tags / Location / Etc..), are “open to meeting” and have liked each other's photos. Our application will notify these two accounts and open a chat room for them to connect.
 
 ## Project Timeline
 
