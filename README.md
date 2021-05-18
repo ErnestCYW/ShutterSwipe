@@ -95,12 +95,14 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 
 1) Google Cloud Vision API <sup>1</sup>
 2) HTML / CSS / Javascript
-3) Firebase
-4) ExpressJS / NodeJS <sup>2</sup>
-5) Heroku <sup>2</sup>
-6) PostgreSQL <sup>2</sup>
-7) React
+3) Firebase <sup>2</sup>
+4) ExpressJS / NodeJS <sup>3</sup>
+6) PostgreSQL <sup>3</sup>
+7) React <sup>3</sup>
+8) Heroku 
 
 <sup>1</sup> Google Cloud Vision provides a free service for up to 1000 photos. For the purpose of this project this will be our limit but it is easily extendible in the future.
 
-<sup>2</sup>  Use of ExpressJS / Heroku / ExpressJS is tentative however, using these frameworks in conjunction with firebase will help in scalability in the future (IOS/Android Port). Non-client side heavy with backend focus.
+<sup>2</sup> Tentative use of firebase for easier (but less customisable) implementation of specialised backend features (eg. Account Authentication OR GPS Tracking)
+
+<sup>3</sup> Use of PERN Stack so as help in scalability (eg. IOS/Android Port). Non-client side heavy with backend focus.
