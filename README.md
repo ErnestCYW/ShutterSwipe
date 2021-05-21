@@ -65,7 +65,8 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 
 ### Profile Creation & Chat
 1) Users are able to create profiles to show off their traits. They can also alter their preferred tags from here.
-2) Should two users share common traits (Preferred Tags / Location / Etc..), are “open to meeting” and have liked each other's photos. Our application will notify these two accounts and open a chat room for them to connect.
+2) Should two users share common traits (Preferred Tags / Location / Etc..), our application will notify these two accounts and open a chat room for them to connect.
+3) Our application will also notify users to join global chats based on their traits (eg. Food, Singapore, Food + Singapore, etc...) 
 
 ## Project Timeline
 
@@ -83,7 +84,6 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 
 ### Optional Features & Extensions (Arranged Based In Order Of Priority):
 - Android / IOS Port
-- Group Chat Function
 - Expanding Storage Database
 - Augmentation of Image Recognition API using alternatives (AutoML / Rekognition / etc..) or even proprietary engine in future
 - Photo Captions
