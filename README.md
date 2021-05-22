@@ -64,14 +64,14 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 <img src="https://user-images.githubusercontent.com/71819961/118116790-4d5e2980-b41d-11eb-95f8-54057af4bb1f.png" width="500">
 
 ### Profile Creation & Chat
-1) Users are able to create profiles to show off their traits. They can also alter their preferred tags from here.
+1) Users are able to create profiles to show off their traits. They can also alter their preferred tags from here. They can also see their average picture rating from here.
 2) Should two users share common traits (Preferred Tags / Location / Etc..), our application will notify these two accounts and open a chat room for them to connect.
 3) Our application will also notify users to join global chats based on their traits (eg. Food, Singapore, Food + Singapore, etc...) 
 
 ## Project Timeline
 
 ### Features To Be Completed By 12 Jun 2021:
-1) Allow users to create accounts which includes photo category preferences (E.g. Sunsets / Cats / Nature / etc... ) used to calculate initial rankings and details (E.g. Sex / Age / Location / etc... ) and an “open to meeting” feature.
+1) Allow users to create accounts which includes photo category preferences (E.g. Sunsets / Cats / Nature / etc... ) and details (E.g. Sex / Age / Location / etc... ).
 2) Allows users to upload photos to their portfolios on our database (Figure 3).
 
 ### Features To Be Completed By 28 Jun 2021:
@@ -83,6 +83,7 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 2) Trial Deployment.
 
 ### Optional Features & Extensions (Arranged Based In Order Of Priority):
+- Explore / Search Feature
 - Android / IOS Port
 - Expanding Storage Database
 - Augmentation of Image Recognition API using alternatives (AutoML / Rekognition / etc..) or even proprietary engine in future
