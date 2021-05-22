@@ -103,6 +103,6 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 
 <sup>1</sup> Google Cloud Vision provides a free service for up to 1000 photos. For the purpose of this project this will be our limit but it is easily extendible in the future.
 
-<sup>2</sup> Tentative use of firebase for easier (but less customisable) implementation of specialised backend features (eg. Account Authentication OR GPS Tracking)
+<sup>2</sup> Tentative use of firebase for easier (but less customisable) implementation of specialised backend features (eg. Account Authentication / GPS Tracking / Main Computer Vision Software / etc...)
 
 <sup>3</sup> Use of PERN Stack so as help in scalability (eg. IOS/Android Port). Non-client side heavy with backend focus.
