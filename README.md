@@ -1,6 +1,4 @@
-# ShutterSwipe
-
-## NUS Orbital 2021 (Artemis)
+# ShutterSwipe (NUS Orbital 2021: Artemis)
 
 ## Motivation
 
