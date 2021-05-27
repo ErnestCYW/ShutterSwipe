@@ -92,16 +92,17 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 
 ## Tech Stack
 
+![ShutterSwipe Architecture](https://user-images.githubusercontent.com/71819961/119790364-72b36300-bf06-11eb-861a-1745c8a1b1e3.png)
+
 1) Google Cloud Vision API <sup>1</sup>
 2) HTML / CSS / Javascript
-3) Firebase <sup>2</sup>
-4) ExpressJS / NodeJS <sup>3</sup>
-6) PostgreSQL <sup>3</sup>
-7) React <sup>3</sup>
-8) Heroku 
+4) ExpressJS / NodeJS <sup>2</sup>
+6) PostgreSQL <sup>2</sup>
+7) React <sup>2</sup>
+8) Heroku <sup>3</sup>
 
 <sup>1</sup> Google Cloud Vision provides a free service for up to 1000 photos. For the purpose of this project this will be our limit but it is easily extendible in the future.
 
-<sup>2</sup> Tentative use of firebase for easier (but less customisable) implementation of specialised backend features (eg. Account Authentication / GPS Tracking / Main Computer Vision Software / etc...)
+<sup>2</sup> Use of PERN Stack so as help in scalability (eg. IOS/Android Port). Non-client side heavy with backend focus.
 
-<sup>3</sup> Use of PERN Stack so as help in scalability (eg. IOS/Android Port). Non-client side heavy with backend focus.
+<sup>3</sup> Trial hosting done on Heroku. Actual Deployment can be done on other services (AWS / Microsft Azure / etc...).
