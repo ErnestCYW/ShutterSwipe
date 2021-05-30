@@ -1,8 +1,12 @@
 # ShutterSwipe (NUS Orbital 2021: Artemis)
 
+# Ernest
 # Timothy
 
+<<<<<<< HEAD
 # Ng Chee Chiu
+=======
+>>>>>>> 6791704ebc255237b4df9bb50df99e00d046814a
 
 ## Motivation
 
