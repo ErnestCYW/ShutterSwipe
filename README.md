@@ -1,6 +1,8 @@
 # ShutterSwipe (NUS Orbital 2021: Artemis)
 
-#Ernest
+# Ernest
+# Timothy
+
 
 ## Motivation
 
