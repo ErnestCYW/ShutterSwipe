@@ -85,6 +85,8 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 
 ## Project Timeline
 
+### Updated & Detailed Timeline Can Be Found In: Projects/Agile Timeline
+
 ### Features To Be Completed By 12 Jun 2021:
 
 1. Allow users to create accounts which includes photo category preferences (E.g. Sunsets / Cats / Nature / etc... ) and details (E.g. Sex / Age / Location / etc... ).
