@@ -90,7 +90,7 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 ### Features To Be Completed By 12 Jun 2021:
 
 1. Allow users to create accounts which includes photo category preferences (E.g. Sunsets / Cats / Nature / etc... ) and details (E.g. Sex / Age / Location / etc... ).
-2. Allows users to upload photos to their portfolios on our database (Figure 3).
+2. Allows users to upload photos to their portfolios on our database.
 
 ### Features To Be Completed By 28 Jun 2021:
 
@@ -99,7 +99,7 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 
 ### Features To Be Completed By 26 Jul 2021 to Splashdown:
 
-1. Chat & Connecting Users Function.
+1. Chat & Groups (Connecting Users) Function.
 2. Trial Deployment.
 
 ### Optional Features & Extensions (Arranged Based In Order Of Priority):
@@ -107,7 +107,7 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 - Explore / Search Feature
 - Android / IOS Port
 - Expanding Storage Database
-- Augmentation of Image Recognition API using alternatives (AutoML / Rekognition / etc..) or even proprietary engine in future
+- Augmentation of Image Recognition API using alternatives (AutoML / Rekognition / etc..) or even proprietary engine
 - Photo Captions
 - Commenting and leaving feedback
 - Auto-Grading Of Photos (Color Theory / Photography Principles / Weighted Rankings / Etc...)
