@@ -1,3 +1,5 @@
+//Checks if JWT token is valid in order to access private routes
+
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -19,6 +21,5 @@ module.exports = async(req, res, next) => {
     return res.status(403).json("Not Authorize")
   }
 
-  //without this line, i encountered a bug and the thing res could not produce output?
   next(); 
 }

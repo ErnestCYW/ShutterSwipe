@@ -5,8 +5,7 @@ const jwtGenerator = require("../utils/jwtGenerator");
 const validInfo = require("../middleware/validinfo")
 const authorization = require("../middleware/authorization");
 
-//registering
-//post -> bc want to add someone into the db
+//Registering user
 router.post("/register", validInfo, async(req, res) => {
   try {
 
@@ -19,8 +18,6 @@ router.post("/register", validInfo, async(req, res) => {
     const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
       email
     ]);
-
-    // res.json(user.rows) --> this was a test to just return and empty row I think
 
     if (user.rows.length !== 0) {
       return res.status(401).send("User already exists!") //see 401 and 403 codes!  
@@ -51,8 +48,7 @@ router.post("/register", validInfo, async(req, res) => {
   }
 });
 
-//Login route (gonna be using more bcrypt than register route)
-
+//Login route
 router.post("/login", validInfo, async (req, res) => {
   try {
 
@@ -60,22 +56,22 @@ router.post("/login", validInfo, async (req, res) => {
     
     const { email, password } = req.body;
 
-    //2. check if uder doesn't exist (if not then we throw error)
+    //2. check if user doesn't exist (if not then we throw error)
 
     const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
       email
     ]);
 
-    if (user.rows.length == 0) {
-      return res.status(401).json("Password or Email is incorrect");
+    if (user.rows.length === 0) {
+      return res.status(401).json("Password or Email is incorrect");  //Email is wrong
     }
 
     //3. check if incoming password is the same as the database password
     // note: await bc bcrypt (async)
     const validPassword = await bcrypt.compare(password, user.rows[0].user_password); 
-    // test --> console.log(validPassword);
+
     if (!validPassword) {
-      return res.status(401).json("Password or Email is incorrect");
+      return res.status(401).json("Password or Email is incorrect");  //Password is wrong
     }
 
     //4. give them the jwt token if passed all test
@@ -94,7 +90,8 @@ router.post("/login", validInfo, async (req, res) => {
 //Private Routes
 router.get("/is-verify", authorization, (req, res) => {
   try {
-    res.json(true); //why does this not execute
+    //Because of timeout may need to relogin to reverify
+    res.json(true);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
