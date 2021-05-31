@@ -19,8 +19,6 @@ router.post("/register", validInfo, async (req, res) => {
       email,
     ]);
 
-    // res.json(user.rows) --> this was a test to just return and empty row I think
-
     if (user.rows.length !== 0) {
       return res.status(401).json("User already exists!"); //see 401 and 403 codes!
     }
@@ -50,22 +48,21 @@ router.post("/register", validInfo, async (req, res) => {
   }
 });
 
-//Login route (gonna be using more bcrypt than register route)
-
+//Login route
 router.post("/login", validInfo, async (req, res) => {
   try {
     //1. destructure the req.body
 
     const { email, password } = req.body;
 
-    //2. check if uder doesn't exist (if not then we throw error)
+    //2. check if user doesn't exist (if not then we throw error)
 
     const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
       email,
     ]);
 
-    if (user.rows.length == 0) {
-      return res.status(401).json("Password or Email is incorrect");
+    if (user.rows.length === 0) {
+      return res.status(401).json("Password or Email is incorrect"); //Email is wrong
     }
 
     //3. check if incoming password is the same as the database password
@@ -74,9 +71,9 @@ router.post("/login", validInfo, async (req, res) => {
       password,
       user.rows[0].user_password
     );
-    // test --> console.log(validPassword);
+
     if (!validPassword) {
-      return res.status(401).json("Password or Email is incorrect");
+      return res.status(401).json("Password or Email is incorrect"); //Password is wrong
     }
 
     //4. give them the jwt token if passed all test
@@ -93,6 +90,7 @@ router.post("/login", validInfo, async (req, res) => {
 //Private Routes
 router.get("/is-verify", authorization, async (req, res) => {
   try {
+    //Because of timeout may need to relogin to reverify
     res.json(true);
   } catch (err) {
     console.error(err.message);

@@ -1,11 +1,5 @@
 # ShutterSwipe (NUS Orbital 2021: Artemis)
 
-# Ernest
-
-# Timothy
-
-# Ng Chee Chiu
-
 ## Motivation
 
 There are several popular photo sharing social media platforms which currently exist today such as Instagram and Flickr. While they are phenomenal at connecting people and sharing photos, we find that existing platforms actually lack conduciveness and utility in supporting photographers.

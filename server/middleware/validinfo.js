@@ -1,3 +1,5 @@
+//Checks that we are sending valid information
+
 module.exports = (req, res, next) => {
   const { email, name, password } = req.body;
 
@@ -6,7 +8,7 @@ module.exports = (req, res, next) => {
   }
 
   // check for empty values
-  if (req.path == "/register") {
+  if (req.path === "/register") {
     if (![email, name, password].every(Boolean)) {
       return res.status(401).json("Missing Credentials");
     } else if (!validEmail(email)) { //if all fields are present, check valid email

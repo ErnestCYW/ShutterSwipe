@@ -1,0 +1,13 @@
+Version 1.0:
+- Login feature with JWT
+- Frontend and backend setup
+- Instructions to run:
+    1) Install postgresSQL on your local machine and run a server on port 5432
+    2) Create a database with name "shutterswipe" and change into that database
+    3) Install uuid extension (CREATE EXTENSION IF NOT EXISTS "uuid-ossp") in database
+    4) Follow table creation and dummy data insertion in ShutterSwipe/server/database.sql file
+    5) To test backend
+        5.1) Run "npm install" to get all dependencies
+        5.2) Run "npm run dev" to start nodemon server to test backend
+        5.3) Send responses / requests through Postman
+    6) To test fullstack
