@@ -59,7 +59,7 @@ ShutterSwipe aims to provide an environment that **connects** and **supports the
 
 ## Features & Overview
 
-A **Web-Based Application** with the ability to recommend photos based on user grading through an intuitive “Swiping” feature and tags using an integrated Machine Learning: Computer Vision (Image Recognition) API.
+A **Web-Based Social Media Application** with the ability to recommend photos based on user grading through an intuitive “Swiping” feature and tags using an integrated Machine Learning: Computer Vision (Image Recognition) API.
 
 <img src="https://user-images.githubusercontent.com/71819961/118116821-59e28200-b41d-11eb-904e-bf8ef99d2c5c.png" width="500">
 
