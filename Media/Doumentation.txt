@@ -11,3 +11,8 @@ Version 1.0:
         5.2) Run "npm run dev" to start nodemon server to test backend
         5.3) Send responses / requests through Postman
     6) To test fullstack
+        6.1) Run "npm install" in client to get all dependencies
+        6.2) Run "npm start" in client to start frontend
+        6.3) Run "npm install" in server to get all dependencies
+        6.4) Run "npm run dev" in server to start backend
+        6.5) Go to localhost on port 3000 to test
