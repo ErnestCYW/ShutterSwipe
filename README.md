@@ -85,7 +85,7 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 
 ## Project Timeline
 
-### Updated & Detailed Timeline Can Be Found In: Projects/Agile Timeline
+### ***Updated & Detailed Timeline Can Be Found In: Projects/Agile Timeline***
 
 ### Features To Be Completed By 12 Jun 2021:
 
