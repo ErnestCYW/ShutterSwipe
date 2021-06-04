@@ -6,6 +6,7 @@ const fileUpload = require("express-fileupload");
 //middleware
 app.use(express.json()); //req.body
 app.use(cors());
+app.use(fileUpload());
 
 //ROUTES//
 

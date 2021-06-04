@@ -25,7 +25,7 @@ router.post('/upload', (req, res) => {
   }
 
   const file = req.files.file;
-  file.mv('${__dirname}/client/public/uploads/${file.name}', err => { //Moves file from client to picture_server
+  file.mv(`${__dirname}/../../picture_server/${file.name}`, err => { //Moves file from client to picture_server
     if (err) {
       console.error(err);
       return res.status(500).send(err);
