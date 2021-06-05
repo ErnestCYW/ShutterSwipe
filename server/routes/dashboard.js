@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require("../middleware/authorization");
-const express = require('express');
-const fileUpload = require('express-fileupload');
+const upload = require("../middleware/upload");
+const express = require("express");
+const fileUpload = require("express-fileupload");
 
 router.get("/", authorization, async (req, res) => {
   try {
@@ -19,19 +20,29 @@ router.get("/", authorization, async (req, res) => {
   }
 });
 
-router.post('/upload', (req, res) => {
+router.post("/upload", (req, res) => {
+  //if no file is selected
+
   if (req.files === null) {
-    return res.status(400).json({msg: 'No file uploaded'}); //400 is bad request
+    return res.status(400).json({ msg: "No file uploaded" }); //400 is bad request
   }
 
+  //select file
+
   const file = req.files.file;
-  file.mv(`${__dirname}/../../picture_server/${file.name}`, err => { //Moves file from client to picture_server
+  console.log(req.files.file);
+
+  //check if file is correct jpg/png/raw format
+
+  //check if file already exists, allow for duplicates
+
+  //move file from client to picture_server
+  file.mv(`${__dirname}/../../picture_server/${file.name}`, (err) => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);
     }
-
-    res.json({fileName: file.name, filePath: '/uploads/${file.name}'});
+    res.json({ fileName: file.name, filePath: "/uploads/${file.name}" });
   });
 });
 
