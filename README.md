@@ -116,6 +116,7 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 ![ShutterSwipe Architecture](https://user-images.githubusercontent.com/71819961/119790364-72b36300-bf06-11eb-861a-1745c8a1b1e3.png)
 
 ![Database Schema](https://user-images.githubusercontent.com/71819961/119814038-8cf83b80-bf1c-11eb-9fb8-51369a3ff28f.png)
+### Database Schema Deprecated
 
 1. Google Cloud Vision API <sup>1</sup>
 2. HTML / CSS / Javascript
