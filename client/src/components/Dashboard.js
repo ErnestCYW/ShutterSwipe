@@ -76,6 +76,7 @@ const Dashboard = ({ setAuth }) => {
       </button>
       <form onSubmit={uploadFile}>
         <div className="mb-3">
+<<<<<<< HEAD
           <label htmlFor="formFile" className="form-label">
             {filename}
           </label>
@@ -86,6 +87,11 @@ const Dashboard = ({ setAuth }) => {
             multiple
             onChange={stageFile}
           />
+=======
+          <label htmlFor="formFile" className="form-label">{filename}</label>
+          <input className="form-control" type="file" 
+            id="formFile" multiple onChange={stageFile}/>
+>>>>>>> 9a47c73fb78883b489325bcb40f21f6e251aacbe
         </div>
 
         <input
