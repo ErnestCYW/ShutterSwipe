@@ -7,10 +7,11 @@ const Dashboard = ({ setAuth }) => {
 
   const [name, setName] = useState("");
   const [file, setFile] = useState("");
+  const [pic_repo, setPicRepo] = useState([]);
   //const [filename, setFilename] = useState("Choose File");
   //const [uploadedFile, setUploadedFile] = useState({})
 
-  async function getName() {
+  async function getAll() {
     try {
       const response = await fetch("http://localhost:5000/dashboard/", {
         method: "GET",
@@ -18,29 +19,15 @@ const Dashboard = ({ setAuth }) => {
       });
 
       const parseRes = await response.json();
+      const pic_repo = JSON.parse(parseRes.pic_repo);
+      //console.log(pic_repo[0].pic_path);
 
+      setPicRepo(pic_repo);
       setName(parseRes.user_name);
     } catch (err) {
       console.error(err.message);
     }
   }
-
-  /*
-  async function getPictures() {
-    try {
-      const response = await fetch("http://localhost:5000/dashboard/picturerepo", {
-        method: "GET",
-        headers: { name: uploadedFile.filename }
-      });
-
-      const parseRes = await response.json();
-      console.log(parseRes);
-      return parseRes;
-    } catch (err) {
-      console.error(err.message);
-    }
-  }
-  */
 
   const logout = (e) => {
     e.preventDefault();
@@ -83,8 +70,10 @@ const Dashboard = ({ setAuth }) => {
   };
 
   useEffect(() => {
-    getName();
+    getAll();
   }, []); //bracket makes one request only
+
+  //console.log(pic_repo);
 
   return (
     <Fragment>
@@ -111,14 +100,6 @@ const Dashboard = ({ setAuth }) => {
           className="btn btn-primary btn-block mt-4"
         />
       </form>
-      {/*
-      { uploadedFile ? <div className="row mt-5">
-        <div className ="col-md-6 m-auto">
-          <h3 className = "text-center"> {uploadedFile.fileName} </h3>
-          <img style = {{width :"100%"}} src = {getPicture} alt=""/>
-        </div>
-      </div> : null}
-      */}
     </Fragment>
   );
 };
