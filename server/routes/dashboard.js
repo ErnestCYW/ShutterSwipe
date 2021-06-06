@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require("../middleware/authorization");
-//const upload = require("../middleware/upload");
 const express = require("express");
 const fileUpload = require("express-fileupload");
+const { response } = require("express");
 
 router.get("/", authorization, async (req, res) => {
   try {
@@ -19,6 +19,8 @@ router.get("/", authorization, async (req, res) => {
     res.status(500).json("Server Error");
   }
 });
+
+//upload route
 
 router.post("/upload", authorization, async (req, res) => {
   //if no file is selected

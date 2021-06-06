@@ -10,6 +10,9 @@ const Dashboard = ({ setAuth }) => {
   const [filename, setFilename] = useState("Choose File");
   const [uploadedFile, setUploadedFile] = useState({});
 
+  //get pics
+  const [pics, setPics] = useState(false);
+
   async function getName() {
     try {
       const response = await fetch("http://localhost:5000/dashboard/", {
@@ -65,6 +68,25 @@ const Dashboard = ({ setAuth }) => {
     }
   };
 
+  //GETPICS TEST - tim --------------------
+
+  async function getPics() {
+    fetch("http://localhost:5000/dashboard/pictures")
+      .then((response) => {
+        return response.text();
+      })
+      .then((data) => {
+        // console.log(data);
+        setPics(data);
+      });
+  }
+
+  useEffect(() => {
+    getPics();
+  }, []);
+
+  //GETPICS TEST - tim --------------------
+
   useEffect(() => {
     getName();
   }, []); //bracket makes one request only
@@ -95,6 +117,7 @@ const Dashboard = ({ setAuth }) => {
           className="btn btn-primary btn-block mt-4"
         />
       </form>
+      <div>{pics ? pics : "There is no pic data available"}</div>
     </Fragment>
   );
 };
