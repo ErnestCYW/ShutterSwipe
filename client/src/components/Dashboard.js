@@ -49,6 +49,7 @@ const Dashboard = ({ setAuth }) => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            token: localStorage.token,
           },
         }
       );
