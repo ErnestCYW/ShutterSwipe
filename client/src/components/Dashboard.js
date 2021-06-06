@@ -7,8 +7,8 @@ const Dashboard = ({ setAuth }) => {
 
   const [name, setName] = useState("");
   const [file, setFile] = useState("");
-  const [filename, setFilename] = useState("Choose File");
-  const [uploadedFile, setUploadedFile] = useState({})
+  //const [filename, setFilename] = useState("Choose File");
+  //const [uploadedFile, setUploadedFile] = useState({})
 
   async function getName() {
     try {
@@ -21,9 +21,26 @@ const Dashboard = ({ setAuth }) => {
 
       setName(parseRes.user_name);
     } catch (err) {
-      console.error(err.messagE);
+      console.error(err.message);
     }
   }
+
+  /*
+  async function getPictures() {
+    try {
+      const response = await fetch("http://localhost:5000/dashboard/picturerepo", {
+        method: "GET",
+        headers: { name: uploadedFile.filename }
+      });
+
+      const parseRes = await response.json();
+      console.log(parseRes);
+      return parseRes;
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+  */
 
   const logout = (e) => {
     e.preventDefault();
@@ -34,7 +51,7 @@ const Dashboard = ({ setAuth }) => {
 
   const stageFile = e => {
     setFile(e.target.files[0]);     //one file upload only
-    setFilename(e.target.files[0].name);
+    //setFilename(e.target.files[0].name);
   };
 
   const uploadFile = async e => {
@@ -43,14 +60,15 @@ const Dashboard = ({ setAuth }) => {
     formData.append('file',file);
 
     try {
-      const res = await axios.post("http://localhost:5000/dashboard/upload", formData, {
+      await axios.post("http://localhost:5000/dashboard/upload", formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
+            token: localStorage.token
           }
       });
 
-      const {fileName, filePath} = res.data;
-      setUploadedFile({fileName, filePath});
+      //const {fileName, filePath} = res.data;
+      //setUploadedFile({fileName, filePath});
     } catch(err) {
       if (err.response.status === 500) {
         console.log('Server Error');
@@ -72,13 +90,21 @@ const Dashboard = ({ setAuth }) => {
       </button>
       <form onSubmit = {uploadFile}>
         <div className="mb-3">
-          <label htmlFor="formFile" className="form-label">{filename}</label>
+          <label htmlFor="formFile" className="form-label"></label>
           <input className="form-control" type="file" 
             id="formFile" multiple onChange={stageFile}/>
         </div>
 
         <input type="submit" value="Upload" className = "btn btn-primary btn-block mt-4" />
       </form>
+      {/*
+      { uploadedFile ? <div className="row mt-5">
+        <div className ="col-md-6 m-auto">
+          <h3 className = "text-center"> {uploadedFile.fileName} </h3>
+          <img style = {{width :"100%"}} src = {getPicture} alt=""/>
+        </div>
+      </div> : null}
+      */}
     </Fragment>
   );
 };
