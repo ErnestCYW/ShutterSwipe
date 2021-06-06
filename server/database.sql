@@ -15,6 +15,7 @@ CREATE TABLE users (
 --Picture table
 CREATE TABLE pics (
   pic_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  image_path VARCHAR(255) NOT NULL, 
   user_id UUID REFERENCES users(user_id) NOT NULL
 )
 

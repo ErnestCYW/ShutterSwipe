@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require("../middleware/authorization");
-const upload = require("../middleware/upload");
-const express = require("express");
+//const upload = require("../middleware/upload");
+//const express = require("express");
 const fileUpload = require("express-fileupload");
 
 router.get("/", authorization, async (req, res) => {
@@ -36,13 +36,24 @@ router.post("/upload", (req, res) => {
 
   //check if file already exists, allow for duplicates
 
+  //add file to psql db
+  const image_path = `${__dirname}/../../picture_server/${file.name}`;
+
+  console.log(image_path);
+  console.log(req.user);
+
+  const newPic = pool.query(
+    "INSERT INTO pics (image_path, user_id) VALUES ($1, $2) RETURNING *",
+    [image_path, req.user]
+  );
+
   //move file from client to picture_server
   file.mv(`${__dirname}/../../picture_server/${file.name}`, (err) => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);
     }
-    res.json({ fileName: file.name, filePath: "/uploads/${file.name}" });
+    res.json({ fileName: file.name, filePath: "/uploads/${file.name}" }); //returns a json
   });
 });
 
