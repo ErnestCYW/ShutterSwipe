@@ -36,18 +36,15 @@ router.post("/upload", authorization, async (req, res) => {
   //check if file already exists, allow for duplicates
 
   //add file to psql db
-  const image_path = `${__dirname}/../../picture_server/${file.name}`;
-
-  // console.log(image_path);
-  // console.log(req.user);
+  const pic_path = `${__dirname}/../../picture_server/${file.name}`;
 
   const newPic = pool.query(
-    "INSERT INTO pics (image_path, user_id) VALUES ($1, $2) RETURNING *",
-    [image_path, req.user]
+    "INSERT INTO pics (pic_path, user_id) VALUES ($1, $2) RETURNING *",
+    [pic_path, req.user]
   );
 
   //move file from client to picture_server
-  file.mv(image_path, (err) => {
+  file.mv(pic_path, (err) => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);
