@@ -13,7 +13,24 @@ router.get("/", authorization, async (req, res) => {
       [req.user]
     );
 
-    res.json(user.rows[0]);
+    const num_of_pics = await pool.query(
+      "SELECT COUNT(*) as num_of_pics FROM pics WHERE user_id = $1",
+      [req.user]
+    );
+
+    const pic_repo = await pool.query(
+      "SELECT pic_path FROM pics WHERE user_id = $1",
+      [req.user]
+    );
+    console.log(pic_repo);
+
+    //return custom JSON
+    const toReturn = {
+      "user_name": `${user.rows[0].user_name}`,
+      "num_of_pics": `${num_of_pics.rows[0].num_of_pics}`,
+      "pic_repo": JSON.stringify(pic_repo.rows)
+    };
+    res.json(toReturn);
   } catch (err) {
     console.error(err.message);
     res.status(500).json("Server Error");
@@ -38,18 +55,15 @@ router.post("/upload", authorization, async (req, res) => {
   //check if file already exists, allow for duplicates
 
   //add file to psql db
-  const image_path = `${__dirname}/../../picture_server/${file.name}`;
-
-  // console.log(image_path);
-  // console.log(req.user);
+  const pic_path = `${__dirname}/../../picture_server/${file.name}`;
 
   const newPic = pool.query(
-    "INSERT INTO pics (image_path, user_id) VALUES ($1, $2) RETURNING *",
-    [image_path, req.user]
+    "INSERT INTO pics (pic_path, user_id) VALUES ($1, $2) RETURNING *",
+    [pic_path, req.user]
   );
 
   //move file from client to picture_server
-  file.mv(image_path, (err) => {
+  file.mv(pic_path, (err) => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);

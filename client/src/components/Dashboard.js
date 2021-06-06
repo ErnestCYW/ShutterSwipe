@@ -7,13 +7,18 @@ const Dashboard = ({ setAuth }) => {
 
   const [name, setName] = useState("");
   const [file, setFile] = useState("");
-  const [filename, setFilename] = useState("Choose File");
-  const [uploadedFile, setUploadedFile] = useState({});
+  const [pic_repo, setPicRepo] = useState([]);
+  //const [filename, setFilename] = useState("Choose File");
+  //const [uploadedFile, setUploadedFile] = useState({})
 
+<<<<<<< HEAD
   //get pics
   const [pics, setPics] = useState(false);
 
   async function getName() {
+=======
+  async function getAll() {
+>>>>>>> fa149c1ab7f0089581d6bd4c0dca8c501973ba05
     try {
       const response = await fetch("http://localhost:5000/dashboard/", {
         method: "GET",
@@ -21,10 +26,13 @@ const Dashboard = ({ setAuth }) => {
       });
 
       const parseRes = await response.json();
+      const pic_repo = JSON.parse(parseRes.pic_repo);
+      //console.log(pic_repo[0].pic_path);
 
+      setPicRepo(pic_repo);
       setName(parseRes.user_name);
     } catch (err) {
-      console.error(err.messagE);
+      console.error(err.message);
     }
   }
 
@@ -35,9 +43,9 @@ const Dashboard = ({ setAuth }) => {
     toast.success("Logged out successfully");
   };
 
-  const stageFile = (e) => {
-    setFile(e.target.files[0]); //one file upload only
-    setFilename(e.target.files[0].name);
+  const stageFile = e => {
+    setFile(e.target.files[0]);     //one file upload only
+    //setFilename(e.target.files[0].name);
   };
 
   const uploadFile = async (e) => {
@@ -57,8 +65,8 @@ const Dashboard = ({ setAuth }) => {
         }
       );
 
-      const { fileName, filePath } = res.data;
-      setUploadedFile({ fileName, filePath });
+      //const { fileName, filePath } = res.data;
+      //setUploadedFile({ fileName, filePath });
     } catch (err) {
       if (err.response.status === 500) {
         console.log("Server Error");
@@ -88,8 +96,10 @@ const Dashboard = ({ setAuth }) => {
   //GETPICS TEST - tim --------------------
 
   useEffect(() => {
-    getName();
+    getAll();
   }, []); //bracket makes one request only
+
+  //console.log(pic_repo);
 
   return (
     <Fragment>
@@ -100,7 +110,6 @@ const Dashboard = ({ setAuth }) => {
       <form onSubmit={uploadFile}>
         <div className="mb-3">
           <label htmlFor="formFile" className="form-label">
-            {filename}
           </label>
           <input
             className="form-control"
