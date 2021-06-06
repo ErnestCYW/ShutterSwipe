@@ -1,3 +1,4 @@
+// this is a module which helps organize code into manageable parts.
 const Pool = require("pg").Pool;
 
 const pool = new Pool({

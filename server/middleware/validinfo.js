@@ -1,3 +1,4 @@
+//This is a callback function
 //Checks that we are sending valid information
 
 module.exports = (req, res, next) => {
@@ -11,12 +12,11 @@ module.exports = (req, res, next) => {
   if (req.path === "/register") {
     if (![email, name, password].every(Boolean)) {
       return res.status(401).json("Missing Credentials");
-    } else if (!validEmail(email)) { //if all fields are present, check valid email
+    } else if (!validEmail(email)) {
+      //if all fields are present, check valid email
       return res.json("Invalid Email");
     }
-  }
-
-  else if (req.path === "/login") {
+  } else if (req.path === "/login") {
     if (![email, password].every(Boolean)) {
       return res.status(401).json("Missing Credentials");
     } else if (!validEmail(email)) {

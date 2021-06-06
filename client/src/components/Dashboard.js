@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import axios from 'axios';
+import axios from "axios";
 
 const Dashboard = ({ setAuth }) => {
   //passing prop setAuth
@@ -54,24 +54,28 @@ const Dashboard = ({ setAuth }) => {
     //setFilename(e.target.files[0].name);
   };
 
-  const uploadFile = async e => {
+  const uploadFile = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('file',file);
+    formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:5000/dashboard/upload", formData, {
+      const res = await axios.post(
+        "http://localhost:5000/dashboard/upload",
+        formData,
+        {
           headers: {
-            'Content-Type': 'multipart/form-data',
-            token: localStorage.token
-          }
-      });
+            "Content-Type": "multipart/form-data",
+            token: localStorage.token,
+          },
+        }
+      );
 
-      //const {fileName, filePath} = res.data;
-      //setUploadedFile({fileName, filePath});
-    } catch(err) {
+      //const { fileName, filePath } = res.data;
+      //setUploadedFile({ fileName, filePath });
+    } catch (err) {
       if (err.response.status === 500) {
-        console.log('Server Error');
+        console.log("Server Error");
       } else {
         console.log(err.response.data.msg);
       }
@@ -88,14 +92,24 @@ const Dashboard = ({ setAuth }) => {
       <button className="btn btn-primary" onClick={(e) => logout(e)}>
         Logout
       </button>
-      <form onSubmit = {uploadFile}>
+      <form onSubmit={uploadFile}>
         <div className="mb-3">
-          <label htmlFor="formFile" className="form-label"></label>
-          <input className="form-control" type="file" 
-            id="formFile" multiple onChange={stageFile}/>
+          <label htmlFor="formFile" className="form-label">
+          </label>
+          <input
+            className="form-control"
+            type="file"
+            id="formFile"
+            multiple
+            onChange={stageFile}
+          />
         </div>
 
-        <input type="submit" value="Upload" className = "btn btn-primary btn-block mt-4" />
+        <input
+          type="submit"
+          value="Upload"
+          className="btn btn-primary btn-block mt-4"
+        />
       </form>
       {/*
       { uploadedFile ? <div className="row mt-5">
