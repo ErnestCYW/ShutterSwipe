@@ -1,24 +1,17 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Post from "./Post";
 
 const Dashboard = ({ setAuth }) => {
   //passing prop setAuth
 
+  //default use states
   const [name, setName] = useState("");
   const [file, setFile] = useState("");
   const [pic_repo, setPicRepo] = useState([]);
-  //const [filename, setFilename] = useState("Choose File");
-  //const [uploadedFile, setUploadedFile] = useState({})
 
-<<<<<<< HEAD
-  //get pics
-  const [pics, setPics] = useState(false);
-
-  async function getName() {
-=======
   async function getAll() {
->>>>>>> fa149c1ab7f0089581d6bd4c0dca8c501973ba05
     try {
       const response = await fetch("http://localhost:5000/dashboard/", {
         method: "GET",
@@ -27,7 +20,7 @@ const Dashboard = ({ setAuth }) => {
 
       const parseRes = await response.json();
       const pic_repo = JSON.parse(parseRes.pic_repo);
-      //console.log(pic_repo[0].pic_path);
+      console.log(pic_repo);
 
       setPicRepo(pic_repo);
       setName(parseRes.user_name);
@@ -43,8 +36,8 @@ const Dashboard = ({ setAuth }) => {
     toast.success("Logged out successfully");
   };
 
-  const stageFile = e => {
-    setFile(e.target.files[0]);     //one file upload only
+  const stageFile = (e) => {
+    setFile(e.target.files[0]); //one file upload only
     //setFilename(e.target.files[0].name);
   };
 
@@ -76,30 +69,10 @@ const Dashboard = ({ setAuth }) => {
     }
   };
 
-  //GETPICS TEST - tim --------------------
-
-  async function getPics() {
-    fetch("http://localhost:5000/dashboard/pictures")
-      .then((response) => {
-        return response.text();
-      })
-      .then((data) => {
-        // console.log(data);
-        setPics(data);
-      });
-  }
-
-  useEffect(() => {
-    getPics();
-  }, []);
-
-  //GETPICS TEST - tim --------------------
-
+  //runs after every render
   useEffect(() => {
     getAll();
   }, []); //bracket makes one request only
-
-  //console.log(pic_repo);
 
   return (
     <Fragment>
@@ -109,8 +82,7 @@ const Dashboard = ({ setAuth }) => {
       </button>
       <form onSubmit={uploadFile}>
         <div className="mb-3">
-          <label htmlFor="formFile" className="form-label">
-          </label>
+          <label htmlFor="formFile" className="form-label"></label>
           <input
             className="form-control"
             type="file"
@@ -126,7 +98,10 @@ const Dashboard = ({ setAuth }) => {
           className="btn btn-primary btn-block mt-4"
         />
       </form>
-      <div>{pics ? pics : "There is no pic data available"}</div>
+
+      {pic_repo.map((pic) => (
+        <Post pic_id={pic.pic_id} />
+      ))}
     </Fragment>
   );
 };

@@ -1,9 +1,7 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require("../middleware/authorization");
-const express = require("express");
-const fileUpload = require("express-fileupload");
-const { response } = require("express");
+const fs = require("fs");
 
 router.get("/", authorization, async (req, res) => {
   try {
@@ -13,23 +11,49 @@ router.get("/", authorization, async (req, res) => {
       [req.user]
     );
 
-    const num_of_pics = await pool.query(
-      "SELECT COUNT(*) as num_of_pics FROM pics WHERE user_id = $1",
+    const pic_repo = await pool.query(
+      "SELECT pic_id FROM pics WHERE user_id = $1",
       [req.user]
     );
 
-    const pic_repo = await pool.query(
-      "SELECT pic_path FROM pics WHERE user_id = $1",
-      [req.user]
+    //React cannot access anything outside of client so need to copy required files into public folder
+    fs.access(
+      `/Users/timothy/ShutterSwipe/client/public/${pic.pic_id}.jpg`,
+      (err) => {
+        if (err) {
+          pic_repo.rows.forEach((pic) => {
+            fs.copyFile(
+              `/Users/timothy/ShutterSwipe/picture_server/${pic.pic_id}.jpg`,
+              `/Users/timothy/ShutterSwipe/client/public/${pic.pic_id}.jpg`,
+              (err) => {
+                if (err) throw err;
+                console.log("error moving files to front end");
+              }
+            );
+          });
+        } else {
+          console.log("Files already copied");
+        }
+      }
     );
-    console.log(pic_repo);
+
+    // pic_repo.rows.forEach((pic) => {
+    //   fs.copyFile(
+    //     `/Users/timothy/ShutterSwipe/picture_server/${pic.pic_id}.jpg`,
+    //     `/Users/timothy/ShutterSwipe/client/public/${pic.pic_id}.jpg`,
+    //     (err) => {
+    //       if (err) throw err;
+    //       console.log("error moving files to front end");
+    //     }
+    //   );
+    // });
 
     //return custom JSON
     const toReturn = {
-      "user_name": `${user.rows[0].user_name}`,
-      "num_of_pics": `${num_of_pics.rows[0].num_of_pics}`,
-      "pic_repo": JSON.stringify(pic_repo.rows)
+      user_name: `${user.rows[0].user_name}`,
+      pic_repo: JSON.stringify(pic_repo.rows),
     };
+    // console.log(pic_repo);
     res.json(toReturn);
   } catch (err) {
     console.error(err.message);
@@ -57,19 +81,22 @@ router.post("/upload", authorization, async (req, res) => {
   //add file to psql db
   const pic_path = `${__dirname}/../../picture_server/${file.name}`;
 
-  const newPic = pool.query(
-    "INSERT INTO pics (pic_path, user_id) VALUES ($1, $2) RETURNING *",
-    [pic_path, req.user]
+  const new_pic_id = await pool.query(
+    "INSERT INTO pics (pic_id, user_id) VALUES (DEFAULT, $1) RETURNING pic_id",
+    [req.user]
   );
 
   //move file from client to picture_server
-  file.mv(pic_path, (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send(err);
+  file.mv(
+    `${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`,
+    (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send(err);
+      }
+      res.json({ fileName: file.name, filePath: "/uploads/${file.name}" }); //returns a json
     }
-    res.json({ fileName: file.name, filePath: "/uploads/${file.name}" }); //returns a json
-  });
+  );
 });
 
 module.exports = router;

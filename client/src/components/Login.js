@@ -34,7 +34,7 @@ const Login = ({ setAuth }) => {
         toast.success("login successfully");
       } else {
         setAuth(false);
-        toast.error(parseRes); //from jwtAuth.js from server side
+        toast.error(parseRes); //from jwetAuth.js from server side
       }
     } catch (err) {
       console.error(err.message);

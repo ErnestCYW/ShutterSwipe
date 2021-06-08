@@ -15,7 +15,6 @@ CREATE TABLE users (
 --Picture table
 CREATE TABLE pics (
   pic_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  pic_path VARCHAR(255) NOT NULL, 
   user_id UUID REFERENCES users(user_id) NOT NULL
 )
 
@@ -33,3 +32,4 @@ CREATE TABLE pics (
 
 --Check proper relation
 --SELECT * FROM users LEFT JOIN pics ON users.user_id = pics.user_id; --use left join since all pics must belong to a user
+--SELECT * FROM pics LEFT JOIN users ON pics.user_id = users.user_id
