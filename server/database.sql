@@ -6,7 +6,7 @@ CREATE DATABASE shutterswipe;
 
 --User Table
 CREATE TABLE users (
-  user_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), --create UUID OSSP if not installed
+  user_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_name VARCHAR(100) NOT NULL,
   user_email VARCHAR(100) NOT NULL,
   user_password VARCHAR(100) NOT NULL

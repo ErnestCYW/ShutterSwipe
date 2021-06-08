@@ -9,9 +9,15 @@ const Dashboard = ({ setAuth }) => {
   //default use states
   const [name, setName] = useState("");
   const [file, setFile] = useState("");
-  const [pic_repo, setPicRepo] = useState([]);
+  const [pic_repo, setPicRepo] = useState([
+    {
+      pic_id: "00000000-0000-0000-0000-000000000000",
+    },
+  ]);
+  //const [filename, setFilename] = useState("Choose File");
+  //const [uploadedFile, setUploadedFile] = useState({})
 
-  async function getAll() {
+  const getAll = async () => {
     try {
       const response = await fetch("http://localhost:5000/dashboard/", {
         method: "GET",
@@ -19,15 +25,15 @@ const Dashboard = ({ setAuth }) => {
       });
 
       const parseRes = await response.json();
+      //console.log(parseRes);
       const pic_repo = JSON.parse(parseRes.pic_repo);
-      console.log(pic_repo);
 
       setPicRepo(pic_repo);
       setName(parseRes.user_name);
     } catch (err) {
       console.error(err.message);
     }
-  }
+  };
 
   const logout = (e) => {
     e.preventDefault();
@@ -37,7 +43,7 @@ const Dashboard = ({ setAuth }) => {
   };
 
   const stageFile = (e) => {
-    setFile(e.target.files[0]); //one file upload only
+    setFile(e.target.files[0]); //one file upload only first file
     //setFilename(e.target.files[0].name);
   };
 
@@ -72,7 +78,7 @@ const Dashboard = ({ setAuth }) => {
   //runs after every render
   useEffect(() => {
     getAll();
-  }, []); //bracket makes one request only
+  }, []); //run if anything in bracket changes or else run only once
 
   return (
     <Fragment>

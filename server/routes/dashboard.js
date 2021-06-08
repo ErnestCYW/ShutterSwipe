@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require("../middleware/authorization");
+//const upload = require("../middleware/upload");
 const fs = require("fs");
 
 router.get("/", authorization, async (req, res) => {
@@ -17,36 +18,26 @@ router.get("/", authorization, async (req, res) => {
     );
 
     //React cannot access anything outside of client so need to copy required files into public folder
-    fs.access(
-      `/Users/timothy/ShutterSwipe/client/public/${pic.pic_id}.jpg`,
-      (err) => {
-        if (err) {
-          pic_repo.rows.forEach((pic) => {
+    pic_repo.rows.forEach((pic) => {
+      //console.log(pic.pic_id);
+      fs.access(
+        `/Users/timothy/ShutterSwipe/client/public/${pic.pic_id}.jpg`,
+        fs.F_OK,
+        (err) => {
+          if (err) {
             fs.copyFile(
               `/Users/timothy/ShutterSwipe/picture_server/${pic.pic_id}.jpg`,
               `/Users/timothy/ShutterSwipe/client/public/${pic.pic_id}.jpg`,
+              fs.constants.COPYFILE_EXCL,
               (err) => {
                 if (err) throw err;
                 console.log("error moving files to front end");
               }
             );
-          });
-        } else {
-          console.log("Files already copied");
+          }
         }
-      }
-    );
-
-    // pic_repo.rows.forEach((pic) => {
-    //   fs.copyFile(
-    //     `/Users/timothy/ShutterSwipe/picture_server/${pic.pic_id}.jpg`,
-    //     `/Users/timothy/ShutterSwipe/client/public/${pic.pic_id}.jpg`,
-    //     (err) => {
-    //       if (err) throw err;
-    //       console.log("error moving files to front end");
-    //     }
-    //   );
-    // });
+      );
+    });
 
     //return custom JSON
     const toReturn = {
@@ -79,14 +70,12 @@ router.post("/upload", authorization, async (req, res) => {
   //check if file already exists, allow for duplicates
 
   //add file to psql db
-  const pic_path = `${__dirname}/../../picture_server/${file.name}`;
-
   const new_pic_id = await pool.query(
     "INSERT INTO pics (pic_id, user_id) VALUES (DEFAULT, $1) RETURNING pic_id",
     [req.user]
   );
 
-  //move file from client to picture_server
+  //rename file to UUID and transfer from client to picture_server, stores as jpg
   file.mv(
     `${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`,
     (err) => {
