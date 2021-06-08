@@ -1,13 +1,21 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Post from "./Post"
 
 const Dashboard = ({ setAuth }) => {
   //passing prop setAuth
 
+  //default use states
   const [name, setName] = useState("");
   const [file, setFile] = useState("");
-  const [pic_repo, setPicRepo] = useState([]);
+  const [pic_repo, setPicRepo] = useState([ 
+    
+    {
+      pic_id: '00000000-0000-0000-0000-000000000000',
+    }
+    
+  ]);
   //const [filename, setFilename] = useState("Choose File");
   //const [uploadedFile, setUploadedFile] = useState({})
 
@@ -20,7 +28,6 @@ const Dashboard = ({ setAuth }) => {
 
       const parseRes = await response.json();
       const pic_repo = JSON.parse(parseRes.pic_repo);
-      //console.log(pic_repo[0].pic_path);
 
       setPicRepo(pic_repo);
       setName(parseRes.user_name);
@@ -37,7 +44,7 @@ const Dashboard = ({ setAuth }) => {
   };
 
   const stageFile = e => {
-    setFile(e.target.files[0]);     //one file upload only
+    setFile(e.target.files[0]);     //one file upload only first file
     //setFilename(e.target.files[0].name);
   };
 
@@ -71,9 +78,7 @@ const Dashboard = ({ setAuth }) => {
 
   useEffect(() => {
     getAll();
-  }, []); //bracket makes one request only
-
-  //console.log(pic_repo);
+  }, []); //run if anything in bracket changes or else run only once
 
   return (
     <Fragment>
@@ -100,6 +105,11 @@ const Dashboard = ({ setAuth }) => {
           className="btn btn-primary btn-block mt-4"
         />
       </form>
+
+      {/*pic_repo.map(pic => (
+        <Post pic_id={pic.pic_id} />
+      ))*/}
+
     </Fragment>
   );
 };
