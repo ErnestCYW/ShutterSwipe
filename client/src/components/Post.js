@@ -7,7 +7,7 @@ function Post({ pic_id }) {
       {
         <img
           width="500px"
-          src={require(`../../public/${pic_id}.jpg`).default}
+          src={require(`../../public/assets/${pic_id}.jpg`).default}
           alt="missing img"
         ></img>
       }

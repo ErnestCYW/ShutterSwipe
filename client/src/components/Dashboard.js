@@ -21,7 +21,6 @@ const Dashboard = ({ setAuth }) => {
       });
 
       const parseRes = await response.json();
-      //console.log(parseRes);
       const pic_repo = JSON.parse(parseRes.pic_repo);
 
       setPicRepo(pic_repo);
@@ -104,15 +103,6 @@ const Dashboard = ({ setAuth }) => {
       {pic_repo.map((pic) => (
         <Post pic_id={pic.pic_id} />
       ))}
-
-      <img
-        width="500px"
-        src={
-          "/Users/timothy/ShutterSwipe/client/src/0d4f2bb7-3caf-44db-8a0e-b2e24e8b3be9.jpg"
-            .default
-        }
-        alt="missing img"
-      ></img>
     </Fragment>
   );
 };

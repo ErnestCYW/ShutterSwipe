@@ -16,3 +16,10 @@ Version 1.0:
         6.3) Run "npm install" in server to get all dependencies
         6.4) Run "npm run dev" in server to start backend
         6.5) Go to localhost on port 3000 to test
+
+Version 1.1:
+- Added upload photos feature with viewing photos
+- Instructions to run:
+    1) Follow instructions above
+    2) Register & Login with account
+    3) Upload photos and refresh the page
