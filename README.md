@@ -1,4 +1,5 @@
 # ShutterSwipe (NUS Orbital 2021: Artemis)
+# Version: 1.2
 
 ## Motivation
 
