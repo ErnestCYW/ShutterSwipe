@@ -21,13 +21,13 @@ router.get("/", authorization, async (req, res) => {
     pic_repo.rows.forEach((pic) => {
       //console.log(pic.pic_id);
       fs.access(
-        `/Users/timothy/ShutterSwipe/client/public/${pic.pic_id}.jpg`,
+        `/Users/timothy/ShutterSwipe/client/public/assets/${pic.pic_id}.jpg`,
         fs.F_OK,
         (err) => {
           if (err) {
             fs.copyFile(
               `/Users/timothy/ShutterSwipe/picture_server/${pic.pic_id}.jpg`,
-              `/Users/timothy/ShutterSwipe/client/public/${pic.pic_id}.jpg`,
+              `/Users/timothy/ShutterSwipe/client/public/assets/${pic.pic_id}.jpg`,
               fs.constants.COPYFILE_EXCL,
               (err) => {
                 if (err) throw err;
