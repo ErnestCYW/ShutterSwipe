@@ -12,14 +12,14 @@ const Dashboard = ({ setAuth }) => {
   const [pic_repo, setPicRepo] = useState([ 
     
     {
-      pic_id: '00000000-0000-0000-0000-000000000000',
+      pic_id: '00000000-0000-0000-0000-000000000000'
     }
     
   ]);
   //const [filename, setFilename] = useState("Choose File");
   //const [uploadedFile, setUploadedFile] = useState({})
 
-  async function getAll() {
+  const getAll = async () => {
     try {
       const response = await fetch("http://localhost:5000/dashboard/", {
         method: "GET",
@@ -27,6 +27,7 @@ const Dashboard = ({ setAuth }) => {
       });
 
       const parseRes = await response.json();
+      //console.log(parseRes);
       const pic_repo = JSON.parse(parseRes.pic_repo);
 
       setPicRepo(pic_repo);
@@ -43,7 +44,7 @@ const Dashboard = ({ setAuth }) => {
     toast.success("Logged out successfully");
   };
 
-  const stageFile = e => {
+  const stageFile = (e) => {
     setFile(e.target.files[0]);     //one file upload only first file
     //setFilename(e.target.files[0].name);
   };
@@ -106,9 +107,9 @@ const Dashboard = ({ setAuth }) => {
         />
       </form>
 
-      {/*pic_repo.map(pic => (
+      {pic_repo.map(pic => (
         <Post pic_id={pic.pic_id} />
-      ))*/}
+      ))}
 
     </Fragment>
   );

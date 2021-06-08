@@ -16,17 +16,24 @@ router.get("/", authorization, async (req, res) => {
       "SELECT pic_id FROM pics WHERE user_id = $1",
       [req.user]
     );
+    //console.log(pic_repo)
 
     //React cannot access anything outside of client so need to copy required files into public folder
     pic_repo.rows.forEach(pic => {
-      fs.copyFile(
-        `/Users/ernestcyw/Desktop/Orbital/ShutterSwipe/picture_server/${pic.pic_id}.jpg`,
-        `/Users/ernestcyw/Desktop/Orbital/ShutterSwipe/client/public/${pic.pic_id}.jpg`,
-        (err) => {
-          if (err) throw err;
-          console.log("error moving files to front end");
+      //console.log(pic.pic_id);
+      fs.access(`/Users/ernestcyw/Desktop/Orbital/ShutterSwipe/client/public/${pic.pic_id}.jpg`, fs.F_OK, err => {
+        if (err) {
+          fs.copyFile(
+            `/Users/ernestcyw/Desktop/Orbital/ShutterSwipe/picture_server/${pic.pic_id}.jpg`,
+            `/Users/ernestcyw/Desktop/Orbital/ShutterSwipe/client/public/${pic.pic_id}.jpg`,
+            fs.constants.COPYFILE_EXCL,
+            (err) => {
+              if (err) throw err;
+              console.log("error moving files to front end");
+            }
+          )
         }
-      )
+      })
     });
 
     //return custom JSON
