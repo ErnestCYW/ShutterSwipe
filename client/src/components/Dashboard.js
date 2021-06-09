@@ -44,7 +44,7 @@ const Dashboard = ({ setAuth }) => {
 
   const uploadFile = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
+    const formData = new FormData(); //default javascript object
     formData.append("file", file);
 
     try {
@@ -59,8 +59,10 @@ const Dashboard = ({ setAuth }) => {
         }
       );
       toast.success("Image uploaded! Refresh to see change.");
-      //const { fileName, filePath } = res.data;
-      //setUploadedFile({ fileName, filePath });
+
+      /*--- TODO ---
+      window.location = "/dashboard"; refreshed page but gets "error moving files to front end", but files are moved alright and apperas in public/assets... hmm.. 
+      */
     } catch (err) {
       if (err.response.status === 500) {
         console.log("Server Error");
@@ -70,7 +72,23 @@ const Dashboard = ({ setAuth }) => {
     }
   };
 
-  //runs after every render
+  //delete picture
+
+  const deletePic = async (id) => {
+    try {
+      //make a delete fetch request
+      const deletePic = await fetch(`http://localhost:5000/dashboard/${id}`, {
+        method: "DELETE",
+      });
+      //makes you not need to refresh!
+      setPicRepo(pic_repo.filter((pic) => pic.pic_id !== id));
+      console.log(deletePic);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  //makes a fetch request to the restful API everytime a component is rendered
   useEffect(() => {
     getAll();
   }, []); //run if anything in bracket changes or else run only once
@@ -78,6 +96,7 @@ const Dashboard = ({ setAuth }) => {
   return (
     <Fragment>
       <h1>Dashboard {name} </h1>
+
       <button className="btn btn-primary" onClick={(e) => logout(e)}>
         Logout
       </button>
@@ -100,8 +119,23 @@ const Dashboard = ({ setAuth }) => {
         />
       </form>
 
-      {pic_repo.map((pic) => (
+      {/* {pic_repo.map((pic) => (
         <Post pic_id={pic.pic_id} />
+      ))} */}
+
+      {pic_repo.map((pic) => (
+        //make sure key is unique
+        <tr key={pic.pic_id}>
+          <Post pic_id={pic.pic_id} />
+          <td>
+            <button
+              className="btn btn-danger"
+              onClick={() => deletePic(pic.pic_id)}
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
       ))}
     </Fragment>
   );
