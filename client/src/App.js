@@ -15,6 +15,8 @@ import {
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Main from "./components/Main";
+import Navbar from "./components/Navbar";
 
 toast.configure();
 
@@ -46,9 +48,17 @@ function App() {
 
   return (
     <Fragment>
+      <Navbar />
       <Router>
         <div className="container">
           <Switch>
+          <Route
+              exact
+              path="/"
+              render={(props) =>
+                <Main />
+              }
+            />
             <Route
               exact
               path="/login"
