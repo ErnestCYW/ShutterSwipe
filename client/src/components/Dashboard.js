@@ -58,7 +58,7 @@ const Dashboard = ({ setAuth }) => {
           },
         }
       );
-
+      toast.success("Image uploaded! Refresh to see change.");
       //const { fileName, filePath } = res.data;
       //setUploadedFile({ fileName, filePath });
     } catch (err) {
