@@ -52,6 +52,19 @@ router.get("/", authorization, async (req, res) => {
   }
 });
 
+//get specific id (for delete query)
+
+router.get("/:id", async (req, res) => {
+  try {
+    //console.log(req.params);
+    const { id } = req.params;
+    const pic = await pool.query("SELECT * FROM pics WHERE pic_id = $1", [id]);
+    res.json(pic.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 //upload route
 
 router.post("/upload", authorization, async (req, res) => {
@@ -83,9 +96,29 @@ router.post("/upload", authorization, async (req, res) => {
         console.error(err);
         return res.status(500).send(err);
       }
-      res.json({ fileName: file.name, filePath: "/uploads/${file.name}" }); //returns a json
+      res.json({
+        fileName: file.name,
+        filePath: "/uploads/${file.name}",
+        new_pic_id,
+      }); //returns a json
     }
   );
+});
+
+// delete route
+
+router.delete("/:id", async (req, res) => {
+  //add an authorization here? --> fails if i add in an authorization... how to fix zz
+  try {
+    const { id } = req.params;
+    //ADD delete from public/assets
+    const deletePic = await pool.query("DELETE FROM pics WHERE pic_id = $1", [
+      id,
+    ]);
+    res.json("Pic was deleted");
+  } catch (err) {
+    console.error(err.message);
+  }
 });
 
 module.exports = router;
