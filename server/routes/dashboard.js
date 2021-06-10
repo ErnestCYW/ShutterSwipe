@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require("../middleware/authorization");
-//const upload = require("../middleware/upload");
 const fs = require("fs");
 
 router.get("/", authorization, async (req, res) => {
@@ -17,34 +16,12 @@ router.get("/", authorization, async (req, res) => {
       [req.user]
     );
 
-    //React cannot access anything outside of client so need to copy required files into public folder
-    pic_repo.rows.forEach((pic) => {
-      //console.log(pic.pic_id);
-      fs.access(
-        `/Users/timothy/ShutterSwipe/client/public/assets/${pic.pic_id}.jpg`,
-        fs.F_OK,
-        (err) => {
-          if (err) {
-            fs.copyFile(
-              `/Users/timothy/ShutterSwipe/picture_server/${pic.pic_id}.jpg`,
-              `/Users/timothy/ShutterSwipe/client/public/assets/${pic.pic_id}.jpg`,
-              fs.constants.COPYFILE_EXCL,
-              (err) => {
-                if (err) throw err;
-                console.log("error moving files to front end");
-              }
-            );
-          }
-        }
-      );
-    });
-
     //return custom JSON
     const toReturn = {
       user_name: `${user.rows[0].user_name}`,
       pic_repo: JSON.stringify(pic_repo.rows),
     };
-    // console.log(pic_repo);
+
     res.json(toReturn);
   } catch (err) {
     console.error(err.message);
@@ -52,7 +29,7 @@ router.get("/", authorization, async (req, res) => {
   }
 });
 
-//get specific id (for delete query)
+//get specific id (for delete query) (see if redundant also)
 
 router.get("/:id", async (req, res) => {
   try {
@@ -111,10 +88,18 @@ router.delete("/:id", async (req, res) => {
   //add an authorization here? --> fails if i add in an authorization... how to fix zz
   try {
     const { id } = req.params;
-    //ADD delete from public/assets
+
     const deletePic = await pool.query("DELETE FROM pics WHERE pic_id = $1", [
       id,
     ]);
+
+    fs.unlink(`/Users/timothy/ShutterSwipe/picture_server/${id}.jpg`, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+
     res.json("Pic was deleted");
   } catch (err) {
     console.error(err.message);

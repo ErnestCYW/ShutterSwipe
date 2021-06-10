@@ -10,8 +10,6 @@ const Dashboard = ({ setAuth }) => {
   const [name, setName] = useState("");
   const [file, setFile] = useState("");
   const [pic_repo, setPicRepo] = useState([]);
-  //const [filename, setFilename] = useState("Choose File");
-  //const [uploadedFile, setUploadedFile] = useState({})
 
   const getAll = async () => {
     try {
@@ -119,12 +117,8 @@ const Dashboard = ({ setAuth }) => {
         />
       </form>
 
-      {/* {pic_repo.map((pic) => (
-        <Post pic_id={pic.pic_id} />
-      ))} */}
-
       {pic_repo.map((pic) => (
-        //make sure key is unique
+        //make sure key is unique (try delete and see if redundant)
         <tr key={pic.pic_id}>
           <Post pic_id={pic.pic_id} />
           <td>
