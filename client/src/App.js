@@ -17,6 +17,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
+import Discover from "./components/Discover";
 
 toast.configure();
 
@@ -52,13 +53,7 @@ function App() {
       <Router>
         <div className="container">
           <Switch>
-          <Route
-              exact
-              path="/"
-              render={(props) =>
-                <Home />
-              }
-            />
+            <Route exact path="/" render={(props) => <Home />} />
             <Route
               exact
               path="/login"
@@ -91,6 +86,11 @@ function App() {
                   <Redirect to="/login" />
                 )
               }
+            />
+            <Route
+              exact
+              path="/discover"
+              render={(props) => <Discover {...props} setAuth={setAuth} />}
             />
           </Switch>
         </div>

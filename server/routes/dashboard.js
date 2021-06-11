@@ -93,7 +93,7 @@ router.delete("/:id", async (req, res) => {
       id,
     ]);
 
-    fs.unlink(`/Users/timothy/ShutterSwipe/picture_server/${id}.jpg`, (err) => {
+    fs.unlink(`${__dirname}/../../picture_server/${id}.jpg`, (err) => {
       if (err) {
         console.error(err);
         return;
