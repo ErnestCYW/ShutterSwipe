@@ -2,6 +2,10 @@ import React, { Fragment, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Post from "./Post";
+import Trait from "./Trait";
+import trait_options from "./Trait_Options";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 const Dashboard = ({ setAuth }) => {
   //passing prop setAuth
@@ -10,6 +14,7 @@ const Dashboard = ({ setAuth }) => {
   const [name, setName] = useState("");
   const [file, setFile] = useState("");
   const [pic_repo, setPicRepo] = useState([]);
+  const [traits, setTraits] = useState([]);
 
   const getAll = async () => {
     try {
@@ -20,7 +25,9 @@ const Dashboard = ({ setAuth }) => {
 
       const parseRes = await response.json();
       const pic_repo = JSON.parse(parseRes.pic_repo);
+      const traits = JSON.parse(parseRes.traits);
 
+      setTraits(traits);
       setPicRepo(pic_repo);
       setName(parseRes.user_name);
     } catch (err) {
@@ -86,10 +93,46 @@ const Dashboard = ({ setAuth }) => {
     }
   };
 
+  const uploadTrait = async (trait) => {
+    try {
+      const res = await fetch(`http://localhost:5000/dashboard/uploadTrait`, {
+        method: "POST",
+        headers: {
+          uploadedTrait: trait,
+          token: localStorage.token,
+        },
+      });
+      console.log(res);
+    } catch (err) {
+      if (err.response.status === 500) {
+        console.log("Server Error");
+      } else {
+        console.log(err.response.data.msg);
+      }
+    }
+  };
+
+  const deleteTrait = async (id) => {
+    try {
+      const deleteTrait = await fetch(
+        `http://localhost:5000/dashboard/traits/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      setTraits(traits.filter((trait) => trait.trait_id !== id));
+      console.log(deleteTrait);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   //makes a fetch request to the restful API everytime a component is rendered
   useEffect(() => {
     getAll();
   }, []); //run if anything in bracket changes or else run only once
+
+  console.log(traits);
 
   return (
     <Fragment>
@@ -98,6 +141,32 @@ const Dashboard = ({ setAuth }) => {
       <button className="btn btn-primary" onClick={(e) => logout(e)}>
         Logout
       </button>
+
+      {traits.map((trait) => (
+        <tr key={trait}>
+          <Trait trait_name={trait.trait_name} />
+          <td>
+            <button
+              className="btn btn-danger"
+              onClick={() => deleteTrait(trait.trait_id)}
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      ))}
+
+      <DropdownButton
+        className="mt-4"
+        id="dropdown-basic-button"
+        title="Select Trait"
+        onSelect={uploadTrait}
+      >
+        {trait_options.map((trait) => (
+          <Dropdown.Item eventKey={trait}>{trait}</Dropdown.Item>
+        ))}
+      </DropdownButton>
+
       <form onSubmit={uploadFile}>
         <div className="mb-3">
           <label htmlFor="formFile" className="form-label"></label>
@@ -109,7 +178,6 @@ const Dashboard = ({ setAuth }) => {
             onChange={stageFile}
           />
         </div>
-
         <input
           type="submit"
           value="Upload"

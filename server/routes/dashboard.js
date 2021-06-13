@@ -2,6 +2,7 @@ const router = require("express").Router();
 const pool = require("../db");
 const authorization = require("../middleware/authorization");
 const fs = require("fs");
+const { restart } = require("nodemon");
 
 router.get("/", authorization, async (req, res) => {
   try {
@@ -16,12 +17,18 @@ router.get("/", authorization, async (req, res) => {
       [req.user]
     );
 
+    const traits = await pool.query(
+      "SELECT trait_name, trait_id FROM traits WHERE user_id = $1",
+      [req.user]
+    );
+
     //return custom JSON
     const toReturn = {
       user_name: `${user.rows[0].user_name}`,
       pic_repo: JSON.stringify(pic_repo.rows),
+      traits: JSON.stringify(traits.rows),
+      trait_ids: traits.rows[1].trait_name,
     };
-
     res.json(toReturn);
   } catch (err) {
     console.error(err.message);
@@ -29,18 +36,18 @@ router.get("/", authorization, async (req, res) => {
   }
 });
 
-//get specific id (for delete query) (see if redundant also)
+//get specific id (for delete query) (I THINK REDUNDANT)
 
-router.get("/:id", async (req, res) => {
-  try {
-    //console.log(req.params);
-    const { id } = req.params;
-    const pic = await pool.query("SELECT * FROM pics WHERE pic_id = $1", [id]);
-    res.json(pic.rows[0]);
-  } catch (err) {
-    console.error(err.message);
-  }
-});
+// router.get("/:id", async (req, res) => {
+//   try {
+//     console.log(req.params);
+//     const { id } = req.params;
+//     const pic = await pool.query("SELECT * FROM pics WHERE pic_id = $1", [id]);
+//     res.json(pic.rows[0]);
+//   } catch (err) {
+//     console.error(err.message);
+//   }
+// });
 
 //upload route
 
@@ -101,6 +108,40 @@ router.delete("/:id", async (req, res) => {
     });
 
     res.json("Pic was deleted");
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+router.post("/uploadTrait", authorization, async (req, res) => {
+  //check if user already has trait
+  const hasTrait = await pool.query(
+    "SELECT COUNT(*) as boolean FROM traits WHERE user_id = $1 and trait_name = $2",
+    [req.user, req.header("uploadedTrait")]
+  );
+
+  if (hasTrait.rows[0].boolean === "0") {
+    const uploaded_trait = await pool.query(
+      "INSERT INTO traits (trait_id, user_id, trait_name) VALUES (DEFAULT, $1, $2) RETURNING trait_id",
+      [req.user, req.header("uploadedTrait")]
+    );
+    res.json("Trait was uploaded");
+  } else {
+    res.json("User already has trait");
+  }
+});
+
+router.delete("/traits/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleteTrait = await pool.query(
+      "DELETE FROM traits WHERE trait_id = $1",
+      [id]
+    );
+
+    console.log("should have deleted from DB");
+    res.json("Trait was deleted");
   } catch (err) {
     console.error(err.message);
   }
