@@ -2,6 +2,7 @@ const router = require("express").Router();
 const pool = require("../db");
 const authorization = require("../middleware/authorization");
 const fs = require("fs");
+const vision = require("@google-cloud/vision");
 const { restart } = require("nodemon");
 
 router.get("/", authorization, async (req, res) => {
@@ -27,7 +28,6 @@ router.get("/", authorization, async (req, res) => {
       user_name: `${user.rows[0].user_name}`,
       pic_repo: JSON.stringify(pic_repo.rows),
       traits: JSON.stringify(traits.rows),
-      trait_ids: traits.rows[1].trait_name,
     };
     res.json(toReturn);
   } catch (err) {
@@ -87,6 +87,31 @@ router.post("/upload", authorization, async (req, res) => {
       }); //returns a json
     }
   );
+
+  //Tag file using cloud vision API
+  const client = new vision.ImageAnnotatorClient({
+    keyFilename: "./APIKey.json",
+  });
+  const [result] = await client.labelDetection(`${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`);
+  const labels = result.labelAnnotations;
+  //console.log("Labels:");
+  //labels.forEach((label) => console.log(label.description));
+  /*
+  labels.forEach((label) =>
+    pool.query(
+      "INSERT INTO labels (label_id, pic_id, label_name) VALUES (DEFAULT, $1, $2)",
+      [new_pic_id.rows[0].pic_id, label.description]
+    )
+  );
+  */
+ //Faster way using asynchronus method
+  await Promise.all(labels.map(async (label) =>
+    await pool.query(
+      "INSERT INTO labels (label_id, pic_id, label_name) VALUES (DEFAULT, $1, $2)",
+      [new_pic_id.rows[0].pic_id, label.description]
+    )
+  ));
+
 });
 
 // delete route
@@ -95,6 +120,10 @@ router.delete("/:id", async (req, res) => {
   //add an authorization here? --> fails if i add in an authorization... how to fix zz
   try {
     const { id } = req.params;
+
+    const deleteLabels = await pool.query("DELETE FROM labels WHERE pic_id = $1", [
+      id,
+    ]);
 
     const deletePic = await pool.query("DELETE FROM pics WHERE pic_id = $1", [
       id,
