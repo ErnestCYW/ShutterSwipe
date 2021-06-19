@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require("../middleware/authorization");
+const deleteTraits = require("../middleware/deleteTraits");
 const fs = require("fs");
 const vision = require("@google-cloud/vision");
 const { restart } = require("nodemon");
@@ -36,29 +37,12 @@ router.get("/", authorization, async (req, res) => {
   }
 });
 
-//get specific id (for delete query) (I THINK REDUNDANT)
-
-// router.get("/:id", async (req, res) => {
-//   try {
-//     console.log(req.params);
-//     const { id } = req.params;
-//     const pic = await pool.query("SELECT * FROM pics WHERE pic_id = $1", [id]);
-//     res.json(pic.rows[0]);
-//   } catch (err) {
-//     console.error(err.message);
-//   }
-// });
-
 //upload route
 
 router.post("/upload", authorization, async (req, res) => {
-  //if no file is selected
-
   if (req.files === null) {
     return res.status(400).json({ msg: "No file uploaded" }); //400 is bad request
   }
-
-  //select file
 
   const file = req.files.file;
 
@@ -66,7 +50,6 @@ router.post("/upload", authorization, async (req, res) => {
 
   //check if file already exists, allow for duplicates
 
-  //add file to psql db
   const new_pic_id = await pool.query(
     "INSERT INTO pics (pic_id, user_id) VALUES (DEFAULT, $1) RETURNING pic_id",
     [req.user]
@@ -160,20 +143,7 @@ router.post("/uploadTrait", authorization, async (req, res) => {
   }
 });
 
-router.delete("/traits/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const deleteTrait = await pool.query(
-      "DELETE FROM traits WHERE trait_id = $1",
-      [id]
-    );
-
-    console.log("should have deleted from DB");
-    res.json("Trait was deleted");
-  } catch (err) {
-    console.error(err.message);
-  }
-});
+//tried routing this way.
+router.delete("/traits/:id", deleteTraits);
 
 module.exports = router;

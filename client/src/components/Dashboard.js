@@ -26,6 +26,7 @@ const Dashboard = ({ setAuth }) => {
       const parseRes = await response.json();
       const pic_repo = JSON.parse(parseRes.pic_repo);
       const traits = JSON.parse(parseRes.traits);
+      console.log(traits);
 
       setTraits(traits);
       setPicRepo(pic_repo);
@@ -33,13 +34,6 @@ const Dashboard = ({ setAuth }) => {
     } catch (err) {
       console.error(err.message);
     }
-  };
-
-  const logout = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    setAuth(false);
-    toast.success("Logged out successfully");
   };
 
   const stageFile = (e) => {
@@ -66,7 +60,7 @@ const Dashboard = ({ setAuth }) => {
       toast.success("Image uploaded! Refresh to see change.");
 
       /*--- TODO ---
-      window.location = "/dashboard"; refreshed page but gets "error moving files to front end", but files are moved alright and apperas in public/assets... hmm.. 
+      window.location = "/dashboard"; refreshes page, and files are moved to picture_server, but react cannot find module. Async error?  
       */
     } catch (err) {
       if (err.response.status === 500) {
@@ -103,6 +97,7 @@ const Dashboard = ({ setAuth }) => {
         },
       });
       console.log(res);
+      window.location.reload(); //Auto refreshes
     } catch (err) {
       if (err.response.status === 500) {
         console.log("Server Error");
@@ -138,12 +133,8 @@ const Dashboard = ({ setAuth }) => {
     <Fragment>
       <h1>Dashboard {name} </h1>
 
-      <button className="btn btn-primary" onClick={(e) => logout(e)}>
-        Logout
-      </button>
-
       {traits.map((trait) => (
-        <tr key={trait}>
+        <tr key={trait.trait_id}>
           <Trait trait_name={trait.trait_name} />
           <td>
             <button

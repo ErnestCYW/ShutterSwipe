@@ -5,7 +5,7 @@ const jwtGenerator = require("../utils/jwtGenerator");
 const validInfo = require("../middleware/validinfo");
 const authorization = require("../middleware/authorization");
 
-//registering
+//COMMENTS LEFT FOR UNDERSTANDING PURPOSES
 //post -> bc want to add someone into the db
 router.post("/register", validInfo, async (req, res) => {
   try {

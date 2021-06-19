@@ -16,8 +16,10 @@ import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
-import Navbar from "./components/Navbar";
-import Discover from "./components/Discover";
+import Feed from "./components/Feed";
+
+import NavbarAuth from "./components/Navbar_Auth";
+import NavbarUnauth from "./components/Navbar_Unauth";
 
 toast.configure();
 
@@ -38,6 +40,7 @@ function App() {
       const parseRes = await response.json();
 
       parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+      console.log(isAuthenticated);
     } catch (err) {
       console.error(err.message);
     }
@@ -49,7 +52,7 @@ function App() {
 
   return (
     <Fragment>
-      <Navbar />
+      {isAuthenticated ? <NavbarAuth setAuth={setAuth} /> : <NavbarUnauth />}
       <Router>
         <div className="container">
           <Switch>
@@ -89,8 +92,15 @@ function App() {
             />
             <Route
               exact
-              path="/discover"
-              render={(props) => <Discover {...props} setAuth={setAuth} />}
+              path="/feed"
+              // render={(props) => <Feed {...props} />}
+              render={(props) =>
+                isAuthenticated ? (
+                  <Feed {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
             />
           </Switch>
         </div>

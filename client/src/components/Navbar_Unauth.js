@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "../Logo.svg";
 
-function Navbar() {
+function NavbarUnauth() {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -14,7 +14,7 @@ function Navbar() {
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="navbarNav"
+            data-bs-target="#navbarNav"
             aria-controls="navbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation"
@@ -23,16 +23,6 @@ function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <a className="nav-link" href="/dashboard">
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/discover">
-                  Discover
-                </a>
-              </li>
               <li className="nav-item">
                 <a className="nav-link" href="/login">
                   Login
@@ -51,4 +41,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavbarUnauth;
