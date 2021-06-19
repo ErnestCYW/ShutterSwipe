@@ -12,6 +12,7 @@ const Feed = ({ setAuth }) => {
         headers: { token: localStorage.token },
       });
 
+      setAuth(true);
       const parseRes = await response.json();
       const queue = JSON.parse(parseRes.inQueue);
       console.log(queue);
