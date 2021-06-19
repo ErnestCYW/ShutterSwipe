@@ -5,6 +5,7 @@ import Logo from "../Logo.svg";
 function NavbarAuth({ setAuth }) {
   const logout = (e) => {
     e.preventDefault();
+    console.log("Triggered");
     localStorage.removeItem("token");
     setAuth(false);
     toast.success("Logged out successfully");

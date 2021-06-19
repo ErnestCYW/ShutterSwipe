@@ -3,7 +3,7 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-module.exports = async(req, res, next) => {
+module.exports = async (req, res, next) => {
   try {
     const jwtToken = req.header("token"); //from client side
 
@@ -11,15 +11,14 @@ module.exports = async(req, res, next) => {
       return res.status(403).json("Not Authorize");
     }
 
-    //one line to check if jwtToken is valid 
+    //one line to check if jwtToken is valid
     const payload = jwt.verify(jwtToken, process.env.jwtSecret);
 
     req.user = payload.user;
-    
   } catch (err) {
     console.error(err.message);
-    return res.status(403).json("Not Authorize")
+    return res.status(403).json("Not Authorize");
   }
 
-  next(); 
-}
+  next();
+};

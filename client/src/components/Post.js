@@ -1,5 +1,7 @@
 import React from "react";
 
+//change post to async to solve bug????
+
 function Post({ pic_id }) {
   return (
     <div>
