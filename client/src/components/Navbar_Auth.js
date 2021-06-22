@@ -23,7 +23,7 @@ function NavbarAuth({ setAuth }) {
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="navbarNav"
+            data-bs-target="#navbarNav"
             aria-controls="navbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation"
@@ -43,7 +43,11 @@ function NavbarAuth({ setAuth }) {
                 </a>
               </li>
             </ul>
-            <button className="btn btn-primary" onClick={(e) => logout(e)}>
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={(e) => logout(e)}
+              id="logout"
+            >
               Logout
             </button>
           </div>

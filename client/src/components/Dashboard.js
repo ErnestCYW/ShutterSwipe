@@ -47,16 +47,12 @@ const Dashboard = ({ setAuth }) => {
     formData.append("file", file);
 
     try {
-      await axios.post(
-        "http://localhost:5000/dashboard/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            token: localStorage.token,
-          },
-        }
-      );
+      await axios.post("http://localhost:5000/dashboard/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          token: localStorage.token,
+        },
+      });
       toast.success("Image uploaded! Refresh to see change.");
 
       /*--- TODO ---
@@ -176,6 +172,14 @@ const Dashboard = ({ setAuth }) => {
         />
       </form>
 
+      <div class="container">
+        <div class="row">
+          <div class="col">Column</div>
+          <div class="col">Column</div>
+          <div class="col">Column</div>
+        </div>
+      </div>
+
       {pic_repo.map((pic) => (
         //make sure key is unique (try delete and see if redundant)
         <tr key={pic.pic_id}>
@@ -190,6 +194,16 @@ const Dashboard = ({ setAuth }) => {
           </td>
         </tr>
       ))}
+
+      <div className="container">
+        <div className="row">
+          {pic_repo.map((pic) => (
+            <div key={pic.pic_id} id="photograph" className="align-self-center col-sm-4">
+              <Post pic_id={pic.pic_id} />
+            </div>
+          ))}
+        </div>
+      </div>
     </Fragment>
   );
 };

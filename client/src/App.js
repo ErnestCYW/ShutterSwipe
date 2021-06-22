@@ -83,7 +83,7 @@ function App() {
               exact
               path="/dashboard"
               render={(props) =>
-                isAuthenticated ? (
+                localStorage.token ? (
                   <Dashboard {...props} setAuth={setAuth} />
                 ) : (
                   <Redirect to="/login" />
@@ -95,7 +95,7 @@ function App() {
               path="/feed"
               // render={(props) => <Feed {...props} />}
               render={(props) =>
-                isAuthenticated ? (
+                localStorage.token ? (
                   <Feed {...props} setAuth={setAuth} />
                 ) : (
                   <Redirect to="/login" />

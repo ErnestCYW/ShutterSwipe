@@ -5,6 +5,8 @@ function Main() {
         <div class="text-center mt-5">
            <h1>Welcome To ShutterSwipe</h1>
         </div>
+
+        
     )
 }
 

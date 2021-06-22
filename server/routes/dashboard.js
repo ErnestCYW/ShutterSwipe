@@ -71,12 +71,15 @@ router.post("/upload", authorization, async (req, res) => {
     }
   );
 
+  // ------------ here
   //Tag file using cloud vision API
-  const client = new vision.ImageAnnotatorClient({
+  /*const client = new vision.ImageAnnotatorClient({
     keyFilename: "./APIKey.json",
   });
   const [result] = await client.labelDetection(`${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`);
-  const labels = result.labelAnnotations;
+  const labels = result.labelAnnotations; */
+
+  // ------------
   //console.log("Labels:");
   //labels.forEach((label) => console.log(label.description));
   /*
@@ -87,14 +90,19 @@ router.post("/upload", authorization, async (req, res) => {
     )
   );
   */
- //Faster way using asynchronus method
-  await Promise.all(labels.map(async (label) =>
-    await pool.query(
-      "INSERT INTO labels (label_id, pic_id, label_name) VALUES (DEFAULT, $1, $2)",
-      [new_pic_id.rows[0].pic_id, label.description]
-    )
-  ));
 
+  // ----------- here
+  //Faster way using asynchronus method
+  /* await Promise.all(
+    labels.map(
+      async (label) =>
+        await pool.query(
+          "INSERT INTO labels (label_id, pic_id, label_name) VALUES (DEFAULT, $1, $2)",
+          [new_pic_id.rows[0].pic_id, label.description]
+        )
+    )
+  ); */
+  // ----------
 });
 
 // delete route
@@ -104,9 +112,20 @@ router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const deleteLabels = await pool.query("DELETE FROM labels WHERE pic_id = $1", [
-      id,
-    ]);
+    const deleteLikes = await pool.query(
+      "DELETE FROM likes where pic_id = $1",
+      [id]
+    );
+
+    const deleteDislikes = await pool.query(
+      "DELETE FROM dislikes where pic_id = $1",
+      [id]
+    );
+
+    const deleteLabels = await pool.query(
+      "DELETE FROM labels WHERE pic_id = $1",
+      [id]
+    );
 
     const deletePic = await pool.query("DELETE FROM pics WHERE pic_id = $1", [
       id,
