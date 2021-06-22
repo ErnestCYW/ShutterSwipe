@@ -29,6 +29,7 @@ CREATE TABLE labels (
   label_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   pic_id UUID REFERENCES pics(pic_id) NOT NULL,
   label_name VARCHAR(100) NOT NULL
+)
 -- NEW -- 
 
 CREATE TABLE likes (
