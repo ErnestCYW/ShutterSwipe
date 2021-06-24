@@ -32,17 +32,15 @@ ShutterSwipe aims to provide an environment that **connects** and **supports the
 
 - As a user, I want an easy log in experience.
 
-- As a user, I want a distraction-free and minimalisitc profile page so that I can showcase my work. 
+- As a photographer, I want a distraction-free and minimalisitc profile page so that I can showcase my work. 
 
-- As a user, I want to be able to promote and link my other social media pages.
+- As a photographer, I want to be able to promote and link my other social media pages. I want a platform to supplement my Instagram and Flickr.
 
-- As a user, I don’t want to be distracted as I am on other social media platforms.
+- As a photographer, I don’t want to be distracted as I am on other social media platforms.
 
-- As a user, I want to consume and appreciate photographs in an intentional manner. 
+- As a photographer, I want to consume and appreciate photographs in an intentional manner. 
 
-- As a user, I want to upload my photographs without dimension restrictions (such as Instagram).
-
-- As a user, I want a platform to supplement my Instagram / Flickr.
+- As a photographer, I want to upload my photographs without dimension restrictions (such as Instagram).
 
 - As a photographer, I want to interact within groups that share similar interests in photography! For instance, small facebook groups or discord channels. 
 
@@ -54,7 +52,7 @@ ShutterSwipe aims to provide an environment that **connects** and **supports the
 
 - As an amateur photographer, I want to meet and learn from like-minded and similar styled photographers.
 
-- As an amateur photographer, I want to discover new perspectives and meet up with other skilled photographers to go on walks and events to take photos.
+- As an amateur photographer, I want to discover new perspectives and form a community with other photographers. 
 
 - As an amateur photographer, I want to connect with professional photographers to up my level and learn new things.
 
