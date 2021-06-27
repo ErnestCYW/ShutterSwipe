@@ -135,3 +135,11 @@ A **Web-Based Social Media Application** with the ability to recommend photos ba
 <sup>2</sup> Use of PERN Stack so as help in scalability (eg. IOS/Android Port). Non-client side heavy with backend focus.
 
 <sup>3</sup> Trial hosting done on Heroku. Actual Deployment can be done on other services (AWS / Microsft Azure / etc...).
+
+## Problems
+
+### ***Technical Issues Can Be Found In: miscellaneous/Testlog.txt***
+
+## Version Documentation
+
+### ***Current Version Documentation Can Be Found In: miscellaneous/Documentation.txt***
