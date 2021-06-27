@@ -57,7 +57,10 @@ router.post("/like", authorization, async (req, res) => {
       "INSERT INTO likes (user_id, pic_id) VALUES ($1, $2) RETURNING *",
       [req.user, req.headers.pic_id]
     );
-    await pool.query("UPDATE pics SET pic_score = pic_score - 1 WHERE pic_id = $1", [req.headers.pic_id]);
+    await pool.query(
+      "UPDATE pics SET pic_score = pic_score + 1 WHERE pic_id = $1",
+      [req.headers.pic_id]
+    );
     res.json("liked a photo!");
   } catch (err) {
     console.error(err.message);
@@ -71,7 +74,10 @@ router.post("/dislike", authorization, async (req, res) => {
       "INSERT INTO dislikes (user_id, pic_id) VALUES ($1, $2) RETURNING *",
       [req.user, req.headers.pic_id]
     );
-    await pool.query("UPDATE pics SET pic_score = pic_score - 1 WHERE pic_id = $1", [req.headers.pic_id]);
+    await pool.query(
+      "UPDATE pics SET pic_score = pic_score - 1 WHERE pic_id = $1",
+      [req.headers.pic_id]
+    );
     res.json("disliked a photo!");
   } catch (err) {
     console.error(err.message);

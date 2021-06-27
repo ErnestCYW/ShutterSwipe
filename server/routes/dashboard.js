@@ -74,7 +74,9 @@ router.post("/upload", authorization, async (req, res) => {
   const client = new vision.ImageAnnotatorClient({
     keyFilename: "./APIKey.json",
   });
-  const [result] = await client.labelDetection(`${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`);
+  const [result] = await client.labelDetection(
+    `${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`
+  );
   const labels = result.labelAnnotations;
   await Promise.all(
     labels.map(
@@ -84,7 +86,7 @@ router.post("/upload", authorization, async (req, res) => {
           [new_pic_id.rows[0].pic_id, label.description]
         )
     )
-  ); 
+  );
 });
 
 // delete route

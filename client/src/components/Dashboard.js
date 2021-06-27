@@ -173,14 +173,51 @@ const Dashboard = ({ setAuth }) => {
       </form>
 
       <div className="container">
-        <div className="row">
-          <div className="col">Column</div>
-          <div className="col">Column</div>
-          <div className="col">Column</div>
+        <div className="row gx-3 gy-4">
+          {pic_repo.map((pic) => (
+            <div
+              key={pic.pic_id}
+              id="photograph"
+              className="align-self-center col-sm-4"
+            >
+              <Post pic_id={pic.pic_id} />
+            </div>
+          ))}
         </div>
       </div>
 
-      {pic_repo.map((pic) => (
+      <p>
+        <a
+          class="btn btn-outline-secondary"
+          data-bs-toggle="collapse"
+          href="#editPics"
+          role="button"
+          aria-expanded="false"
+          aria-controls="editPics"
+          // style={{ margin: { top: 5 } }}
+        >
+          Edit Photos
+        </a>
+      </p>
+
+      <div class="collapse" id="editPics">
+        {pic_repo.map((pic) => (
+          //make sure key is unique (try delete and see if redundant)
+          <tr key={pic.pic_id}>
+            <Post pic_id={pic.pic_id} />
+            <td>
+              <button
+                className="btn btn-danger"
+                onClick={() => deletePic(pic.pic_id)}
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        ))}
+      </div>
+
+      {/* {pic_repo.map((pic) => (
         //make sure key is unique (try delete and see if redundant)
         <tr key={pic.pic_id}>
           <Post pic_id={pic.pic_id} />
@@ -193,20 +230,7 @@ const Dashboard = ({ setAuth }) => {
             </button>
           </td>
         </tr>
-      ))}
-
-      {/*
-      <div className="container">
-        <div className="row">
-          {pic_repo.map((pic) => (
-            <div key={pic.pic_id} id="photograph" className="align-self-center col-sm-4">
-              <Post pic_id={pic.pic_id} />
-            </div>
-          ))}
-        </div>
-      </div>
-      */}
-
+      ))} */}
     </Fragment>
   );
 };
