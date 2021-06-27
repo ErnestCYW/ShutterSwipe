@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Login = ({ setAuth }) => {
@@ -34,7 +34,7 @@ const Login = ({ setAuth }) => {
         toast.success("login successfully");
       } else {
         setAuth(false);
-        toast.error(parseRes); //from jwetAuth.js from server side
+        toast.error(parseRes); //from jwtAuth.js from server side
       }
     } catch (err) {
       console.error(err.message);
@@ -63,7 +63,6 @@ const Login = ({ setAuth }) => {
         />
         <button className="btn btn-success btn-block">Submit</button>
       </form>
-      <Link to="/register">Register</Link>
     </Fragment>
   );
 };

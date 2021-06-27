@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import "./App.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import {
@@ -15,6 +15,11 @@ import {
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Home from "./components/Home";
+import Feed from "./components/Feed";
+
+import NavbarAuth from "./components/Navbar_Auth";
+import NavbarUnauth from "./components/Navbar_Unauth";
 
 toast.configure();
 
@@ -35,6 +40,7 @@ function App() {
       const parseRes = await response.json();
 
       parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+      console.log(isAuthenticated);
     } catch (err) {
       console.error(err.message);
     }
@@ -46,9 +52,11 @@ function App() {
 
   return (
     <Fragment>
+      {isAuthenticated ? <NavbarAuth setAuth={setAuth} /> : <NavbarUnauth />}
       <Router>
         <div className="container">
           <Switch>
+            <Route exact path="/" render={(props) => <Home />} />
             <Route
               exact
               path="/login"
@@ -75,8 +83,20 @@ function App() {
               exact
               path="/dashboard"
               render={(props) =>
-                isAuthenticated ? (
+                localStorage.token ? (
                   <Dashboard {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/feed"
+              // render={(props) => <Feed {...props} />}
+              render={(props) =>
+                localStorage.token ? (
+                  <Feed {...props} setAuth={setAuth} />
                 ) : (
                   <Redirect to="/login" />
                 )
