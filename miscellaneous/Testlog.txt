@@ -1,0 +1,10 @@
+Current Bugs
+
+v1.1:
+    - NIL
+
+v1.2:
+    - NIL
+
+v1.3:
+    - JWT authentication may not be correct. Frontend routing causes login route to be accessed everytime when navigating page.

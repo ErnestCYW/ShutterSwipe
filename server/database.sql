@@ -15,7 +15,8 @@ CREATE TABLE users (
 --Picture table
 CREATE TABLE pics (
   pic_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES users(user_id) NOT NULL
+  user_id UUID REFERENCES users(user_id) NOT NULL,
+  pic_score INT DEFAULT 0 
 )
 
 --User Traits table
@@ -40,10 +41,6 @@ CREATE TABLE likes (
 CREATE TABLE dislikes (
   user_id UUID REFERENCES users(user_id) NOT NULL,
   pic_id UUID REFERENCES pics(pic_id) NOT NULL
-)
-
-CREATE TABLE pic_score (
-  
 )
 
 --TESTING

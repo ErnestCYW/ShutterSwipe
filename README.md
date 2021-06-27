@@ -30,17 +30,19 @@ ShutterSwipe aims to provide an environment that **connects** and **supports the
 
 ## User Stories
 
-- As a user, I want a smooth log in experience.
+- As a user, I want an easy log in experience.
 
-- As a user, I want a quick, responsive and encompassing profile page.
+- As a photographer, I want a distraction-free and minimalisitc profile page so that I can showcase my work. 
 
-- As a user, I want to be able to promote and link my other social media pages.
+- As a photographer, I want to be able to promote and link my other social media pages. I want a platform to supplement my Instagram and Flickr.
 
-- As a user, I don’t want to be distracted as I am on other social media platforms.
+- As a photographer, I don’t want to be distracted as I am on other social media platforms.
 
-- As a user, I want to upload my photographs seamlessly and efficiently.
+- As a photographer, I want to consume and appreciate photographs in an intentional manner. 
 
-- As a user, I want something to supplement my Instagram / Flickr.
+- As a photographer, I want to upload my photographs without dimension restrictions (such as Instagram).
+
+- As a photographer, I want to interact within groups that share similar interests in photography! For instance, small facebook groups or discord channels. 
 
 - As an enthusiast photographer, I want my photographs to be seen more regardless of my following.
 
@@ -50,7 +52,7 @@ ShutterSwipe aims to provide an environment that **connects** and **supports the
 
 - As an amateur photographer, I want to meet and learn from like-minded and similar styled photographers.
 
-- As an amateur photographer, I want to discover new perspectives and meet up with other skilled photographers to go on walks and events to take photos.
+- As an amateur photographer, I want to discover new perspectives and form a community with other photographers. 
 
 - As an amateur photographer, I want to connect with professional photographers to up my level and learn new things.
 
@@ -116,8 +118,8 @@ A **Web-Based Application** with the ability to recommend photos based on user g
 
 ![ShutterSwipe Architecture](https://user-images.githubusercontent.com/71819961/119790364-72b36300-bf06-11eb-861a-1745c8a1b1e3.png)
 
+### NOTE: Database Schema Deprecated
 ![Database Schema](https://user-images.githubusercontent.com/71819961/119814038-8cf83b80-bf1c-11eb-9fb8-51369a3ff28f.png)
-### Database Schema Deprecated
 
 1. Google Cloud Vision API <sup>1</sup>
 2. HTML / CSS / Javascript

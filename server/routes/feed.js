@@ -9,8 +9,9 @@ router.get("/", authorization, async (req, res) => {
       [req.user]
     );
 
+    //Gets first photo
     const inQueue = await pool.query(
-      "SELECT DISTINCT pics.pic_id FROM pics LEFT JOIN likes ON pics.pic_id = likes.pic_id LEFT JOIN dislikes ON pics.pic_id = dislikes.pic_id WHERE likes.user_id IS NULL AND dislikes.user_id IS NULL AND pics.user_id != $1 LIMIT 1",
+      "SELECT pics.pic_id FROM pics LEFT JOIN likes ON pics.pic_id = likes.pic_id LEFT JOIN dislikes ON pics.pic_id = dislikes.pic_id WHERE likes.user_id IS NULL AND dislikes.user_id IS NULL AND pics.user_id != $1 ORDER BY pic_score DESC LIMIT 1",
       [req.user]
     );
 
@@ -32,7 +33,7 @@ router.get("/nextPhoto", authorization, async (req, res) => {
     // const reqBody = req.body; --> I had to do this without authorization. This could only be done when adding token into the headers upon fetch.
 
     const inQueue = await pool.query(
-      "SELECT DISTINCT pics.pic_id FROM pics LEFT JOIN likes ON pics.pic_id = likes.pic_id LEFT JOIN dislikes ON pics.pic_id = dislikes.pic_id WHERE likes.user_id IS NULL AND dislikes.user_id IS NULL AND pics.user_id != $1 LIMIT 1",
+      "SELECT pics.pic_id FROM pics LEFT JOIN likes ON pics.pic_id = likes.pic_id LEFT JOIN dislikes ON pics.pic_id = dislikes.pic_id WHERE likes.user_id IS NULL AND dislikes.user_id IS NULL AND pics.user_id != $1 ORDER BY pic_score DESC LIMIT 1",
       [req.user]
     );
 
@@ -56,6 +57,10 @@ router.post("/like", authorization, async (req, res) => {
       "INSERT INTO likes (user_id, pic_id) VALUES ($1, $2) RETURNING *",
       [req.user, req.headers.pic_id]
     );
+    await pool.query(
+      "UPDATE pics SET pic_score = pic_score + 1 WHERE pic_id = $1",
+      [req.headers.pic_id]
+    );
     res.json("liked a photo!");
   } catch (err) {
     console.error(err.message);
@@ -68,6 +73,10 @@ router.post("/dislike", authorization, async (req, res) => {
     const dislike_pic = await pool.query(
       "INSERT INTO dislikes (user_id, pic_id) VALUES ($1, $2) RETURNING *",
       [req.user, req.headers.pic_id]
+    );
+    await pool.query(
+      "UPDATE pics SET pic_score = pic_score - 1 WHERE pic_id = $1",
+      [req.headers.pic_id]
     );
     res.json("disliked a photo!");
   } catch (err) {
