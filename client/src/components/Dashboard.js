@@ -172,11 +172,11 @@ const Dashboard = ({ setAuth }) => {
         />
       </form>
 
-      <div class="container">
-        <div class="row">
-          <div class="col">Column</div>
-          <div class="col">Column</div>
-          <div class="col">Column</div>
+      <div className="container">
+        <div className="row">
+          <div className="col">Column</div>
+          <div className="col">Column</div>
+          <div className="col">Column</div>
         </div>
       </div>
 
@@ -195,6 +195,7 @@ const Dashboard = ({ setAuth }) => {
         </tr>
       ))}
 
+      {/*
       <div className="container">
         <div className="row">
           {pic_repo.map((pic) => (
@@ -204,6 +205,8 @@ const Dashboard = ({ setAuth }) => {
           ))}
         </div>
       </div>
+      */}
+
     </Fragment>
   );
 };

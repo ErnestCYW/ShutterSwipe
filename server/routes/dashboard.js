@@ -1,10 +1,9 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require("../middleware/authorization");
-const deleteTraits = require("../middleware/deleteTraits");
+//const deleteTraits = require("../middleware/deleteTraits");
 const fs = require("fs");
 const vision = require("@google-cloud/vision");
-const { restart } = require("nodemon");
 
 router.get("/", authorization, async (req, res) => {
   try {
@@ -51,7 +50,7 @@ router.post("/upload", authorization, async (req, res) => {
   //check if file already exists, allow for duplicates
 
   const new_pic_id = await pool.query(
-    "INSERT INTO pics (pic_id, user_id) VALUES (DEFAULT, $1) RETURNING pic_id",
+    "INSERT INTO pics (pic_id, user_id, pic_score) VALUES (DEFAULT, $1, DEFAULT) RETURNING pic_id",
     [req.user]
   );
 
@@ -71,29 +70,13 @@ router.post("/upload", authorization, async (req, res) => {
     }
   );
 
-  // ------------ here
   //Tag file using cloud vision API
-  /*const client = new vision.ImageAnnotatorClient({
+  const client = new vision.ImageAnnotatorClient({
     keyFilename: "./APIKey.json",
   });
   const [result] = await client.labelDetection(`${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`);
-  const labels = result.labelAnnotations; */
-
-  // ------------
-  //console.log("Labels:");
-  //labels.forEach((label) => console.log(label.description));
-  /*
-  labels.forEach((label) =>
-    pool.query(
-      "INSERT INTO labels (label_id, pic_id, label_name) VALUES (DEFAULT, $1, $2)",
-      [new_pic_id.rows[0].pic_id, label.description]
-    )
-  );
-  */
-
-  // ----------- here
-  //Faster way using asynchronus method
-  /* await Promise.all(
+  const labels = result.labelAnnotations;
+  await Promise.all(
     labels.map(
       async (label) =>
         await pool.query(
@@ -101,8 +84,7 @@ router.post("/upload", authorization, async (req, res) => {
           [new_pic_id.rows[0].pic_id, label.description]
         )
     )
-  ); */
-  // ----------
+  ); 
 });
 
 // delete route
@@ -163,6 +145,21 @@ router.post("/uploadTrait", authorization, async (req, res) => {
 });
 
 //tried routing this way.
-router.delete("/traits/:id", deleteTraits);
+//router.delete("/traits/:id", deleteTraits);
+router.delete("/traits/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleteTrait = await pool.query(
+      "DELETE FROM traits WHERE trait_id = $1",
+      [id]
+    );
+
+    console.log("should have deleted from DB");
+    res.json("Trait was deleted");
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
 module.exports = router;
