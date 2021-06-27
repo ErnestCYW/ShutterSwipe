@@ -73,11 +73,13 @@ router.post("/upload", authorization, async (req, res) => {
 
   // ------------ here
   //Tag file using cloud vision API
-  /*const client = new vision.ImageAnnotatorClient({
+  const client = new vision.ImageAnnotatorClient({
     keyFilename: "./APIKey.json",
   });
-  const [result] = await client.labelDetection(`${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`);
-  const labels = result.labelAnnotations; */
+  const [result] = await client.labelDetection(
+    `${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`
+  );
+  const labels = result.labelAnnotations;
 
   // ------------
   //console.log("Labels:");
@@ -93,7 +95,7 @@ router.post("/upload", authorization, async (req, res) => {
 
   // ----------- here
   //Faster way using asynchronus method
-  /* await Promise.all(
+  await Promise.all(
     labels.map(
       async (label) =>
         await pool.query(
@@ -101,7 +103,7 @@ router.post("/upload", authorization, async (req, res) => {
           [new_pic_id.rows[0].pic_id, label.description]
         )
     )
-  ); */
+  );
   // ----------
 });
 
