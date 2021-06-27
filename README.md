@@ -143,3 +143,7 @@ A **Web-Based Social Media Application** with the ability to recommend photos ba
 ## Version Documentation
 
 ### ***Current Version Documentation Can Be Found In: miscellaneous/Documentation.txt***
+
+## Additional Notes
+
+- Ranking algorithm will be implemented based on 2 factors (pic_score & tag_score). Photos in the feed of a particular user will be ranked based on a total_score = A*pic_score + B*tag_score where values of A and B can be altered. This allows us to recommend photos that are not only popular but suitable to the user. All photos start off with a photo score of 0 meaning that popular photos are not determined by user popularity, but photo quality.
