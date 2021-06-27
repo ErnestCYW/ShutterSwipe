@@ -74,30 +74,10 @@ router.post("/upload", authorization, async (req, res) => {
   const client = new vision.ImageAnnotatorClient({
     keyFilename: "./APIKey.json",
   });
-<<<<<<< HEAD
   const [result] = await client.labelDetection(
     `${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`
   );
   const labels = result.labelAnnotations;
-
-  // ------------
-  //console.log("Labels:");
-  //labels.forEach((label) => console.log(label.description));
-  /*
-  labels.forEach((label) =>
-    pool.query(
-      "INSERT INTO labels (label_id, pic_id, label_name) VALUES (DEFAULT, $1, $2)",
-      [new_pic_id.rows[0].pic_id, label.description]
-    )
-  );
-  */
-
-  // ----------- here
-  //Faster way using asynchronus method
-=======
-  const [result] = await client.labelDetection(`${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`);
-  const labels = result.labelAnnotations;
->>>>>>> 7118fa62af7bb1fcb3f0d0db5c96ec5feb2a1d2c
   await Promise.all(
     labels.map(
       async (label) =>
@@ -106,12 +86,7 @@ router.post("/upload", authorization, async (req, res) => {
           [new_pic_id.rows[0].pic_id, label.description]
         )
     )
-<<<<<<< HEAD
   );
-  // ----------
-=======
-  ); 
->>>>>>> 7118fa62af7bb1fcb3f0d0db5c96ec5feb2a1d2c
 });
 
 // delete route

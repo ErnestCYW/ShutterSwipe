@@ -173,7 +173,6 @@ const Dashboard = ({ setAuth }) => {
       </form>
 
       <div className="container">
-<<<<<<< HEAD
         <div className="row gx-3 gy-4">
           {pic_repo.map((pic) => (
             <div
@@ -184,12 +183,6 @@ const Dashboard = ({ setAuth }) => {
               <Post pic_id={pic.pic_id} />
             </div>
           ))}
-=======
-        <div className="row">
-          <div className="col">Column</div>
-          <div className="col">Column</div>
-          <div className="col">Column</div>
->>>>>>> 7118fa62af7bb1fcb3f0d0db5c96ec5feb2a1d2c
         </div>
       </div>
 
@@ -237,24 +230,7 @@ const Dashboard = ({ setAuth }) => {
             </button>
           </td>
         </tr>
-<<<<<<< HEAD
       ))} */}
-=======
-      ))}
-
-      {/*
-      <div className="container">
-        <div className="row">
-          {pic_repo.map((pic) => (
-            <div key={pic.pic_id} id="photograph" className="align-self-center col-sm-4">
-              <Post pic_id={pic.pic_id} />
-            </div>
-          ))}
-        </div>
-      </div>
-      */}
-
->>>>>>> 7118fa62af7bb1fcb3f0d0db5c96ec5feb2a1d2c
     </Fragment>
   );
 };
