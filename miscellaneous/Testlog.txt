@@ -1,11 +1,13 @@
-Current Bugs
+Problems encountered (Testing) 
 
 v1.1:
-    - NIL
+    - Room for optimization of photo display in "Dashboard". 
 
 v1.2:
-    - NIL
+    - Navbar was not fully functional. Dropdown menu could not work. (Resolved, included Bootstrap 5.0 script) 
 
 v1.3:
-    - JWT authentication may not be correct. Frontend routing causes login route to be accessed everytime when navigating page.
-    - Feed displays same picture twice if multiple user likes / dislikes it, problem with get route in feed.  
+    - JWT authentication may not be correct. Frontend routing causes login route to be accessed everytime when navigating page. (Unresolved, Probably something to do with high level states and resetting, have to consult advisor). 
+    - Feed displays same picture twice if multiple user likes / dislikes it, problem with get route in feed. (Semi-resolved, PSQL query)  
+    - UI/UX design bugs and difficulties. E.g. Carousel on landing page incorrectly implemented. (Need to learn more)
+    - Google Cloud Vision API optimization. (Resolved, Done with Async) 
