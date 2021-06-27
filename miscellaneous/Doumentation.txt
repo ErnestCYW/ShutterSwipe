@@ -1,5 +1,5 @@
 Version 1.0:
-- Login feature with JWT
+- Login feature with JWT authentication
 - Frontend and backend setup
 - Instructions to run:
     1) Install postgresSQL on your local machine and run a server on port 5432
@@ -19,6 +19,9 @@ Version 1.0:
 
 Version 1.1:
 - Added upload photos feature with viewing photos
+- Added CRUD operations on photos
+- Basic display of photos in "Dashboard" 
+- Basic routing
 - Instructions to run:
     1) Follow instructions above
     2) Register & Login with account
@@ -34,6 +37,7 @@ Version 1.2:
 
 Version 1.3:
 - Prelimanary CSS styling using Bootstrap and SASS
+- Added "Feed" to view other user's photos
 - Added "like" and "dislike" feature for photos
 - Implemented ranking algorithmn using photo score
 - Implemented Cloud Vision API with image recognition capabilities *
