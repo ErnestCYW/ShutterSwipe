@@ -157,7 +157,7 @@ router.delete("/traits/:id", async (req, res) => {
       [id]
     );
 
-    console.log("should have deleted from DB");
+    //console.log("should have deleted from DB");
     res.json("Trait was deleted");
   } catch (err) {
     console.error(err.message);

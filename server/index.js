@@ -22,6 +22,9 @@ app.use("/dashboard", require("./routes/dashboard"));
 //feed route
 app.use("/feed", require("./routes/feed"));
 
+//group route
+app.use("/group", require("./routes/group"));
+
 app.listen(port, () => {
   console.log(`server has started on port ${port}`);
 });

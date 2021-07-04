@@ -83,8 +83,7 @@ A **Web-Based Social Media Application** with the ability to recommend photos ba
 ### Profile Creation & Chat
 
 1. Users are able to create profiles to show off their traits. They can also alter their preferred tags from here. They can also see their average picture rating from here.
-2. Should two users share common traits (Preferred Tags / Location / Etc..), our application will notify these two accounts and open a chat room for them to connect.
-3. Our application will also notify users to join global chats based on their traits (eg. Food, Singapore, Food + Singapore, etc...)
+2. Users can join various chat groups or create their own chat groups based on traits that they have selected
 
 ## Project Timeline
 
@@ -146,4 +145,7 @@ A **Web-Based Social Media Application** with the ability to recommend photos ba
 
 ## Additional Notes
 
-- Ranking algorithm will be implemented based on 2 factors (pic_score & tag_score). Photos in the feed of a particular user will be ranked based on a total_score = A*pic_score + B*tag_score where values of A and B can be altered. This allows us to recommend photos that are not only popular but suitable to the user. All photos start off with a photo score of 0 meaning that popular photos are not determined by user popularity, but photo quality.
+- Ranking algorithm will be implemented based on 2 factors (pic_score & tag_score). Photos in the feed of a particular user will be ranked based on a total_score = A*pic_score + B*tag_score where values of A and B can be altered. This allows us to recommend photos that are not only popular but suitable to the user.
+- All photos start off with a photo score of 0 meaning that popular photos are not determined by user popularity, but photo quality.
+- All users have equal say in ranking (ie. More popular user's input does not mean a photo's score is increased faster).
+- Photos which have not been updated (DOES NOT MEAN LESS POPULAR) for a longer amount of time are more likely to be pushed to be ranked.

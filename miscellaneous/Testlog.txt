@@ -8,4 +8,10 @@ v1.2:
 
 v1.3:
     - JWT authentication may not be correct. Frontend routing causes login route to be accessed everytime when navigating page.
-    - Feed displays same picture twice if multiple user likes / dislikes it, problem with get route in feed.  
+    - Feed displays same picture twice if multiple user likes / dislikes it, problem with get route in feed. (SOLVED)
+
+v2.1:
+    - tag_score does not take into account disliked photos
+    - Ranking algorithmn has time complexity modelled after cumulative frequency graph / S shape graph; very bad complexity given large input. Can use SQL (Refactoring) to do faster but hard.
+    - Values for A and B are not ideal, need to refine (SEE README Additional Notes Section)
+    - Smooth refreshing problem, having to refresh and reload the page can be bad for user experience. Look into automated refreshers.

@@ -15,7 +15,7 @@ const Feed = ({ setAuth }) => {
       setAuth(true);
       const parseRes = await response.json();
       const queue = JSON.parse(parseRes.inQueue);
-      console.log(queue);
+      //console.log(queue);
 
       setPicFeed(queue);
       setName(parseRes.user_name);

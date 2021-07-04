@@ -26,6 +26,7 @@ CREATE TABLE traits (
   trait_name VARCHAR(100) NOT NULL
 )
 
+--Picture labels table
 CREATE TABLE labels (
   label_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   pic_id UUID REFERENCES pics(pic_id) NOT NULL,
@@ -42,6 +43,31 @@ CREATE TABLE dislikes (
   user_id UUID REFERENCES users(user_id) NOT NULL,
   pic_id UUID REFERENCES pics(pic_id) NOT NULL
 )
+
+-- Written in this way so that groups can have the same group name identified by UUID--
+
+CREATE TABLE groups (
+  group_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  group_name VARCHAR(100) NOT NULL
+)
+
+CREATE TABLE group_relations (
+  group_id UUID REFERENCES groups(group_id) NOT NULL,
+  user_id UUID REFERENCES users(user_id) NOT NULL
+)
+
+CREATE TABLE group_traits (
+  group_id UUID REFERENCES groups(group_id) NOT NULL,
+  trait_name VARCHAR(100) NOT NULL
+)
+
+--Alternative?
+--CREATE TABLE groups (
+  --relation_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  --group_name VARCHAR(100) NOT NULL
+  --user_id UUID REFERENCES users(user_id) NOT NULL
+  --trait_name VARCHAR(100) NOT NULL
+--)
 
 --TESTING
 

@@ -42,6 +42,11 @@ function NavbarAuth({ setAuth }) {
                   Feed
                 </a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/group">
+                  Groups
+                </a>
+              </li>
             </ul>
             <button
               className="btn btn-primary btn-sm"

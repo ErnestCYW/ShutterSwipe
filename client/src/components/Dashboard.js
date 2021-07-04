@@ -26,7 +26,7 @@ const Dashboard = ({ setAuth }) => {
       const parseRes = await response.json();
       const pic_repo = JSON.parse(parseRes.pic_repo);
       const traits = JSON.parse(parseRes.traits);
-      console.log(traits);
+      //console.log(traits);
 
       setTraits(traits);
       setPicRepo(pic_repo);
@@ -123,7 +123,7 @@ const Dashboard = ({ setAuth }) => {
     getAll();
   }, []); //run if anything in bracket changes or else run only once
 
-  console.log(traits);
+  //console.log(typeof traits);
 
   return (
     <Fragment>
