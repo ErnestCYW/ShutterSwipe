@@ -52,6 +52,7 @@ router.get("/", authorization, async (req, res) => {
       recommended_groups: JSON.stringify(
         recommended_groups.rows.filter(removeAlreadyMember)
       ),
+      user_id: req.user,
     };
 
     res.json(toReturn);

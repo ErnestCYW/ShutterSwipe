@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { Fragment, useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import Trait_Options from "./Trait_Options";
+import { link } from "react-router-dom";
+import Chat from "./Chat";
 
 const Group = ({ setAuth }) => {
   const [member_groups, setMemberGroup] = useState([]);
@@ -10,6 +12,8 @@ const Group = ({ setAuth }) => {
     group_name: "",
     group_trait: "",
   });
+  const [selected_chat, setSelectedChat] = useState("No Chat Selected");
+  const [user_id, setUserID] = useState("");
 
   const getAll = async () => {
     try {
@@ -25,6 +29,7 @@ const Group = ({ setAuth }) => {
 
       setMemberGroup(member_groups);
       setRecommendedGroup(recommended_groups);
+      setUserID(parseRes.user_id);
     } catch (err) {
       console.error(err.message);
     }
@@ -187,7 +192,10 @@ const Group = ({ setAuth }) => {
       <h1>Member Groups</h1>
       {member_groups.map((group) => (
         <tr key={group.group_id}>
-          <h3>{group.group_name}</h3>
+          <h3 onClick={() => setSelectedChat(group.group_id)}>
+            {" "}
+            {group.group_name}{" "}
+          </h3>
           <td>
             <button
               className="btn btn-danger"
@@ -213,8 +221,9 @@ const Group = ({ setAuth }) => {
       {recommended_groups.map((group) => (
         <h3>{group.group_name}</h3>
       ))}
+
+      <Chat group_id={selected_chat} user_id={user_id} />
     </Fragment>
   );
 };
-
 export default Group;
