@@ -50,6 +50,7 @@ router.get("/", authorization, async (req, res) => {
         const toReturn = {
             member_groups: JSON.stringify(member_groups.rows),
             recommended_groups: JSON.stringify(recommended_groups.rows.filter(removeAlreadyMember)),
+            user_id: req.user,
         }
 
         res.json(toReturn);
