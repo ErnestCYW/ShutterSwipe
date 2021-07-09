@@ -84,3 +84,5 @@ CREATE TABLE group_traits (
 -- SELECT DISTINCT * FROM pics LEFT JOIN likes ON pics.pic_id = likes.pic_id LEFT JOIN dislikes ON pics.pic_id = dislikes.pic_id WHERE likes.user_id IS NULL AND dislikes.user_id IS NULL and pics.user_id != 'e8b98a3c-b30f-4ef5-b98d-5ec621f0dda5' LIMIT 1;
 
 -- INSERT INTO likes (user_id, pic_id) VALUES ('e8b98a3c-b30f-4ef5-b98d-5ec621f0dda5', 'ff7cc3b5-20dd-4e2e-99b2-2390e2efad94');
+
+

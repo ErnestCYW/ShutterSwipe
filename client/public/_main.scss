@@ -1,0 +1,18 @@
+@mixin flexCenter($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+main {
+  // @include flexCenter(column);
+
+  background-color: indigo;
+}
+
+#sidebarMenu {
+  background-color: khaki;
+  width: 280px;
+  height: 100vh;
+}

@@ -1,7 +1,64 @@
+main {
+  background-color: indigo;
+}
+
+#sidebarMenu {
+  background-color: khaki;
+  width: 280px;
+  height: 100vh;
+}
+
+.delete-button1 {
+  margin-left: 5px;
+  background-color: white;
+  color: black;
+  border: 2px solid red;
+  -webkit-transition-duration: 0.4s;
+          transition-duration: 0.4s;
+}
+
+.delete-button1:hover {
+  background-color: red;
+  color: white;
+}
+
+#dropdown {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0.25rem 0.5rem;
+  font-weight: 600;
+  color: rgba(106, 19, 146, 0.65);
+  background-color: transparent;
+  border: 0;
+}
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
 img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+.container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
+  display: table;
+}
+
+#feed {
+  background-color: teal;
+}
+
+#loginBody {
+  color: blue;
+  background-color: orange;
+  height: 100vh;
 }
 
 /*!
@@ -615,13 +672,7 @@ progress {
   color: #6c757d;
 }
 
-.container,
-.container-fluid,
-.container-sm,
-.container-md,
-.container-lg,
-.container-xl,
-.container-xxl {
+.container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
   width: 100%;
   padding-right: var(--bs-gutter-x, 0.75rem);
   padding-left: var(--bs-gutter-x, 0.75rem);

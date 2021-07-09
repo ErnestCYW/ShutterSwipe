@@ -126,112 +126,146 @@ const Dashboard = ({ setAuth }) => {
   //console.log(typeof traits);
 
   return (
-    <Fragment>
-      <h1>Dashboard {name} </h1>
-
-      {traits.map((trait) => (
-        <tr key={trait.trait_id}>
-          <Trait trait_name={trait.trait_name} />
-          <td>
-            <button
-              className="btn btn-danger"
-              onClick={() => deleteTrait(trait.trait_id)}
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      ))}
-
-      <DropdownButton
-        className="mt-4"
-        id="dropdown-basic-button"
-        title="Select Trait"
-        onSelect={uploadTrait}
+    <div class="row">
+      <nav
+        id="sidebarMenu"
+        class="col-md-3 col-lg2 d-md-block sidebar collapse"
       >
-        {trait_options.map((trait) => (
-          <Dropdown.Item eventKey={trait}>{trait}</Dropdown.Item>
-        ))}
-      </DropdownButton>
+        <hr></hr>
+        {name}
+        <div class="position-sticky pt-3">
+          <ul class="nav flex-column">
+            <p>
+              {" "}
+              This is a paragraph, for users to add a description of themselves
+            </p>
+            <li class="nav-item"> Testing</li>
+            <li class="nav-item"> Add a href</li>
+            <li class="nav-item"> Profile things here</li>
+            <li class="nav-item">
+              {" "}
+              Testing if this wraps around... Need to add collapse button as
+              well as adjust width and length
+            </li>
+            <hr></hr>
 
-      <form onSubmit={uploadFile}>
-        <div className="mb-3">
-          <label htmlFor="formFile" className="form-label"></label>
-          <input
-            className="form-control"
-            type="file"
-            id="formFile"
-            multiple
-            onChange={stageFile}
-          />
+            {/* Traits in side navbar */}
+            <li class="nav-item">
+              <button
+                id="dropdown"
+                class="btn btn-toggle align-items-center rounded collapsed"
+                data-bs-toggle="collapse"
+                data-bs-target="#traits-collapse"
+                aria-expanded="false"
+              >
+                Traits{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-caret-down-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                </svg>
+              </button>
+              <div class="collapse" id="traits-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                  {traits.map((trait) => (
+                    <tr key={trait.trait_id}>
+                      <Trait trait_name={trait.trait_name} />
+                      <td>
+                        <button
+                          className="delete-button1"
+                          onClick={() => deleteTrait(trait.trait_id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          </ul>
         </div>
-        <input
-          type="submit"
-          value="Upload"
-          className="btn btn-primary btn-block mt-4"
-        />
-      </form>
+      </nav>
 
-      <div className="container">
-        <div className="row gx-3 gy-4">
+      <body class="col-md-9 ms-sm-auto px-md-4">
+        <h1>Dashboard</h1>
+
+        <DropdownButton
+          className="mt-4"
+          id="dropdown-basic-button"
+          title="Select Trait"
+          onSelect={uploadTrait}
+        >
+          {trait_options.map((trait) => (
+            <Dropdown.Item eventKey={trait}>{trait}</Dropdown.Item>
+          ))}
+        </DropdownButton>
+        <form onSubmit={uploadFile}>
+          <div className="mb-3">
+            <label htmlFor="formFile" className="form-label"></label>
+            <input
+              className="form-control"
+              type="file"
+              id="formFile"
+              multiple
+              onChange={stageFile}
+            />
+          </div>
+          <input
+            type="submit"
+            value="Upload"
+            className="btn btn-primary btn-block mt-4"
+          />
+        </form>
+        <div className="container">
+          <div className="row gx-3 gy-4">
+            {pic_repo.map((pic) => (
+              <div
+                key={pic.pic_id}
+                id="photograph"
+                className="align-self-center col-sm-4"
+              >
+                <Post pic_id={pic.pic_id} />
+              </div>
+            ))}
+          </div>
+        </div>
+        <p>
+          <a
+            class="btn btn-outline-secondary"
+            data-bs-toggle="collapse"
+            href="#editPics"
+            role="button"
+            aria-expanded="false"
+            aria-controls="editPics"
+            // style={{ margin: { top: 5 } }}
+          >
+            Edit Photos
+          </a>
+        </p>
+        <div class="collapse" id="editPics">
           {pic_repo.map((pic) => (
-            <div
-              key={pic.pic_id}
-              id="photograph"
-              className="align-self-center col-sm-4"
-            >
+            //make sure key is unique (try delete and see if redundant)
+            <tr key={pic.pic_id}>
               <Post pic_id={pic.pic_id} />
-            </div>
+              <td>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => deletePic(pic.pic_id)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
           ))}
         </div>
-      </div>
-
-      <p>
-        <a
-          class="btn btn-outline-secondary"
-          data-bs-toggle="collapse"
-          href="#editPics"
-          role="button"
-          aria-expanded="false"
-          aria-controls="editPics"
-          // style={{ margin: { top: 5 } }}
-        >
-          Edit Photos
-        </a>
-      </p>
-
-      <div class="collapse" id="editPics">
-        {pic_repo.map((pic) => (
-          //make sure key is unique (try delete and see if redundant)
-          <tr key={pic.pic_id}>
-            <Post pic_id={pic.pic_id} />
-            <td>
-              <button
-                className="btn btn-danger"
-                onClick={() => deletePic(pic.pic_id)}
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        ))}
-      </div>
-
-      {/* {pic_repo.map((pic) => (
-        //make sure key is unique (try delete and see if redundant)
-        <tr key={pic.pic_id}>
-          <Post pic_id={pic.pic_id} />
-          <td>
-            <button
-              className="btn btn-danger"
-              onClick={() => deletePic(pic.pic_id)}
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      ))} */}
-    </Fragment>
+      </body>
+    </div>
   );
 };
 

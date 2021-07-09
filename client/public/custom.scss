@@ -1,4 +1,10 @@
-// $theme-colors: ( "primary": #fcba03,);
+@import "./main";
+@import "./dashboard";
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
 
 img {
   display: block;
@@ -6,4 +12,32 @@ img {
   height: auto;
 }
 
+//Target a specific class
+.container-fluid {
+  display: table;
+}
+
+// Target a specific id,
+#feed {
+  background-color: teal;
+}
+
+#loginBody {
+  color: blue;
+  background-color: orange;
+  height: 100vh;
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+//-----------
+//TESTING
+//-----------
+
+// #dashboardContainer {
+//   background-color: green;
+// }
+
+// .container {
+//   background-color: pink;
+// }

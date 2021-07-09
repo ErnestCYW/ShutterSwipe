@@ -75,7 +75,7 @@ const Feed = ({ setAuth }) => {
   return (
     <Fragment>
       <div class="text-center mt-5">
-        <h1> DISCOVER {name}</h1>
+        <h1 id="feed"> Feed {name}</h1>
         <h2> (work in progress) </h2>
         {/* <h2> {curr_pic} </h2> */}
       </div>

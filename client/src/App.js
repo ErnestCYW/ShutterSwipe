@@ -55,7 +55,7 @@ function App() {
     <Fragment>
       {isAuthenticated ? <NavbarAuth setAuth={setAuth} /> : <NavbarUnauth />}
       <Router>
-        <div className="container">
+        <div className="container-fluid">
           <Switch>
             <Route exact path="/" render={(props) => <Home />} />
             <Route

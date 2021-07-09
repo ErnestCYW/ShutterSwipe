@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const pool = require("../db");
 const authorization = require("../middleware/authorization");
-//const deleteTraits = require("../middleware/deleteTraits");
 const fs = require("fs");
 const vision = require("@google-cloud/vision");
 
@@ -146,7 +145,6 @@ router.post("/uploadTrait", authorization, async (req, res) => {
   }
 });
 
-//tried routing this way.
 //router.delete("/traits/:id", deleteTraits);
 router.delete("/traits/:id", async (req, res) => {
   try {
