@@ -13,32 +13,38 @@ const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
     origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
-  }
+    methods: ["GET", "POST"],
+  },
 });
 
-io.on('connection', (socket) => {
+io.on("connection", (socket) => {
   console.log("Connection Occurred");
 
-  socket.on('join', ({user_id, group_id}, callback) => {
+  socket.on("join", ({ user_id, group_id }, callback) => {
     //console.log(user_id, group_id);
 
     socket.join(group_id);
 
-    socket.emit('message', {user: user_id, text: `${user_id} has joined room ${group_id}` });
-    socket.broadcast.to(group_id).emit('message', {user: user_id, text: `Welcome ${user_id} to ${group_id}`});
+    socket.emit("message", {
+      user: user_id,
+      text: `${user_id} has joined room ${group_id}`,
+    });
+    socket.broadcast.to(group_id).emit("message", {
+      user: user_id,
+      text: `Welcome ${user_id} to ${group_id}`,
+    });
 
     callback();
   });
 
-  socket.on('sendMessage', (message, user_id, group_id, callback) => {
-    io.to(group_id).emit('message', {user: user_id, text: message});
+  socket.on("sendMessage", (message, user_id, group_id, callback) => {
+    io.to(group_id).emit("message", { user: user_id, text: message });
     callback();
-  })
+  });
 
-  socket.on('disconnect', () => {
+  socket.on("disconnect", () => {
     console.log("Disconnection Ocurred");
-  })
+  });
 });
 
 //middleware
@@ -59,6 +65,8 @@ app.use("/feed", require("./routes/feed"));
 
 //group route
 app.use("/group", require("./routes/group"));
+
+app.use("/discover", require("./routes/discover"));
 
 /*
 app.listen(port, () => {

@@ -205,6 +205,7 @@ const Dashboard = ({ setAuth }) => {
             <Dropdown.Item eventKey={trait}>{trait}</Dropdown.Item>
           ))}
         </DropdownButton>
+
         <form onSubmit={uploadFile}>
           <div className="mb-3">
             <label htmlFor="formFile" className="form-label"></label>

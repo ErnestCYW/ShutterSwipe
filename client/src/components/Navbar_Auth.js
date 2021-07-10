@@ -47,6 +47,11 @@ function NavbarAuth({ setAuth }) {
                   Groups
                 </a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/discover">
+                  Discover
+                </a>
+              </li>
             </ul>
             <button
               className="btn btn-primary btn-sm"
