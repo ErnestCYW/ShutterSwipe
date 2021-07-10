@@ -68,6 +68,8 @@ app.use("/group", require("./routes/group"));
 
 app.use("/discover", require("./routes/discover"));
 
+app.use("/profile", require("./routes/profile"));
+
 /*
 app.listen(port, () => {
   console.log(`server has started on port ${port}`);

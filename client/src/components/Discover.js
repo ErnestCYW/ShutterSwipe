@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const Discover = () => {
   const [name, setName] = useState("");
   const [users, setUsers] = useState([]);
+  const history = useHistory();
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
@@ -13,10 +15,18 @@ const Discover = () => {
 
       const parseResponse = await response.json();
 
-      setUsers(parseResponse);
+      setUsers(parseResponse.matched_users);
     } catch (err) {
       console.error(err.message);
     }
+  };
+
+  const handleClick = async (user_id, e) => {
+    e.preventDefault();
+    console.log("the link was clicked.");
+    console.log(user_id);
+    history.push(`/profile/${user_id}`);
+    // history.push(`/profile/`);
   };
 
   return (
@@ -33,6 +43,7 @@ const Discover = () => {
         />
         <button className="btn btn-success">Submit</button>
       </form>
+
       <table className="table my-5">
         <thead>
           <tr>
@@ -42,11 +53,30 @@ const Discover = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.user_id}>
-              <td>{user.user_name}</td>
+              <td onClick={(e) => handleClick(user.user_id, e)}>
+                {" "}
+                {user.user_name}
+              </td>
+
+              <td
+                className="nav-item"
+                onClick={(e) => handleClick(user.user_id, e)}
+              >
+                {user.user_name}
+              </td>
+
+              <td className="nav-item">
+                <a className="nav-link" href={`/profile/${user.user_id}`}>
+                  {user.user_name}
+                </a>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {users.length === 0 && <p>No Results Found</p>}
+
+      <hr></hr>
     </div>
   );
 };

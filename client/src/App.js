@@ -19,6 +19,7 @@ import Home from "./components/Home";
 import Feed from "./components/Feed";
 import Group from "./components/Group";
 import Discover from "./components/Discover";
+import Profile from "./components/Profile";
 
 import NavbarAuth from "./components/Navbar_Auth";
 import NavbarUnauth from "./components/Navbar_Unauth";
@@ -122,6 +123,17 @@ function App() {
               render={(props) =>
                 localStorage.token ? (
                   <Discover {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/profile/:id"
+              render={(props) =>
+                localStorage.token ? (
+                  <Profile {...props} setAuth={setAuth} />
                 ) : (
                   <Redirect to="/login" />
                 )
