@@ -19,23 +19,6 @@ router.get("/", authorization, async (req, res) => {
       [req.user]
     );
 
-    /*
-        //Cannot use async?
-        const filtered_recommended_groups = [];
-        await Promise.all(
-            member_groups.rows.map(async (member_group) => {
-                await Promise.all (
-                    recommended_groups.rows.map(async (recommended_group) => {
-                        if (recommended_group.group_id !== member_group.group_id) {
-                            filtered_recommended_groups.push(recommended_group);
-                        } 
-                    })
-                )          
-
-            })
-        )
-        */
-
     //Remove groups user is already part of
     function removeAlreadyMember(recommended_group) {
       let temp = true;
@@ -59,6 +42,62 @@ router.get("/", authorization, async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).json("Server Error");
+  }
+});
+
+router.get("/search", async (req, res) => {
+  try {
+    const { searched_groups } = req.query;
+
+    const matched_groups = await pool.query(
+      "SELECT * FROM groups WHERE group_name ILIKE $1",
+      [`%${searched_groups}%`]
+    );
+
+    const toReturn = {
+      matched_groups: matched_groups.rows,
+    };
+
+    res.json(toReturn);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json("Server Error");
+  }
+});
+
+router.post("/join/:group_id", async (req, res) => {
+  try {
+    const { group_id } = req.params;
+
+    const selectedGroup = await pool.query(
+      "SELECT * FROM group_relations WHERE group_id = $1 AND user_id = $2",
+      [group_id, req.header("user_id")]
+    );
+
+    if (selectedGroup.rows.length !== 0) {
+      return res.status(401).json("Group already added!");
+    }
+
+    const joinGroup = await pool.query(
+      "INSERT INTO group_relations (group_id, user_id) VALUES ($1, $2) RETURNING group_id",
+      [group_id, req.header("user_id")]
+    );
+
+    const memberGroups = await pool.query(
+      "SELECT groups.group_name, groups.group_id FROM groups LEFT JOIN group_relations \
+            ON groups.group_id = group_relations.group_id \
+            WHERE user_id = $1",
+      [req.header("user_id")]
+    );
+
+    const toReturn = {
+      updatedMemberGroups: JSON.stringify(memberGroups.rows),
+      joined: true,
+    };
+
+    res.json(toReturn);
+  } catch (err) {
+    console.error(err.message);
   }
 });
 
@@ -102,8 +141,6 @@ router.post("/create", authorization, async (req, res) => {
 router.delete("/leave/:group_id", authorization, async (req, res) => {
   try {
     const { group_id } = req.params;
-    console.log(group_id); // ":group_id" must be included in the route - why?
-    console.log(req.user);
 
     const leaveGroup = await pool.query(
       "DELETE FROM group_relations WHERE group_id = $1 AND user_id = $2",

@@ -13,6 +13,9 @@ router.get("/", async (req, res) => {
       [`%${name}%`]
     );
 
+    // console.log(users.rows);
+    console.log(name);
+
     const toReturn = {
       matched_users: users.rows,
     };
