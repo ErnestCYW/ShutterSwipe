@@ -57,19 +57,6 @@ const Discover = () => {
                 {" "}
                 {user.user_name}
               </td>
-
-              <td
-                className="nav-item"
-                onClick={(e) => handleClick(user.user_id, e)}
-              >
-                {user.user_name}
-              </td>
-
-              <td className="nav-item">
-                <a className="nav-link" href={`/profile/${user.user_id}`}>
-                  {user.user_name}
-                </a>
-              </td>
             </tr>
           ))}
         </tbody>

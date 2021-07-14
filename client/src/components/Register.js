@@ -5,12 +5,13 @@ import { toast } from "react-toastify";
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
     email: "",
+    username: "",
     password: "",
     name: "",
   });
 
   //destructure
-  const { email, password, name } = inputs;
+  const { email, username, password, name } = inputs;
 
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -20,7 +21,7 @@ const Register = ({ setAuth }) => {
     e.preventDefault();
 
     try {
-      const body = { email, password, name };
+      const body = { email, username, password, name };
 
       const response = await fetch("http://localhost:5000/auth/register", {
         method: "POST",
@@ -57,6 +58,14 @@ const Register = ({ setAuth }) => {
           onChange={(e) => onChange(e)}
         />
         <input
+          type="username"
+          name="username"
+          placeholder="username"
+          className="form-control my-3"
+          value={username}
+          onChange={(e) => onChange(e)}
+        />
+        <input
           type="password"
           name="password"
           placeholder="password"
@@ -72,6 +81,7 @@ const Register = ({ setAuth }) => {
           value={name}
           onChange={(e) => onChange(e)}
         />
+
         <button className="btn btn-success btn-block">Submit</button>
       </form>
     </Fragment>

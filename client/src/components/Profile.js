@@ -5,6 +5,7 @@ import Trait from "./Trait";
 
 const Profile = () => {
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [pic_repo, setPicRepo] = useState([]);
   const [traits, setTraits] = useState([]);
   const { id } = useParams();
@@ -22,6 +23,7 @@ const Profile = () => {
       setTraits(traits);
       setPicRepo(pic_repo);
       setName(parseRes.user_name);
+      setUsername(parseRes.username);
     } catch (err) {
       console.error(err.message);
     }
@@ -38,7 +40,10 @@ const Profile = () => {
         class="col-md-3 col-lg2 d-md-block sidebar collapse"
       >
         <hr></hr>
-        {name}
+        <row>
+          <h3> {username} </h3>
+          {name}
+        </row>
         <div class="position-sticky pt-3">
           <ul class="nav flex-column">
             <p>

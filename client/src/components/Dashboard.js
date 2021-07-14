@@ -15,6 +15,13 @@ const Dashboard = ({ setAuth }) => {
   const [file, setFile] = useState("");
   const [pic_repo, setPicRepo] = useState([]);
   const [traits, setTraits] = useState([]);
+  const [username, setUsername] = useState("");
+  const [description, setDescription] = useState("");
+  const [profile, setProfile] = useState({
+    new_username: "",
+    new_description: "",
+  });
+  const { new_username, new_description } = profile;
 
   const getAll = async () => {
     try {
@@ -26,11 +33,67 @@ const Dashboard = ({ setAuth }) => {
       const parseRes = await response.json();
       const pic_repo = JSON.parse(parseRes.pic_repo);
       const traits = JSON.parse(parseRes.traits);
-      //console.log(traits);
 
       setTraits(traits);
       setPicRepo(pic_repo);
       setName(parseRes.user_name);
+      setUsername(parseRes.username);
+
+      const getDescription = await fetch(
+        "http://localhost:5000/dashboard/description",
+        {
+          method: "GET",
+          headers: { token: localStorage.token },
+        }
+      );
+
+      const descRes = await getDescription.json();
+
+      if (descRes === false) {
+        console.log("User has no description");
+      } else {
+        setDescription(descRes);
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const onEditUsername = (e) => {
+    setProfile({ ...profile, new_username: e.target.value });
+  };
+
+  const onEditDescription = (e) => {
+    setProfile({ ...profile, new_description: e.target.value });
+  };
+
+  const editProfile = async (e) => {
+    e.preventDefault();
+    let formData = new FormData();
+
+    formData.append("username", new_username);
+    formData.append("description", new_description);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/dashboard/edit",
+        formData,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: localStorage.token,
+          },
+        }
+      );
+
+      // // ADD VALIDATION
+      // if (parseRes) {
+      //   console.log("success is achieved!");
+      //   toast.success("Profile updated!");
+      // } else {
+      //   toast.failure(parseRes);
+      // }
     } catch (err) {
       console.error(err.message);
     }
@@ -132,20 +195,17 @@ const Dashboard = ({ setAuth }) => {
         class="col-md-3 col-lg2 d-md-block sidebar collapse"
       >
         <hr></hr>
-        {name}
+        <row>
+          <h3> {username} </h3>
+          {name}
+        </row>
         <div class="position-sticky pt-3">
           <ul class="nav flex-column">
-            <p>
-              {" "}
-              This is a paragraph, for users to add a description of themselves
-            </p>
-            <li class="nav-item"> Testing</li>
-            <li class="nav-item"> Add a href</li>
-            <li class="nav-item"> Profile things here</li>
+            <p>{description}</p>
+
             <li class="nav-item">
               {" "}
-              Testing if this wraps around... Need to add collapse button as
-              well as adjust width and length
+              To do: Justify text? Add links to socials?
             </li>
             <hr></hr>
 
@@ -194,6 +254,79 @@ const Dashboard = ({ setAuth }) => {
 
       <body class="col-md-9 ms-sm-auto px-md-4">
         <h1>Dashboard</h1>
+        {/* Edit Profile */}
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#editProfileModal"
+        >
+          Edit Profile
+        </button>
+        <div
+          class="modal fade"
+          id="editProfileModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  Edit Profile
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="editProfileForm" onSubmit={editProfile}>
+                  <div class="mb-3">
+                    <label>New Username</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="new username"
+                      value={new_username}
+                      onChange={(e) => onEditUsername(e)}
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label>New Description</label>
+                    <textarea
+                      class="form-control"
+                      rows="3"
+                      value={new_description}
+                      onChange={(e) => onEditDescription(e)}
+                    />
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  form="editProfileForm"
+                  class="btn btn-primary"
+                  aria-hidden="true"
+                  // data-bs-dismiss="modal"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <DropdownButton
           className="mt-4"
@@ -205,7 +338,6 @@ const Dashboard = ({ setAuth }) => {
             <Dropdown.Item eventKey={trait}>{trait}</Dropdown.Item>
           ))}
         </DropdownButton>
-
         <form onSubmit={uploadFile}>
           <div className="mb-3">
             <label htmlFor="formFile" className="form-label"></label>

@@ -12,6 +12,11 @@ router.get("/", authorization, async (req, res) => {
       [req.user]
     );
 
+    const username = await pool.query(
+      "SELECT username FROM user_username WHERE user_id = $1",
+      [req.user]
+    );
+
     const pic_repo = await pool.query(
       "SELECT pic_id FROM pics WHERE user_id = $1",
       [req.user]
@@ -25,6 +30,7 @@ router.get("/", authorization, async (req, res) => {
     //return custom JSON
     const toReturn = {
       user_name: `${user.rows[0].user_name}`,
+      username: `${username.rows[0].username}`,
       pic_repo: JSON.stringify(pic_repo.rows),
       traits: JSON.stringify(traits.rows),
     };
@@ -32,6 +38,76 @@ router.get("/", authorization, async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).json("Server Error");
+  }
+});
+
+//TODO: PROFILE PICS
+router.get("/profilePic", authorization, async (req, res) => {
+  const profilePic = await pool.query(
+    "SELECT profile_pic FROM profile_pic WHERE user_id = $1",
+    [req.user]
+  );
+
+  if (profilePic.rows.length !== 1) {
+    res.json(false);
+  } else {
+    res.json(username.rows[0].username);
+  }
+});
+
+router.get("/description", authorization, async (req, res) => {
+  const description = await pool.query(
+    "SELECT user_description FROM user_description WHERE user_id = $1",
+    [req.user]
+  );
+
+  if (description.rows.length !== 1) {
+    res.json(false);
+  } else {
+    res.json(description.rows[0].user_description);
+  }
+});
+
+//edit profile
+router.post("/edit", authorization, async (req, res) => {
+  try {
+    const form = req.body;
+
+    if (form.username) {
+      const alreadyExists = await pool.query(
+        "SELECT * FROM user_username WHERE username = $1",
+        [form.username]
+      );
+      if (alreadyExists.rows.length == 1) {
+        res.status(401).json("Username is taken");
+      } else {
+        const updateUsername = await pool.query(
+          "UPDATE user_username SET username = $1 WHERE user_id = $2",
+          [form.username, req.user]
+        );
+      }
+    }
+
+    if (form.description) {
+      const hasDescription = await pool.query(
+        "SELECT * FROM user_description WHERE user_id = $1",
+        [req.user]
+      );
+
+      if (hasDescription.rows.length === 1) {
+        const updateDescription = await pool.query(
+          "UPDATE user_description SET user_description = $1 WHERE user_id = $2",
+          [form.description, req.user]
+        );
+      } else {
+        const insertDescription = await pool.query(
+          "INSERT INTO user_description (user_id, user_description) VALUES ($1, $2)",
+          [req.user, form.description]
+        );
+      }
+    }
+  } catch (err) {
+    console.error(err.message);
   }
 });
 
