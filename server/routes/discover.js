@@ -9,17 +9,31 @@ router.get("/", async (req, res) => {
     const { name } = req.query;
 
     const users = await pool.query(
-      "SELECT * FROM users WHERE user_name ILIKE $1",
+      "SELECT * FROM users LEFT JOIN user_username ON users.user_id = user_username.user_id WHERE user_name ILIKE $1",
       [`%${name}%`]
     );
-
-    // console.log(users.rows);
-    console.log(name);
 
     const toReturn = {
       matched_users: users.rows,
     };
     res.json(toReturn);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+router.get("/:user_id", async (req, res) => {
+  try {
+    const { user_id } = req.params;
+
+    const username = await pool.query(
+      "SELECT username FROM user_username WHERE user_id = $1",
+      [user_id]
+    );
+
+    console.log(username.rows[0]);
+
+    res.json(username.rows[0]);
   } catch (err) {
     console.error(err.message);
   }

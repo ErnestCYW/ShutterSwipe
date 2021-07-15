@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Discover = () => {
   const [name, setName] = useState("");
   const [users, setUsers] = useState([]);
-  const history = useHistory();
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
@@ -19,14 +18,6 @@ const Discover = () => {
     } catch (err) {
       console.error(err.message);
     }
-  };
-
-  const handleClick = async (user_id, e) => {
-    e.preventDefault();
-    console.log("the link was clicked.");
-    console.log(user_id);
-    history.push(`/profile/${user_id}`);
-    // history.push(`/profile/`);
   };
 
   return (
@@ -53,10 +44,17 @@ const Discover = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.user_id}>
-              <td onClick={(e) => handleClick(user.user_id, e)}>
+              <td>
                 {" "}
                 {user.user_name}
+                <Link
+                  to={`profile/${user.username}`}
+                  className="btn btn-primary"
+                >
+                  Go
+                </Link>
               </td>
+              <td>Hello</td>
             </tr>
           ))}
         </tbody>

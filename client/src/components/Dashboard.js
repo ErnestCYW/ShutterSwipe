@@ -7,6 +7,9 @@ import trait_options from "./Trait_Options";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
+import useForm from "./useForm";
+import FormEditProfile from "./FormEditProfile";
+
 const Dashboard = ({ setAuth }) => {
   //passing prop setAuth
 
@@ -17,11 +20,8 @@ const Dashboard = ({ setAuth }) => {
   const [traits, setTraits] = useState([]);
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
-  const [profile, setProfile] = useState({
-    new_username: "",
-    new_description: "",
-  });
-  const { new_username, new_description } = profile;
+
+  const { handleUsername, handleDescription, values, handleSubmit } = useForm();
 
   const getAll = async () => {
     try {
@@ -54,46 +54,6 @@ const Dashboard = ({ setAuth }) => {
       } else {
         setDescription(descRes);
       }
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
-
-  const onEditUsername = (e) => {
-    setProfile({ ...profile, new_username: e.target.value });
-  };
-
-  const onEditDescription = (e) => {
-    setProfile({ ...profile, new_description: e.target.value });
-  };
-
-  const editProfile = async (e) => {
-    e.preventDefault();
-    let formData = new FormData();
-
-    formData.append("username", new_username);
-    formData.append("description", new_description);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/dashboard/edit",
-        formData,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "multipart/form-data",
-            token: localStorage.token,
-          },
-        }
-      );
-
-      // // ADD VALIDATION
-      // if (parseRes) {
-      //   console.log("success is achieved!");
-      //   toast.success("Profile updated!");
-      // } else {
-      //   toast.failure(parseRes);
-      // }
     } catch (err) {
       console.error(err.message);
     }
@@ -284,15 +244,15 @@ const Dashboard = ({ setAuth }) => {
                 ></button>
               </div>
               <div class="modal-body">
-                <form id="editProfileForm" onSubmit={editProfile}>
+                <form id="editProfileForm" onSubmit={handleSubmit}>
                   <div class="mb-3">
                     <label>New Username</label>
                     <input
                       type="text"
                       class="form-control"
                       placeholder="new username"
-                      value={new_username}
-                      onChange={(e) => onEditUsername(e)}
+                      value={values.username}
+                      onChange={(e) => handleUsername(e)}
                     />
                   </div>
                   <div class="mb-3">
@@ -300,8 +260,8 @@ const Dashboard = ({ setAuth }) => {
                     <textarea
                       class="form-control"
                       rows="3"
-                      value={new_description}
-                      onChange={(e) => onEditDescription(e)}
+                      value={values.description}
+                      onChange={(e) => handleDescription(e)}
                     />
                   </div>
                 </form>

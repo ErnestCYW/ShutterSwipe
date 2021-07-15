@@ -130,7 +130,7 @@ function App() {
             />
             <Route
               exact
-              path="/profile/:id"
+              path="/profile/:input_username"
               render={(props) =>
                 localStorage.token ? (
                   <Profile {...props} setAuth={setAuth} />

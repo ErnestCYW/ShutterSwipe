@@ -8,13 +8,23 @@ const Profile = () => {
   const [username, setUsername] = useState("");
   const [pic_repo, setPicRepo] = useState([]);
   const [traits, setTraits] = useState([]);
-  const { id } = useParams();
+
+  const { input_username } = useParams();
 
   const getAll = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/profile/${id}`, {
-        method: "GET",
-      });
+      console.log(input_username);
+
+      if (input_username === "custom.css") {
+        console.log("WTF");
+      }
+
+      const response = await fetch(
+        `http://localhost:5000/profile/${input_username}`,
+        {
+          method: "GET",
+        }
+      );
 
       const parseRes = await response.json();
       const pic_repo = JSON.parse(parseRes.pic_repo);
