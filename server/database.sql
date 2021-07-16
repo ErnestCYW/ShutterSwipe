@@ -61,6 +61,12 @@ CREATE TABLE group_traits (
   trait_name VARCHAR(100) NOT NULL
 )
 
+CREATE TABLE group_chat_history (
+  group_id UUID REFERENCES groups(group_id) NOT NULL,
+  user_id UUID REFERENCES users(user_id) NOT NULL,
+  message_contents TEXT NOT NULL
+)
+
 --Alternative?
 --CREATE TABLE groups (
   --relation_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

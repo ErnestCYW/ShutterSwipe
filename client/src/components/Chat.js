@@ -3,50 +3,83 @@ import io from "socket.io-client";
 
 let socket;
 
-function Chat({ group_id, user_id }) {
+function Chat({selected_chat, user_info }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [chat_history, setChatHistory] = useState([]);
   const ENDPOINT = "http://localhost:5000";
+  const group_id = selected_chat.group_id;
+  const group_name = selected_chat.group_name;
+  const user_id = user_info.user_id;
+  const user_name = user_info.user_name;
 
-  useEffect(() => {
-    if (group_id != "No Chat Selected") {
-      socket = io(ENDPOINT);
-      socket.emit("join", { user_id, group_id }, () => {});
+  const getAll = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/group/chat", {
+        method: "GET",
+        headers: { 
+          token: localStorage.token,
+          group_id: group_id 
+        },
+      });
 
-      return () => {
-        socket.emit("disconnect");
-        socket.off();
-      };
+      const parseRes = await response.json();
+      const chat_history = JSON.parse(parseRes.chat_history);
+
+      setChatHistory(chat_history);
+    } catch (err) {
+      console.error(err.message);
     }
+  };
+
+  useEffect(() => {    
+    socket = io(ENDPOINT);
+    
+    setMessages([]);
+
+    socket.emit("join", { user_id, group_id, user_name, group_name }, () => {});
+
+    socket.on("message", (message) => {
+      setMessages((messages) => [...messages, message]);
+    });
+
+    return () => {
+      socket.disconnect();
+      socket.off();
+    };
+  
   }, [ENDPOINT, group_id]);
 
   useEffect(() => {
-    if (group_id != "No Chat Selected") {
-      socket.on("message", (message) => {
-        setMessages((messages) => [...messages, message]);
-      });
-    }
-  }, [group_id]);
+    getAll()
+  }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
     if (message) {
-      socket.emit("sendMessage", message, user_id, group_id, () =>
+      socket.emit("sendMessage", message, user_id, group_id, user_name, () =>
         setMessage("")
       );
     }
   };
 
+  console.log(chat_history);
+
   return (
     <div className="outerContainer">
       <h1>CHAT ROOM</h1>
       <div className="container">
-        <h3> Selected: {group_id} </h3>
+        <h3> Selected: {group_name} </h3>
         <h3>Previous Messages</h3>
         <div>
+        {chat_history.map((message) => (
+            <div>
+              <strong>{message.user_name}</strong>: {message.message_contents}
+            </div>
+          ))}
           {messages.map((message) => (
             <div>
-              <strong>{message.user}</strong>: {message.text}
+              <strong>{message.user_name}</strong>: {message.text}
             </div>
           ))}
         </div>

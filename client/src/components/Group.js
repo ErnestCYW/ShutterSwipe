@@ -12,8 +12,15 @@ const Group = ({ setAuth }) => {
     group_name: "",
     group_trait: "",
   });
-  const [selected_chat, setSelectedChat] = useState("No Chat Selected");
-  const [user_id, setUserID] = useState("");
+  const [selected_chat, setSelectedChat] = useState({
+    group_name: "No Chat Selected",
+    group_id: "",
+    chat_history: "",
+  });
+  const [user_info, setUserInfo] = useState({
+    user_name: "",
+    user_id: "",
+  });
 
   const getAll = async () => {
     try {
@@ -29,7 +36,10 @@ const Group = ({ setAuth }) => {
 
       setMemberGroup(member_groups);
       setRecommendedGroup(recommended_groups);
-      setUserID(parseRes.user_id);
+      setUserInfo({
+        user_name: parseRes.user_name,
+        user_id: parseRes.user_id
+      });
     } catch (err) {
       console.error(err.message);
     }
@@ -192,7 +202,7 @@ const Group = ({ setAuth }) => {
       <h1>Member Groups</h1>
       {member_groups.map((group) => (
         <tr key={group.group_id}>
-          <h3 onClick={() => setSelectedChat(group.group_id)}>
+          <h3 onClick={() => setSelectedChat(group)}>
             {" "}
             {group.group_name}{" "}
           </h3>
@@ -222,7 +232,8 @@ const Group = ({ setAuth }) => {
         <h3>{group.group_name}</h3>
       ))}
 
-      <Chat group_id={selected_chat} user_id={user_id} />
+      {selected_chat.group_id != "" ? <Chat selected_chat={selected_chat} user_info={user_info} />: null}
+    
     </Fragment>
   );
 };

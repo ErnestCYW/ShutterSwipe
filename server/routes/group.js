@@ -19,22 +19,10 @@ router.get("/", authorization, async (req, res) => {
       [req.user]
     );
 
-    /*
-        //Cannot use async?
-        const filtered_recommended_groups = [];
-        await Promise.all(
-            member_groups.rows.map(async (member_group) => {
-                await Promise.all (
-                    recommended_groups.rows.map(async (recommended_group) => {
-                        if (recommended_group.group_id !== member_group.group_id) {
-                            filtered_recommended_groups.push(recommended_group);
-                        } 
-                    })
-                )          
-
-            })
-        )
-        */
+    const user_name = await pool.query(
+      "SELECT user_name FROM users WHERE user_id = $1",
+      [req.user]
+    );
 
     //Remove groups user is already part of
     function removeAlreadyMember(recommended_group) {
@@ -52,6 +40,7 @@ router.get("/", authorization, async (req, res) => {
       recommended_groups: JSON.stringify(
         recommended_groups.rows.filter(removeAlreadyMember)
       ),
+      user_name: user_name.rows[0].user_name,
       user_id: req.user,
     };
 
@@ -138,6 +127,26 @@ router.delete("/delete/:group_id", authorization, async (req, res) => {
     res.json("Group Deleted");
   } catch (err) {
     console.error(err.message);
+  }
+});
+
+router.get("/chat", authorization, async (req, res) => {
+  try {
+    const chat_history = await pool.query(
+      "SELECT users.user_name, group_chat_history.message_contents FROM users \
+      LEFT JOIN group_chat_history ON users.user_id = group_chat_history.user_id \
+      WHERE group_id = $1 LIMIT 100",
+      [req.header("group_id")]
+    );
+
+    const toReturn = {
+      chat_history: JSON.stringify(chat_history.rows),
+    };
+
+    res.json(toReturn);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json("Server Error");
   }
 });
 

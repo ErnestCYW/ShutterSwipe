@@ -9,7 +9,6 @@ const pool = require("./db");
 const app = express();
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
-//const io = socketio(server);
 const io = require("socket.io")(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -20,30 +19,36 @@ const io = require("socket.io")(server, {
 io.on("connection", (socket) => {
   console.log("Connection Occurred");
 
-  socket.on("join", ({ user_id, group_id }, callback) => {
-    //console.log(user_id, group_id);
+  socket.on("join", ({ user_id, group_id, user_name, group_name }, callback) => {
 
     socket.join(group_id);
 
     socket.emit("message", {
-      user: user_id,
-      text: `${user_id} has joined room ${group_id}`,
+      user_id: user_id,
+      user_name: user_name,
+      text: `You have joined ${group_name}`,
     });
     socket.broadcast.to(group_id).emit("message", {
-      user: user_id,
-      text: `Welcome ${user_id} to ${group_id}`,
+      user_id: user_id,
+      user_name: user_name,
+      text: `${user_name} has joined ${group_name}`,
     });
 
     callback();
   });
 
-  socket.on("sendMessage", (message, user_id, group_id, callback) => {
-    io.to(group_id).emit("message", { user: user_id, text: message });
+  socket.on("sendMessage", (message, user_id, group_id, user_name, callback) => {
+    io.to(group_id).emit("message", { user_id: user_id, user_name: user_name, text: message });
+    pool.query(
+      "INSERT INTO group_chat_history(group_id, user_id, message_contents) \
+      VALUES ($1, $2, $3)",
+      [group_id,user_id,message]
+    )
     callback();
   });
 
   socket.on("disconnect", () => {
-    console.log("Disconnection Ocurred");
+    console.log("Disconnection Occured")
   });
 });
 
