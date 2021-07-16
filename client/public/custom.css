@@ -36,8 +36,34 @@ main {
   border: 0;
 }
 
+.container-md {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 16px;
+}
+
+.container-md h1, .container-md .h1 {
+  background-color: teal;
+}
+
+.container-md h4, .container-md .h4 {
+  text-align: center;
+}
+
+.container-md tr .btn {
+  color: red;
+}
+
 html {
-  overflow: hidden;
+  overflow: auto I !important;
   height: 100%;
 }
 
@@ -48,6 +74,7 @@ img {
 }
 
 .container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
+  overflow: auto;
   display: table;
 }
 
@@ -11521,4 +11548,13 @@ fieldset:disabled .btn {
     display: none !important;
   }
 }
+
+/*
+<div className="blog-preview" key >
+    <h2> smt </h2>
+</div> 
+
+--> .blog-preview h2 {}
+--> .blog-preview a {}
+*/
 /*# sourceMappingURL=custom.css.map */

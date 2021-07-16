@@ -15,7 +15,7 @@ const Feed = ({ setAuth }) => {
       setAuth(true);
       const parseRes = await response.json();
       const queue = JSON.parse(parseRes.inQueue);
-      //console.log(queue);
+      console.log(parseRes.user_name);
 
       setPicFeed(queue);
       setName(parseRes.user_name);
@@ -73,33 +73,40 @@ const Feed = ({ setAuth }) => {
   }, []);
 
   return (
-    <Fragment>
-      <div class="text-center mt-5">
-        <h1 id="feed"> Feed {name}</h1>
-        <h2> (work in progress) </h2>
-        {/* <h2> {curr_pic} </h2> */}
-      </div>
+    <div style={{}}>
+      <div style={{ paddingTop: "30px" }}></div>
+      <div className="container-md border">
+        <div class="text-center mt-5">
+          <h1> {name + "'s"} Feed </h1>
+        </div>
 
-      {pic_feed.map((pic) => (
-        <tr key={pic.pic_id}>
-          <Post pic_id={pic.pic_id} />
-          <td>
-            <button
-              className="btn btn-warning"
-              onClick={() => likePic(pic.pic_id)}
-            >
-              like
-            </button>
-            <button
-              className="btn btn-warning"
-              onClick={() => dislikePic(pic.pic_id)}
-            >
-              dislike
-            </button>
-          </td>
-        </tr>
-      ))}
-    </Fragment>
+        {pic_feed.map((pic) => (
+          <tr key={pic.pic_id}>
+            <Post pic_id={pic.pic_id} />
+            <h4>testing center alignment</h4>
+
+            <div className="row justify-content-center text-center">
+              <h2 className="col">
+                <button
+                  className="btn btn-warning"
+                  onClick={() => likePic(pic.pic_id)}
+                >
+                  like
+                </button>
+              </h2>
+              <h2 className="col">
+                <button
+                  className="btn btn-warning"
+                  onClick={() => dislikePic(pic.pic_id)}
+                >
+                  dislike
+                </button>
+              </h2>
+            </div>
+          </tr>
+        ))}
+      </div>
+    </div>
   );
 };
 

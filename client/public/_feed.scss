@@ -1,0 +1,25 @@
+.container-md {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 16px;
+
+  h1 {
+    background-color: teal;
+  }
+
+  //HAS PADDING
+  h4 {
+    // background-color: red;
+    text-align: center;
+  }
+
+  //DOESN'T HAVE PADDING
+  .row {
+    // background-color: green;
+  }
+
+  tr .btn {
+    color: red;
+  }
+}
