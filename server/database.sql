@@ -4,13 +4,31 @@ CREATE DATABASE shutterswipe;
 
 --CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
---User Table
+--User table
 CREATE TABLE users (
   user_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_name VARCHAR(100) NOT NULL,
   user_email VARCHAR(100) NOT NULL,
   user_password VARCHAR(100) NOT NULL
+);
+
+--User username table
+CREATE TABLE user_username ( 
+  username VARCHAR(100) PRIMARY KEY NOT NULL,
+  user_id UUID REFERENCES users(user_id) NOT NULL
 )
+
+--User Description table
+CREATE TABLE user_description (
+  user_id UUID REFERENCES users(user_id) NOT NULL,
+  user_description TEXT
+);
+
+--Profile picture table
+CREATE TABLE profile_pics (
+  pic_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES users(user_id) NOT NULL
+);
 
 --Picture table
 CREATE TABLE pics (

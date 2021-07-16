@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Discover = () => {
   const [name, setName] = useState("");
@@ -13,7 +14,7 @@ const Discover = () => {
 
       const parseResponse = await response.json();
 
-      setUsers(parseResponse);
+      setUsers(parseResponse.matched_users);
     } catch (err) {
       console.error(err.message);
     }
@@ -33,6 +34,7 @@ const Discover = () => {
         />
         <button className="btn btn-success">Submit</button>
       </form>
+
       <table className="table my-5">
         <thead>
           <tr>
@@ -42,11 +44,24 @@ const Discover = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.user_id}>
-              <td>{user.user_name}</td>
+              <td>
+                {" "}
+                {user.user_name}
+                <Link
+                  to={`profile/${user.username}`}
+                  className="btn btn-primary"
+                >
+                  Go
+                </Link>
+              </td>
+              <td>Hello</td>
             </tr>
           ))}
         </tbody>
       </table>
+      {users.length === 0 && <p>No Results Found</p>}
+
+      <hr></hr>
     </div>
   );
 };

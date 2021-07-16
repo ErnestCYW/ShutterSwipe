@@ -11,7 +11,7 @@ router.post("/register", validInfo, async (req, res) => {
   try {
     //1. destructure the req.body (name, email, password)
 
-    const { name, email, password } = req.body;
+    const { name, username, email, password } = req.body;
 
     //2. check if user exists (if user exist then throw error)
 
@@ -21,6 +21,15 @@ router.post("/register", validInfo, async (req, res) => {
 
     if (user.rows.length !== 0) {
       return res.status(401).json("User already exists!"); //see 401 and 403 codes!
+    }
+
+    const existingUsername = await pool.query(
+      "SELECT * FROM user_username WHERE username = $1",
+      [username]
+    );
+
+    if (existingUsername.rows.length !== 0) {
+      return res.status(401).json("Username is taken!");
     }
 
     //3. Bcrypt the user password (see npm bcrypt documentation)
@@ -35,6 +44,11 @@ router.post("/register", validInfo, async (req, res) => {
     const newUser = await pool.query(
       "INSERT INTO users (user_name, user_email, user_password) VALUES ($1, $2, $3) RETURNING *",
       [name, email, bcryptPassword]
+    );
+
+    const newUsername = await pool.query(
+      "INSERT INTO user_username (user_id, username) VALUES ($1, $2)",
+      [newUser.rows[0].user_id, username]
     );
 
     //5. generating our jwt token

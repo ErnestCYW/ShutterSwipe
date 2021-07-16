@@ -1,11 +1,14 @@
 import axios from "axios";
 import React, { Fragment, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
 import Trait_Options from "./Trait_Options";
 import { link } from "react-router-dom";
 import Chat from "./Chat";
 
 const Group = ({ setAuth }) => {
+  const [searched_groups, setSearchedGroup] = useState("");
+  const [matched_groups, setMatchedGroup] = useState([]);
   const [member_groups, setMemberGroup] = useState([]);
   const [recommended_groups, setRecommendedGroup] = useState([]);
   const [inputs, setInputs] = useState({
@@ -43,6 +46,45 @@ const Group = ({ setAuth }) => {
     } catch (err) {
       console.error(err.message);
     }
+  };
+
+  const onSubmitSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `http://localhost:5000/group/search/?searched_groups=${searched_groups}`
+      );
+      const parseResponse = await response.json();
+
+      setMatchedGroup(parseResponse.matched_groups);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const joinGroup = async (group_id, e) => {
+    e.preventDefault();
+    console.log("Join Group Clicked");
+    const join = await fetch(`http://localhost:5000/group/join/${group_id}`, {
+      method: "POST",
+      headers: {
+        user_id: user_info.user_id,
+      },
+    });
+
+    const parseRes = await join.json();
+
+    if (parseRes.joined === true) {
+      toast.success("Joined Group!");
+      const updatedMemberGroups = JSON.parse(parseRes.updatedMemberGroups);
+      setMemberGroup(updatedMemberGroups);
+    } else {
+      toast.warning("Failed to join group");
+    }
+
+    // toast.success("Joined Group!");
+    // console.log(member_groups);
+    // if (console.log(join.json);
   };
 
   const { group_name, group_trait } = inputs;
@@ -129,6 +171,40 @@ const Group = ({ setAuth }) => {
 
   return (
     <Fragment>
+      <div>
+        <h1>Find Groups</h1>
+        <form className="d-flex" onSubmit={onSubmitSearch}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter group ..."
+            className="form-control"
+            value={searched_groups}
+            onChange={(e) => setSearchedGroup(e.target.value)}
+          />
+          <button className="btn btn-success">Submit</button>
+        </form>
+      </div>
+
+      <table className="table my-5">
+        <thead>
+          <tr>
+            <th>Group Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {matched_groups.map((group) => (
+            <tr key={group.group_id}>
+              <td onClick={(e) => joinGroup(group.group_id, e)}>
+                {" "}
+                {group.group_name}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {matched_groups.length === 0 && <p>No Results Found</p>}
+
       <button
         type="button"
         class="btn btn-primary"
