@@ -17,6 +17,7 @@ const Dashboard = ({ setAuth }) => {
   const [name, setName] = useState("");
   const [file, setFile] = useState("");
   const [pic_repo, setPicRepo] = useState([]);
+  const [staged_trait, setStagedTrait] = useState("");
   const [traits, setTraits] = useState([]);
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
@@ -106,17 +107,30 @@ const Dashboard = ({ setAuth }) => {
     }
   };
 
-  const uploadTrait = async (trait) => {
+  const handleTraitChange = (event) => {
+    setStagedTrait(event.target.value);
+  };
+
+  const uploadTrait = async (e) => {
+    e.preventDefault();
     try {
       const res = await fetch(`http://localhost:5000/dashboard/uploadTrait`, {
-        method: "POST",
+        method: "GET",
         headers: {
-          uploadedTrait: trait,
+          uploadedTrait: staged_trait,
           token: localStorage.token,
         },
       });
-      console.log(res);
-      window.location.reload(); //Auto refreshes
+
+      const parseRes = await res.json();
+
+      if (parseRes.added === true) {
+        toast.success("Trait added!");
+        const updatedTraits = JSON.parse(parseRes.updatedUserTraits);
+        setTraits(updatedTraits);
+      } else {
+        toast.warning("Failed to add trait");
+      }
     } catch (err) {
       if (err.response.status === 500) {
         console.log("Server Error");
@@ -149,215 +163,218 @@ const Dashboard = ({ setAuth }) => {
   //console.log(typeof traits);
 
   return (
-    <div class="row">
-      <nav
-        id="sidebarMenu"
-        class="col-md-3 col-lg2 d-md-block sidebar collapse"
-      >
-        <hr></hr>
-        <row>
-          <h3> {username} </h3>
-          {name}
-        </row>
-        <div class="position-sticky pt-3">
-          <ul class="nav flex-column">
-            <p>{description}</p>
-
-            <li class="nav-item">
+    <div class="dashboard">
+      <div class="row">
+        <nav
+          id="sidebarMenu"
+          class="col-md-3 d-md-block sidebar collapse position-fixed"
+        >
+          <hr></hr>
+          <row>
+            <h3>
               {" "}
-              To do: Justify text? Add links to socials?
-            </li>
-            <hr></hr>
-
-            {/* Traits in side navbar */}
-            <li class="nav-item">
-              <button
-                id="dropdown"
-                class="btn btn-toggle align-items-center rounded collapsed"
-                data-bs-toggle="collapse"
-                data-bs-target="#traits-collapse"
-                aria-expanded="false"
+              {username}{" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                fill="currentColor"
+                type="button"
+                class="bi bi-gear text-muted"
+                viewBox="0 0 16 16"
+                data-bs-toggle="modal"
+                data-bs-target="#editProfileModal"
               >
-                Traits{" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-caret-down-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                </svg>
-              </button>
-              <div class="collapse" id="traits-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                  {traits.map((trait) => (
-                    <tr key={trait.trait_id}>
-                      <Trait trait_name={trait.trait_name} />
-                      <td>
-                        <button
-                          className="delete-button1"
-                          onClick={() => deleteTrait(trait.trait_id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
+                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+              </svg>
+            </h3>
+            {name}
+          </row>
+          <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+              <p>{description}</p>
 
-      <body class="col-md-9 ms-sm-auto px-md-4">
-        <h1>Dashboard</h1>
-        {/* Edit Profile */}
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#editProfileModal"
-        >
-          Edit Profile
-        </button>
-        <div
-          class="modal fade"
-          id="editProfileModal"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                  Edit Profile
-                </h5>
+              <hr></hr>
+
+              {/* Traits in side navbar */}
+              <li class="nav-item">
                 <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <form id="editProfileForm" onSubmit={handleSubmit}>
-                  <div class="mb-3">
-                    <label>New Username</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="new username"
-                      value={values.username}
-                      onChange={(e) => handleUsername(e)}
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label>New Description</label>
-                    <textarea
-                      class="form-control"
-                      rows="3"
-                      value={values.description}
-                      onChange={(e) => handleDescription(e)}
-                    />
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
+                  id="dropdown"
+                  class="btn btn-toggle align-items-center rounded collapsed"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#traits-collapse"
+                  aria-expanded="false"
                 >
-                  Close
+                  Traits{" "}
                 </button>
-                <button
-                  type="submit"
-                  form="editProfileForm"
-                  class="btn btn-primary"
-                  aria-hidden="true"
-                  // data-bs-dismiss="modal"
-                >
-                  Submit
-                </button>
+                <div class="collapse" id="traits-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    {traits.map((trait) => (
+                      <tr key={trait.trait_id}>
+                        <Trait trait_name={trait.trait_name} />
+                        <td>
+                          <button
+                            className="delete-button1"
+                            onClick={() => deleteTrait(trait.trait_id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <body class="col-md-9 ms-sm-auto px-md-4">
+          <h1>Dashboard</h1>
+          {/* Edit Profile */}
+          <div
+            class="modal fade"
+            id="editProfileModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Edit Profile
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form id="editProfileForm" onSubmit={handleSubmit}>
+                    <div class="mb-3">
+                      <label>New Username</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="new username"
+                        value={values.username}
+                        onChange={(e) => handleUsername(e)}
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label>New Description</label>
+                      <textarea
+                        class="form-control"
+                        rows="3"
+                        value={values.description}
+                        onChange={(e) => handleDescription(e)}
+                      />
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="submit"
+                    form="editProfileForm"
+                    class="btn btn-primary"
+                    aria-hidden="true"
+                    // data-bs-dismiss="modal"
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <DropdownButton
-          className="mt-4"
-          id="dropdown-basic-button"
-          title="Select Trait"
-          onSelect={uploadTrait}
-        >
-          {trait_options.map((trait) => (
-            <Dropdown.Item eventKey={trait}>{trait}</Dropdown.Item>
-          ))}
-        </DropdownButton>
-        <form onSubmit={uploadFile}>
-          <div className="mb-3">
-            <label htmlFor="formFile" className="form-label"></label>
+          <form className="d-flex" onSubmit={uploadTrait}>
+            <div>
+              <label>Select Traits</label>
+              <input name="trait" list="anrede" onChange={handleTraitChange} />
+              <datalist id="anrede">
+                {trait_options.map((trait) => {
+                  return <option value={trait}></option>;
+                })}
+              </datalist>
+            </div>
+
+            <button className="btn btn-success">Submit</button>
+          </form>
+
+          <form onSubmit={uploadFile}>
+            <div className="mb-3">
+              <label htmlFor="formFile" className="form-label"></label>
+              <input
+                className="form-control"
+                type="file"
+                id="formFile"
+                multiple
+                onChange={stageFile}
+              />
+            </div>
             <input
-              className="form-control"
-              type="file"
-              id="formFile"
-              multiple
-              onChange={stageFile}
+              type="submit"
+              value="Upload"
+              className="btn btn-primary btn-block mt-4"
             />
+          </form>
+
+          <div className="container">
+            <div className="row gx-3 gy-4">
+              {pic_repo.map((pic) => (
+                <div
+                  key={pic.pic_id}
+                  id="photograph"
+                  className="align-self-center col-sm-4"
+                >
+                  <Post pic_id={pic.pic_id} />
+                </div>
+              ))}
+            </div>
           </div>
-          <input
-            type="submit"
-            value="Upload"
-            className="btn btn-primary btn-block mt-4"
-          />
-        </form>
-        <div className="container">
-          <div className="row gx-3 gy-4">
+
+          <p>
+            <a
+              class="btn btn-outline-secondary"
+              data-bs-toggle="collapse"
+              href="#editPics"
+              role="button"
+              aria-expanded="false"
+              aria-controls="editPics"
+              // style={{ margin: { top: 5 } }}
+            >
+              Edit Photos
+            </a>
+          </p>
+          <div class="collapse" id="editPics">
             {pic_repo.map((pic) => (
-              <div
-                key={pic.pic_id}
-                id="photograph"
-                className="align-self-center col-sm-4"
-              >
+              //make sure key is unique (try delete and see if redundant)
+              <tr key={pic.pic_id}>
                 <Post pic_id={pic.pic_id} />
-              </div>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => deletePic(pic.pic_id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
             ))}
           </div>
-        </div>
-        <p>
-          <a
-            class="btn btn-outline-secondary"
-            data-bs-toggle="collapse"
-            href="#editPics"
-            role="button"
-            aria-expanded="false"
-            aria-controls="editPics"
-            // style={{ margin: { top: 5 } }}
-          >
-            Edit Photos
-          </a>
-        </p>
-        <div class="collapse" id="editPics">
-          {pic_repo.map((pic) => (
-            //make sure key is unique (try delete and see if redundant)
-            <tr key={pic.pic_id}>
-              <Post pic_id={pic.pic_id} />
-              <td>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => deletePic(pic.pic_id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </div>
-      </body>
+        </body>
+      </div>
     </div>
   );
 };

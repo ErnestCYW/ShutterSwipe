@@ -3,7 +3,7 @@ import io from "socket.io-client";
 
 let socket;
 
-function Chat({selected_chat, user_info }) {
+function Chat({ selected_chat, user_info }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [chat_history, setChatHistory] = useState([]);
@@ -17,9 +17,9 @@ function Chat({selected_chat, user_info }) {
     try {
       const response = await fetch("http://localhost:5000/group/chat", {
         method: "GET",
-        headers: { 
+        headers: {
           token: localStorage.token,
-          group_id: group_id 
+          group_id: group_id,
         },
       });
 
@@ -32,9 +32,9 @@ function Chat({selected_chat, user_info }) {
     }
   };
 
-  useEffect(() => {    
+  useEffect(() => {
     socket = io(ENDPOINT);
-    
+
     setMessages([]);
 
     socket.emit("join", { user_id, group_id, user_name, group_name }, () => {});
@@ -47,11 +47,10 @@ function Chat({selected_chat, user_info }) {
       socket.disconnect();
       socket.off();
     };
-  
   }, [ENDPOINT, group_id]);
 
   useEffect(() => {
-    getAll()
+    getAll();
   }, []);
 
   const sendMessage = (event) => {
@@ -72,7 +71,7 @@ function Chat({selected_chat, user_info }) {
         <h3> Selected: {group_name} </h3>
         <h3>Previous Messages</h3>
         <div>
-        {chat_history.map((message) => (
+          {chat_history.map((message) => (
             <div>
               <strong>{message.user_name}</strong>: {message.message_contents}
             </div>

@@ -21,47 +21,54 @@ const Discover = () => {
   };
 
   return (
-    <div>
-      <h1>All Users</h1>
-      <form className="d-flex" onSubmit={onSubmitForm}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Enter user ..."
-          className="form-control"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button className="btn btn-success">Submit</button>
-      </form>
+    <div className="discover">
+      <div style={{ paddingTop: "30px" }}></div>
+      <div className="container-md border rounded">
+        <h1>All Users</h1>
+        <form className="d-flex" onSubmit={onSubmitForm}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter user ..."
+            className="form-control"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <button className="btn btn-success">Submit</button>
+        </form>
 
-      <table className="table my-5">
-        <thead>
-          <tr>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.user_id}>
-              <td>
-                {" "}
-                {user.user_name}
-                <Link
-                  to={`profile/${user.username}`}
-                  className="btn btn-primary"
-                >
-                  Go
-                </Link>
-              </td>
-              <td>Hello</td>
+        <table className="table my-5">
+          <thead>
+            <tr>
+              <th>Name</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {users.length === 0 && <p>No Results Found</p>}
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.user_id}>
+                <td>
+                  <Link
+                    to={`profile/${user.username}`}
+                    className="btn btn-primary"
+                    style={{ marginLeft: "10px" }}
+                  >
+                    Visit
+                  </Link>
+                  <strong style={{ marginLeft: "8px" }}>
+                    @{user.username}
+                  </strong>
+                  <span className="text-muted" style={{ marginLeft: "8px" }}>
+                    {user.user_name}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {users.length === 0 && <p>No Results Found</p>}
 
-      <hr></hr>
+        <hr></hr>
+      </div>
     </div>
   );
 };

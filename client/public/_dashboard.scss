@@ -1,22 +1,40 @@
-.delete-button1 {
-  margin-left: 5px;
-  background-color: white;
-  color: black;
-  border: 2px solid red;
-  transition-duration: 0.4s;
-}
+.dashboard {
+  padding-top: 115px;
 
-.delete-button1:hover {
-  background-color: red;
-  color: white;
-}
+  body {
+    background-color: #f5f5f5;
+  }
 
-#dropdown {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.5rem;
-  font-weight: 600;
-  color: rgba(106, 19, 146, 0.65);
-  background-color: transparent;
-  border: 0;
+  .bi-gear {
+    margin-left: 5px;
+  }
+
+  .delete-button1 {
+    margin-left: 5px;
+    background-color: white;
+    color: black;
+    border: 2px solid red;
+    transition-duration: 0.4s;
+  }
+
+  .delete-button1:hover {
+    background-color: red;
+    color: white;
+  }
+
+  #dropdown {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    font-weight: 600;
+    color: rgba(106, 19, 146, 0.65);
+    background-color: transparent;
+    border: 0;
+  }
+
+  #sidebarMenu {
+    background-color: khaki;
+    // width: 280px;
+    height: 100vh;
+  }
 }

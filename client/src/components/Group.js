@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, { Fragment, useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Form } from "react-bootstrap";
 import Trait_Options from "./Trait_Options";
-import { link } from "react-router-dom";
 import Chat from "./Chat";
 
 const Group = ({ setAuth }) => {
@@ -41,7 +39,7 @@ const Group = ({ setAuth }) => {
       setRecommendedGroup(recommended_groups);
       setUserInfo({
         user_name: parseRes.user_name,
-        user_id: parseRes.user_id
+        user_id: parseRes.user_id,
       });
     } catch (err) {
       console.error(err.message);
@@ -104,7 +102,6 @@ const Group = ({ setAuth }) => {
   };
 
   const handleSubmit = async (event) => {
-    // alert(`${inputs.group_name} ${inputs.group_trait}`);
     event.preventDefault();
 
     let formData = new FormData();
@@ -170,7 +167,7 @@ const Group = ({ setAuth }) => {
   }, []);
 
   return (
-    <Fragment>
+    <div className="groups">
       <div>
         <h1>Find Groups</h1>
         <form className="d-flex" onSubmit={onSubmitSearch}>
@@ -278,10 +275,7 @@ const Group = ({ setAuth }) => {
       <h1>Member Groups</h1>
       {member_groups.map((group) => (
         <tr key={group.group_id}>
-          <h3 onClick={() => setSelectedChat(group)}>
-            {" "}
-            {group.group_name}{" "}
-          </h3>
+          <h3 onClick={() => setSelectedChat(group)}> {group.group_name} </h3>
           <td>
             <button
               className="btn btn-danger"
@@ -308,9 +302,10 @@ const Group = ({ setAuth }) => {
         <h3>{group.group_name}</h3>
       ))}
 
-      {selected_chat.group_id != "" ? <Chat selected_chat={selected_chat} user_info={user_info} />: null}
-    
-    </Fragment>
+      {selected_chat.group_id != "" ? (
+        <Chat selected_chat={selected_chat} user_info={user_info} />
+      ) : null}
+    </div>
   );
 };
 export default Group;

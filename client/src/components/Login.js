@@ -7,6 +7,7 @@ const Login = ({ setAuth }) => {
     email: "",
     password: "",
   });
+  const [errors, setErrors] = useState({});
 
   const { email, password } = inputs;
 
@@ -34,7 +35,8 @@ const Login = ({ setAuth }) => {
         toast.success("login successfully");
       } else {
         setAuth(false);
-        toast.error(parseRes); //from jwtAuth.js from server side
+
+        setErrors(parseRes);
       }
     } catch (err) {
       console.error(err.message);
@@ -42,30 +44,53 @@ const Login = ({ setAuth }) => {
   };
 
   return (
-    <body id="loginBody">
-      <h1 id="login" className="text-center my-5">
-        Login
-      </h1>
-      <form onSubmit={onSubmitForm}>
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          className="form-control my-3"
-          value={email}
-          onChange={(e) => onChange(e)} //allows you to type!
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          className="form-control my-3"
-          value={password}
-          onChange={(e) => onChange(e)}
-        />
-        <button className="btn btn-success btn-block">Submit</button>
-      </form>
-    </body>
+    <div className="authentication">
+      <div className="form-container">
+        <div className="form-content-left">
+          <h1 className="text-center my-5">Login</h1>
+        </div>
+
+        <div className="form-content-right">
+          <form onSubmit={onSubmitForm} className="form">
+            <div className="form-inputs">
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input
+                className="form-input"
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => onChange(e)} //allows you to type!
+              />
+              {errors.email && <p>{errors.email}</p>}
+            </div>
+
+            <div className="form-inputs">
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                className="form-input"
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => onChange(e)}
+              />
+              {errors.password && <p>{errors.password}</p>}
+            </div>
+            <button className="form-input-btn" type="submit">
+              Submit
+            </button>
+            <span className="form-input-login">
+              New to ShutterSwipe? Register <a href="/register">here</a>
+            </span>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

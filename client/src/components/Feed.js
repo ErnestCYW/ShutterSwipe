@@ -73,9 +73,9 @@ const Feed = ({ setAuth }) => {
   }, []);
 
   return (
-    <div style={{}}>
+    <div className="feed">
       <div style={{ paddingTop: "30px" }}></div>
-      <div className="container-md border">
+      <div className="container-md border rounded">
         <div class="text-center mt-5">
           <h1> {name + "'s"} Feed </h1>
         </div>

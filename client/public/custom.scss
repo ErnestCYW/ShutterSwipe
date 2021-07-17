@@ -1,6 +1,9 @@
 @import "./main";
 @import "./dashboard";
 @import "./feed";
+@import "./discover";
+@import "./authentication";
+@import "./groups";
 
 html {
   overflow: auto I !important; //Scroll bug here
@@ -19,15 +22,9 @@ img {
   display: table;
 }
 
-// Target a specific id,
-#feed {
-  background-color: teal;
-}
-
-#loginBody {
-  color: blue;
-  background-color: orange;
-  height: 100vh;
+.myNavbar {
+  .container-fluid {
+  }
 }
 
 @import "../node_modules/bootstrap/scss/bootstrap";

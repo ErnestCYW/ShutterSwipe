@@ -12,8 +12,8 @@ function NavbarAuth({ setAuth }) {
   };
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div className="myNavbar">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
             <img src={Logo} alt="" width="62.5" height="50"></img>

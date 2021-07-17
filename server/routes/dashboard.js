@@ -112,7 +112,6 @@ router.post("/edit", authorization, async (req, res) => {
 });
 
 //upload route
-
 router.post("/upload", authorization, async (req, res) => {
   if (req.files === null) {
     return res.status(400).json({ msg: "No file uploaded" }); //400 is bad request
@@ -203,7 +202,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.post("/uploadTrait", authorization, async (req, res) => {
+router.get("/uploadTrait", authorization, async (req, res) => {
   //check if user already has trait
   const hasTrait = await pool.query(
     "SELECT COUNT(*) as boolean FROM traits WHERE user_id = $1 and trait_name = $2",
@@ -211,11 +210,25 @@ router.post("/uploadTrait", authorization, async (req, res) => {
   );
 
   if (hasTrait.rows[0].boolean === "0") {
-    const uploaded_trait = await pool.query(
+    const insertTrait = await pool.query(
       "INSERT INTO traits (trait_id, user_id, trait_name) VALUES (DEFAULT, $1, $2) RETURNING trait_id",
       [req.user, req.header("uploadedTrait")]
     );
-    res.json("Trait was uploaded");
+
+    const updatedTraits = await pool.query(
+      "SELECT trait_name from traits WHERE user_id = $1",
+      [req.user]
+    );
+
+    console.log(updatedTraits);
+
+    const toReturn = {
+      updatedUserTraits: JSON.stringify(updatedTraits.rows),
+      added: true,
+    };
+
+    res.json(toReturn);
+    // res.json("Trait was uploaded");
   } else {
     res.json("User already has trait");
   }
