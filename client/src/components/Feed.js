@@ -74,7 +74,7 @@ const Feed = ({ setAuth }) => {
   }, []);
 
   return (
-    <div>
+    <div className="feed">
       <div className="text-center text-muted display-4 bg-light w-100 py-3">
         {name + "'s"} Feed
       </div>

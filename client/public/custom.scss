@@ -3,23 +3,33 @@
 @import "./feed";
 @import "./home";
 @import "./groups";
+@import "./discover";
+@import "./authentication";
 
-/*
 html {
   overflow: hidden;
   height: 100%;
 }
-*/
 
-html {
-  overflow: auto !important; //Scroll bug here
+body {
+  //Makes body only scrollable
   height: 100%;
+  overflow: auto;
 }
 
 img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+.pic_in_a_row {
+  display: flex;
+  margin: 25px 0;
+}
+
+.dashboardImage {
+  color: red;
 }
 
 //Target a specific class
@@ -29,15 +39,12 @@ img {
   padding: 0 !important;
 }
 
-// Target a specific id,
-#feed {
-  background-color: teal;
-}
+.myNavbar {
+  .container-fluid {
+  }
 
-#loginBody {
-  color: blue;
-  background-color: orange;
-  height: 100vh;
+  img {
+  }
 }
 
 @import "../node_modules/bootstrap/scss/bootstrap";
@@ -58,11 +65,3 @@ img {
 //-----------
 //TESTING
 //-----------
-
-// #dashboardContainer {
-//   background-color: green;
-// }
-
-// .container {
-//   background-color: pink;
-// }

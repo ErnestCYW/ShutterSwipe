@@ -4,10 +4,10 @@ import React from "react";
 
 function Post({ pic_id }) {
   return (
-    <div>
+    <div class="dashboardImage">
       {
         <img
-          width="auto"
+          // width="auto"
           src={require(`../../../picture_server/${pic_id}.jpg`).default}
           alt="missing img"
           data-bs-toggle="modal"

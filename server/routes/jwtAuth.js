@@ -5,15 +5,9 @@ const jwtGenerator = require("../utils/jwtGenerator");
 const validInfo = require("../middleware/validinfo");
 const authorization = require("../middleware/authorization");
 
-//COMMENTS LEFT FOR UNDERSTANDING PURPOSES
-//post -> bc want to add someone into the db
 router.post("/register", validInfo, async (req, res) => {
   try {
-    //1. destructure the req.body (name, email, password)
-
-    const { name, username, email, password } = req.body;
-
-    //2. check if user exists (if user exist then throw error)
+    const { name, username, email, password, password2 } = req.body;
 
     const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
       email,
@@ -65,32 +59,30 @@ router.post("/register", validInfo, async (req, res) => {
 //Login route
 router.post("/login", validInfo, async (req, res) => {
   try {
-    //1. destructure the req.body
-
     const { email, password } = req.body;
-
-    //2. check if user doesn't exist (if not then we throw error)
+    let errors = {};
 
     const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
       email,
     ]);
 
     if (user.rows.length === 0) {
-      return res.status(401).json("Password or Email is incorrect"); //Email is wrong
+      errors.email = "No user found";
+      return res.json(errors);
     }
 
-    //3. check if incoming password is the same as the database password
-    // note: await bc bcrypt (async)
     const validPassword = await bcrypt.compare(
       password,
       user.rows[0].user_password
     );
 
     if (!validPassword) {
-      return res.status(401).json("Password or Email is incorrect"); //Password is wrong
+      errors.password = "Incorrect password";
     }
 
-    //4. give them the jwt token if passed all test
+    if (Object.keys(errors).length !== 0) {
+      return res.json(errors);
+    }
 
     const token = jwtGenerator(user.rows[0].user_id);
 

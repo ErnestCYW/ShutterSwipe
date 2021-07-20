@@ -12,8 +12,8 @@ function NavbarAuth({ setAuth }) {
   };
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div className="myNavbar">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
           <a className="navbar-brand ms-4" href="/">
             <img
@@ -39,15 +39,16 @@ function NavbarAuth({ setAuth }) {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <a className="nav-link" href="/dashboard">
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
                 <a className="nav-link" href="/feed">
                   Feed
                 </a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/dashboard">
+                  Home
+                </a>
+              </li>
+
               <li className="nav-item">
                 <a className="nav-link" href="/group">
                   Groups

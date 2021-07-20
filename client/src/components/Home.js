@@ -45,7 +45,7 @@ function Main() {
   }, [index]);
 
   return (
-    <div>
+    <div className="home">
       <div className="d-flex align-items-center position-relative">
         <div className="slideshow">
           <div

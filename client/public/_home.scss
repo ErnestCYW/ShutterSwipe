@@ -1,48 +1,52 @@
-.slideshow {
-  overflow: hidden;
-  width: auto;
-  max-height: 725px;
-}
+.home {
+  padding-top: 115px;
 
-.slideshowSlider {
-  white-space: nowrap;
-  transition: ease 1500ms;
-  max-height: 725px;
-}
+  .slideshow {
+    overflow: hidden;
+    width: auto;
+    max-height: 725px;
+  }
 
-.slide {
-  display: inline-block;
-  width: 100%;
-  height: 725px;
-  object-fit: cover;
-}
+  .slideshowSlider {
+    white-space: nowrap;
+    transition: ease 1500ms;
+    max-height: 725px;
+  }
 
-.welcomeMessageBox {
-  opacity: 0.6;
-  height: 325px;
-}
+  .slide {
+    display: inline-block;
+    width: 100%;
+    height: 725px;
+    object-fit: cover;
+  }
 
-.welcomeMessage {
-  margin: 20px;
-}
+  .welcomeMessageBox {
+    opacity: 0.6;
+    height: 325px;
+  }
 
-.slideshowDots {
-  margin-top: 5px;
-  text-align: center;
-}
+  .welcomeMessage {
+    margin: 20px;
+  }
 
-.slideshowDot {
-  display: inline-block;
-  height: 10px;
-  width: 10px;
-  border-radius: 50%;
+  .slideshowDots {
+    margin-top: 5px;
+    text-align: center;
+  }
 
-  cursor: pointer;
-  margin: 15px 7px 0px;
+  .slideshowDot {
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
 
-  background-color: #c4c4c4;
-}
+    cursor: pointer;
+    margin: 15px 7px 0px;
 
-.slideshowDot.active {
-  background-color: #2a3439;
+    background-color: #c4c4c4;
+  }
+
+  .slideshowDot.active {
+    background-color: #2a3439;
+  }
 }
