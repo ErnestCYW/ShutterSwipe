@@ -8,16 +8,13 @@ const Profile = () => {
   const [username, setUsername] = useState("");
   const [pic_repo, setPicRepo] = useState([]);
   const [traits, setTraits] = useState([]);
+  const [description, setDescription] = useState("");
 
   const { input_username } = useParams();
 
   const getAll = async () => {
     try {
       console.log(input_username);
-
-      if (input_username === "custom.css") {
-        console.log("WTF");
-      }
 
       const response = await fetch(
         `http://localhost:5000/profile/${input_username}`,
@@ -34,6 +31,12 @@ const Profile = () => {
       setPicRepo(pic_repo);
       setName(parseRes.user_name);
       setUsername(parseRes.username);
+
+      if (Object.keys(parseRes.description).length !== 0) {
+        setDescription(parseRes.description);
+      }
+
+      console.log(parseRes.description);
     } catch (err) {
       console.error(err.message);
     }
@@ -44,75 +47,70 @@ const Profile = () => {
   }, []);
 
   return (
-    <div class="row">
-      <nav
-        id="sidebarMenu"
-        class="col-md-3 col-lg2 d-md-block sidebar collapse"
-      >
-        <hr></hr>
-        <row>
-          <h3> {username} </h3>
-          {name}
-        </row>
-        <div class="position-sticky pt-3">
-          <ul class="nav flex-column">
-            <p>
-              {" "}
-              This is a paragraph, for users to add a description of themselves
-            </p>
-            <li class="nav-item">Another person's profile</li>
-            <hr></hr>
+    <div class="dashboard">
+      <div class="row">
+        <nav
+          id="sidebarMenu"
+          class="col-md-3 d-md-block sidebar collapse position-fixed"
+        >
+          <hr></hr>
+          <row>
+            <h3> {username} </h3>
+            {name}
+          </row>
+          <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+              <p>
+                <span className="fw-bold">Bio:</span> {description}
+              </p>
 
-            {/* Traits in side navbar */}
-            <li class="nav-item">
-              <button
-                id="dropdown"
-                class="btn btn-toggle align-items-center rounded collapsed"
-                data-bs-toggle="collapse"
-                data-bs-target="#traits-collapse"
-                aria-expanded="false"
-              >
-                Traits{" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-caret-down-fill"
-                  viewBox="0 0 16 16"
+              <hr></hr>
+
+              {/* Traits in side navbar */}
+              <li class="nav-item">
+                <button
+                  id="dropdown"
+                  class="btn btn-toggle align-items-center rounded collapsed"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#traits-collapse"
+                  aria-expanded="false"
                 >
-                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                </svg>
-              </button>
-              <div class="collapse" id="traits-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                  {traits.map((trait) => (
-                    <tr key={trait.trait_id}>
-                      <Trait trait_name={trait.trait_name} />
-                    </tr>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
-      <body class="col-md-9 ms-sm-auto px-md-4">
-        <div className="container">
-          <div className="row gx-3 gy-4">
-            {pic_repo.map((pic) => (
-              <div
-                key={pic.pic_id}
-                id="photograph"
-                className="align-self-center col-sm-4"
-              >
-                <Post pic_id={pic.pic_id} />
-              </div>
-            ))}
+                  Traits{" "}
+                </button>
+                <div class="collapse" id="traits-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    {traits.map((trait) => (
+                      <tr id="user-trait" key={trait.trait_id}>
+                        <td>
+                          <span className="border border-secondary rounded-pill">
+                            {trait.trait_name}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            </ul>
           </div>
-        </div>
-      </body>
+        </nav>
+
+        <body class="col-md-9 ms-sm-auto px-md-4">
+          <div className="container-fluid">
+            <div className="row gx-3 gy-4">
+              {pic_repo.map((pic) => (
+                <div
+                  key={pic.pic_id}
+                  id="photograph"
+                  className="align-self-center col-sm-4"
+                >
+                  <Post pic_id={pic.pic_id} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </body>
+      </div>
     </div>
   );
 };

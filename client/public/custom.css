@@ -8,27 +8,30 @@ main {
 
 .dashboard body {
   background-color: #f5f5f5;
+  padding-bottom: 100px;
+}
+
+.dashboard .btn-success {
+  margin-left: 10px;
+}
+
+.dashboard #uploadPicForm {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: white;
+  padding-top: 15px;
 }
 
 .dashboard .bi-gear {
   margin-left: 5px;
 }
 
-.dashboard .delete-button1 {
-  margin-left: 5px;
-  background-color: white;
-  color: black;
-  border: 2px solid red;
-  -webkit-transition-duration: 0.4s;
-          transition-duration: 0.4s;
+.dashboard .addTrait {
+  margin-left: 10px;
 }
 
-.dashboard .delete-button1:hover {
-  background-color: red;
-  color: white;
-}
-
-.dashboard #dropdown {
+.dashboard .btn-toggle {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -40,11 +43,81 @@ main {
   color: rgba(106, 19, 146, 0.65);
   background-color: transparent;
   border: 0;
+  margin-bottom: 14px;
+}
+
+.dashboard .btn-toggle::before {
+  width: 1.25em;
+  line-height: 0;
+  content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+  -webkit-transition: -webkit-transform 0.35s ease;
+  transition: -webkit-transform 0.35s ease;
+  transition: transform 0.35s ease;
+  transition: transform 0.35s ease, -webkit-transform 0.35s ease;
+  -webkit-transform-origin: 0.5em 50%;
+          transform-origin: 0.5em 50%;
+}
+
+.dashboard .btn-toggle[aria-expanded="true"]::before {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.dashboard .rounded {
+  border-radius: 0.25rem !important;
+}
+
+.dashboard .align-items-center {
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+}
+
+.dashboard .rounded-pill {
+  border-width: 10000px;
+  height: 1000px;
+  padding: 0.5rem;
+}
+
+.dashboard #user-trait {
+  margin-left: 1.5 rem;
+}
+
+.dashboard .collapse ul tr td {
+  padding-bottom: 1.5em;
+}
+
+.dashboard .collapse ul tr span {
+  color: black;
 }
 
 .dashboard #sidebarMenu {
-  background-color: khaki;
+  background-color: #f5f5f5;
   height: 100vh;
+}
+
+.dashboard #sidebarMenu row h3, .dashboard #sidebarMenu row .h3 {
+  padding-top: 30px;
+}
+
+.dashboard .title {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  padding: 4px 6px;
+  font-size: 30px;
+  color: #000000;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  clear: both;
+}
+
+.dashboard .title .dashboardTitle {
+  float: left;
+}
+
+.dashboard .title span {
+  float: right;
 }
 
 .feed {
@@ -265,14 +338,30 @@ main {
 }
 
 html {
-  overflow: auto I !important;
+  overflow: hidden;
   height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: auto;
 }
 
 img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+.pic_in_a_row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 25px 0;
+}
+
+.dashboardImage {
+  color: red;
 }
 
 .container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {

@@ -33,15 +33,16 @@ function NavbarAuth({ setAuth }) {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <a className="nav-link" href="/dashboard">
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
                 <a className="nav-link" href="/feed">
                   Feed
                 </a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/dashboard">
+                  Home
+                </a>
+              </li>
+
               <li className="nav-item">
                 <a className="nav-link" href="/group">
                   Groups

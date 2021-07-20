@@ -1,14 +1,11 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Post from "./Post";
 import Trait from "./Trait";
 import trait_options from "./Trait_Options";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 
 import useForm from "./useForm";
-import FormEditProfile from "./FormEditProfile";
 
 const Dashboard = ({ setAuth }) => {
   //passing prop setAuth
@@ -62,7 +59,6 @@ const Dashboard = ({ setAuth }) => {
 
   const stageFile = (e) => {
     setFile(e.target.files[0]); //one file upload only first file
-    //setFilename(e.target.files[0].name);
   };
 
   const uploadFile = async (e) => {
@@ -71,14 +67,22 @@ const Dashboard = ({ setAuth }) => {
     formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:5000/dashboard/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          token: localStorage.token,
-        },
-      });
-      toast.success("Image uploaded! Refresh to see change.");
+      const upload = await axios.post(
+        "http://localhost:5000/dashboard/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: localStorage.token,
+          },
+        }
+      );
 
+      if (upload) {
+        console.log("uploaded");
+      }
+
+      // getPicRepo();
       /*--- TODO ---
       window.location = "/dashboard"; refreshes page, and files are moved to picture_server, but react cannot find module. Async error?  
       */
@@ -89,6 +93,23 @@ const Dashboard = ({ setAuth }) => {
         console.log(err.response.data.msg);
       }
     }
+  };
+
+  const getPicRepo = async () => {
+    // e.preventDefault();
+    const res = await fetch("http://localhost:5000/dashboard/getPics", {
+      method: "GET",
+      headers: {
+        token: localStorage.token,
+      },
+    });
+
+    const parseRes = await res.json();
+    const updatedPicRepo = JSON.parse(parseRes.updatedPicRepo);
+    // // console.log(updatedPicRepo);
+    setPicRepo(updatedPicRepo);
+
+    toast.success("Image uploaded! Refresh to see change.");
   };
 
   //delete picture
@@ -167,9 +188,8 @@ const Dashboard = ({ setAuth }) => {
       <div class="row">
         <nav
           id="sidebarMenu"
-          class="col-md-3 d-md-block sidebar collapse position-fixed"
+          class="col-md-3 d-md-block sidebar collapse position-fixed shadow p-3 mb-5 rounded"
         >
-          <hr></hr>
           <row>
             <h3>
               {" "}
@@ -189,7 +209,7 @@ const Dashboard = ({ setAuth }) => {
                 <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
               </svg>
             </h3>
-            {name}
+            <span className="text-muted">{name}</span>
           </row>
           <div class="position-sticky pt-3">
             <ul class="nav flex-column">
@@ -209,17 +229,50 @@ const Dashboard = ({ setAuth }) => {
                   Traits{" "}
                 </button>
                 <div class="collapse" id="traits-collapse">
+                  <form className="d-flex" onSubmit={uploadTrait}>
+                    <div className="mb-3 row">
+                      <label for="inputTrait" class="col-auto col-form-label">
+                        Add Trait
+                      </label>
+                      <div class="col-auto">
+                        <input
+                          name="trait"
+                          id="inputTrait"
+                          className="form-control"
+                          list="anrede"
+                          onChange={handleTraitChange}
+                        />
+                      </div>
+                      <datalist id="anrede">
+                        {trait_options.map((trait) => {
+                          return <option value={trait}></option>;
+                        })}
+                      </datalist>
+
+                      <div className="col-auto">
+                        <button className="btn btn-success">Submit</button>
+                      </div>
+                    </div>
+                  </form>
                   <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     {traits.map((trait) => (
-                      <tr key={trait.trait_id}>
-                        <Trait trait_name={trait.trait_name} />
+                      <tr id="user-trait" key={trait.trait_id}>
                         <td>
-                          <button
-                            className="delete-button1"
-                            onClick={() => deleteTrait(trait.trait_id)}
-                          >
-                            Delete
-                          </button>
+                          <span className="border border-secondary rounded-pill">
+                            {trait.trait_name}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="18"
+                              height="18"
+                              fill="currentColor"
+                              type="button"
+                              class="bi bi-x"
+                              viewBox="0 0 16 16"
+                              onClick={() => deleteTrait(trait.trait_id)}
+                            >
+                              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                          </span>
                         </td>
                       </tr>
                     ))}
@@ -231,7 +284,19 @@ const Dashboard = ({ setAuth }) => {
         </nav>
 
         <body class="col-md-9 ms-sm-auto px-md-4">
-          <h1>Dashboard</h1>
+          <div className="title">
+            <span className="dashboardTitle">Dashboard</span>
+            <span>
+              <button
+                class="btn btn-outline-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#editPicsModal"
+              >
+                Edit Photos
+              </button>
+            </span>
+          </div>
+
           {/* Edit Profile */}
           <div
             class="modal fade"
@@ -298,39 +363,36 @@ const Dashboard = ({ setAuth }) => {
             </div>
           </div>
 
-          <form className="d-flex" onSubmit={uploadTrait}>
-            <div>
-              <label>Select Traits</label>
-              <input name="trait" list="anrede" onChange={handleTraitChange} />
-              <datalist id="anrede">
-                {trait_options.map((trait) => {
-                  return <option value={trait}></option>;
-                })}
-              </datalist>
-            </div>
+          <div className="container-sm col-md-7 ">
+            <form
+              id="uploadPicForm"
+              className="d-flex shadow p-3 mb-5 bg-body rounded"
+              onSubmit={uploadFile}
+            >
+              <div className="mb-3 row ">
+                <label htmlFor="formFile" className="col-auto col-form-label">
+                  Upload a photo
+                </label>
+                <div className="col-auto">
+                  <input
+                    className="form-control"
+                    type="file"
+                    id="formFile"
+                    multiple
+                    onChange={stageFile}
+                  />
+                </div>
 
-            <button className="btn btn-success">Submit</button>
-          </form>
+                <div className="col-auto">
+                  <button className="btn btn-primary btn-success">
+                    Upload
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
 
-          <form onSubmit={uploadFile}>
-            <div className="mb-3">
-              <label htmlFor="formFile" className="form-label"></label>
-              <input
-                className="form-control"
-                type="file"
-                id="formFile"
-                multiple
-                onChange={stageFile}
-              />
-            </div>
-            <input
-              type="submit"
-              value="Upload"
-              className="btn btn-primary btn-block mt-4"
-            />
-          </form>
-
-          <div className="container">
+          <div className="container-fluid">
             <div className="row gx-3 gy-4">
               {pic_repo.map((pic) => (
                 <div
@@ -344,34 +406,51 @@ const Dashboard = ({ setAuth }) => {
             </div>
           </div>
 
-          <p>
-            <a
-              class="btn btn-outline-secondary"
-              data-bs-toggle="collapse"
-              href="#editPics"
-              role="button"
-              aria-expanded="false"
-              aria-controls="editPics"
-              // style={{ margin: { top: 5 } }}
-            >
-              Edit Photos
-            </a>
-          </p>
-          <div class="collapse" id="editPics">
-            {pic_repo.map((pic) => (
-              //make sure key is unique (try delete and see if redundant)
-              <tr key={pic.pic_id}>
-                <Post pic_id={pic.pic_id} />
-                <td>
+          {/* Edit pics modal */}
+          <div
+            class="modal fade"
+            id="editPicsModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Edit Pictures
+                  </h5>
                   <button
-                    className="btn btn-danger"
-                    onClick={() => deletePic(pic.pic_id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+
+                <div class="modal-body">
+                  <div className="row gx-3 gy-4">
+                    {pic_repo.map((pic) => (
+                      <div
+                        key={pic.pic_id}
+                        id="photograph"
+                        className="align-self-center col-sm-4"
+                      >
+                        <Post pic_id={pic.pic_id} />
+                        <td>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => deletePic(pic.pic_id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </body>
       </div>

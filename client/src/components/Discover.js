@@ -23,7 +23,7 @@ const Discover = () => {
   return (
     <div className="discover">
       <div style={{ paddingTop: "30px" }}></div>
-      <div className="container-md border rounded">
+      <div className="container-md border rounded ">
         <h1>All Users</h1>
         <form className="d-flex" onSubmit={onSubmitForm}>
           <input

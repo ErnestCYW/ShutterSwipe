@@ -34,8 +34,10 @@ CREATE TABLE profile_pics (
 CREATE TABLE pics (
   pic_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID REFERENCES users(user_id) NOT NULL,
-  pic_score INT DEFAULT 0 
-)
+  pic_score INT DEFAULT 0,
+  created_date TIMESTAMP NOT NULL
+);
+
 
 --User Traits table
 CREATE TABLE traits (
