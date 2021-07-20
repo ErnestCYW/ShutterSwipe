@@ -180,8 +180,7 @@ router.get("/nextPhoto", authorization, async (req, res) => {
     //console.log(recommended_pic_id);
 
     const toReturn = {
-      inQueue: JSON.stringify(temp),
-      user_name: `${user.rows[0].user_name}`,
+      nextPic: JSON.stringify(temp),
       posted_by: posted_by,
     };
 

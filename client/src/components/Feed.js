@@ -36,6 +36,7 @@ const Feed = ({ setAuth }) => {
       const pic = JSON.parse(parseRes.nextPic);
 
       setPicFeed(pic);
+      setPostedBy(parseRes.posted_by);
     } catch (err) {
       console.error(err.message);
     }
@@ -100,7 +101,7 @@ const Feed = ({ setAuth }) => {
                 alt="missing img"
               />
             </div>
-            <div className="mb-4 d-flex fixed-bottom justify-content-around text-center">
+            <div className="pb-4 d-flex fixed-bottom justify-content-around text-center bg-white">
               <button
                 className="btn btn-teal"
                 onClick={() => likePic(pic.pic_id)}
