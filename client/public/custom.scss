@@ -1,9 +1,18 @@
 @import "./main";
 @import "./dashboard";
 @import "./feed";
+@import "./home";
+@import "./groups";
+
+/*
+html {
+  overflow: hidden;
+  height: 100%;
+}
+*/
 
 html {
-  overflow: auto I !important; //Scroll bug here
+  overflow: auto !important; //Scroll bug here
   height: 100%;
 }
 
@@ -17,6 +26,7 @@ img {
 .container-fluid {
   overflow: auto;
   display: table;
+  padding: 0 !important;
 }
 
 // Target a specific id,

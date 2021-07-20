@@ -56,7 +56,7 @@ router.get("/", authorization, async (req, res) => {
             //Loop through user preffered labels
             user_prefered_labels.rows.forEach((preffered_label) => {
               if (label.label_name == preffered_label.label_name) {
-                map[pic.pic_id] += 0.1 * preffered_label.num_occurences; //0.1 value here is the B value in ranking equation
+                map[pic.pic_id] += 0.7 * preffered_label.num_occurences; //0.7 value here is the B value in ranking equation
               }
             });
           })
@@ -64,11 +64,22 @@ router.get("/", authorization, async (req, res) => {
       })
     );
 
-    //Find highest score picture
-    const recommended_pic_id = Object.entries(map).reduce((a, b) =>
-      a[1] > b[1] ? a : b
-    )[0];
-    const temp = [{ pic_id: recommended_pic_id }];
+    //Find highest score picture & who posted it
+    var temp = [];
+    var posted_by = "";
+    if (Object.keys(map).length !== 0) {
+      const recommended_pic_id = Object.entries(map).reduce((a, b) =>
+        a[1] > b[1] ? a : b
+      )[0];
+      temp = [{ pic_id: recommended_pic_id }];
+      const posted_by_temp = await pool.query(
+        "SELECT users.user_name FROM users \
+        LEFT JOIN pics ON users.user_id = pics.user_id \
+        WHERE pics.pic_id = $1",
+        [recommended_pic_id]
+      );
+      posted_by = posted_by_temp.rows[0].user_name
+    }
 
     //console.log(map);
     //console.log(inQueue.rows);
@@ -77,6 +88,7 @@ router.get("/", authorization, async (req, res) => {
     const toReturn = {
       inQueue: JSON.stringify(temp),
       user_name: `${user.rows[0].user_name}`,
+      posted_by: posted_by,
     };
 
     res.json(toReturn);
@@ -138,7 +150,7 @@ router.get("/nextPhoto", authorization, async (req, res) => {
             //Loop through user preffered labels
             user_prefered_labels.rows.forEach((preffered_label) => {
               if (label.label_name == preffered_label.label_name) {
-                map[pic.pic_id] += 0.1 * preffered_label.num_occurences; //0.1 value here is the B value in ranking equation
+                map[pic.pic_id] += 0.7 * preffered_label.num_occurences; //0.1 value here is the B value in ranking equation
               }
             });
           })
@@ -146,18 +158,31 @@ router.get("/nextPhoto", authorization, async (req, res) => {
       })
     );
 
-    //Find highest score picture
-    const recommended_pic_id = Object.entries(map).reduce((a, b) =>
-      a[1] > b[1] ? a : b
-    )[0];
-    const temp = [{ pic_id: recommended_pic_id }];
+    //Find highest score picture & who posted it
+    var temp = [];
+    var posted_by = "";
+    if (Object.keys(map).length !== 0) {
+      const recommended_pic_id = Object.entries(map).reduce((a, b) =>
+        a[1] > b[1] ? a : b
+      )[0];
+      temp = [{ pic_id: recommended_pic_id }];
+      const posted_by_temp = await pool.query(
+        "SELECT users.user_name FROM users \
+        LEFT JOIN pics ON users.user_id = pics.user_id \
+        WHERE pics.pic_id = $1",
+        [recommended_pic_id]
+      );
+      posted_by = posted_by_temp.rows[0].user_name
+    }
 
     //console.log(map);
     //console.log(inQueue.rows);
     //console.log(recommended_pic_id);
 
     const toReturn = {
-      nextPic: JSON.stringify(temp),
+      inQueue: JSON.stringify(temp),
+      user_name: `${user.rows[0].user_name}`,
+      posted_by: posted_by,
     };
 
     res.json(toReturn);

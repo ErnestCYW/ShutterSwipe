@@ -4,6 +4,7 @@ import Post from "./Post";
 const Feed = ({ setAuth }) => {
   const [name, setName] = useState("");
   const [pic_feed, setPicFeed] = useState([]);
+  const [posted_by, setPostedBy] = useState("");
 
   const getAll = async () => {
     try {
@@ -15,10 +16,10 @@ const Feed = ({ setAuth }) => {
       setAuth(true);
       const parseRes = await response.json();
       const queue = JSON.parse(parseRes.inQueue);
-      console.log(parseRes.user_name);
 
       setPicFeed(queue);
       setName(parseRes.user_name);
+      setPostedBy(parseRes.posted_by);
     } catch (err) {
       console.error(err.message);
     }
@@ -73,39 +74,56 @@ const Feed = ({ setAuth }) => {
   }, []);
 
   return (
-    <div style={{}}>
-      <div style={{ paddingTop: "30px" }}></div>
-      <div className="container-md border">
-        <div class="text-center mt-5">
-          <h1> {name + "'s"} Feed </h1>
-        </div>
-
-        {pic_feed.map((pic) => (
-          <tr key={pic.pic_id}>
-            <Post pic_id={pic.pic_id} />
-            <h4>testing center alignment</h4>
-
-            <div className="row justify-content-center text-center">
-              <h2 className="col">
-                <button
-                  className="btn btn-warning"
-                  onClick={() => likePic(pic.pic_id)}
-                >
-                  like
-                </button>
-              </h2>
-              <h2 className="col">
-                <button
-                  className="btn btn-warning"
-                  onClick={() => dislikePic(pic.pic_id)}
-                >
-                  dislike
-                </button>
-              </h2>
-            </div>
-          </tr>
-        ))}
+    <div>
+      <div className="text-center text-muted display-4 bg-light w-100 py-3">
+        {name + "'s"} Feed
       </div>
+
+      {pic_feed.length === 0 ? (
+        <div className="text-center display-1 mt-5">
+          {" "}
+          No Pictures To Display
+          <div className="display-5"> Check Back Later! </div>{" "}
+        </div>
+      ) : (
+        pic_feed.map((pic) => (
+          <div>
+            <div
+              className="feedPicContainer d-flex justify-content-center bg-dark"
+              key={pic.pic_id}
+            >
+              <img
+                src={
+                  require(`../../../picture_server/${pic.pic_id}.jpg`).default
+                }
+                className="bg-light"
+                alt="missing img"
+              />
+            </div>
+            <div className="mb-4 d-flex fixed-bottom justify-content-around text-center">
+              <button
+                className="btn btn-teal"
+                onClick={() => likePic(pic.pic_id)}
+              >
+                <i
+                  className="bi bi-hand-thumbs-up-fill"
+                  style={{ "font-size": "30px", color: "whitesmoke" }}
+                />
+              </button>
+              <div className="lead"> Posted By: {posted_by} </div>
+              <button
+                className="btn btn-orange"
+                onClick={() => dislikePic(pic.pic_id)}
+              >
+                <i
+                  className="bi bi-hand-thumbs-down-fill"
+                  style={{ "font-size": "30px", color: "whitesmoke" }}
+                />
+              </button>
+            </div>
+          </div>
+        ))
+      )}
     </div>
   );
 };

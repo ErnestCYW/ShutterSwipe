@@ -186,9 +186,9 @@ router.delete("/:id", async (req, res) => {
       [id]
     );
 
-    const deletePic = await pool.query("DELETE FROM pics WHERE pic_id = $1", [
-      id,
-    ]);
+    const deletePic = await pool.query("DELETE FROM pics WHERE pic_id = $1", 
+      [id]
+    );
 
     fs.unlink(`${__dirname}/../../picture_server/${id}.jpg`, (err) => {
       if (err) {

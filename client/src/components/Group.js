@@ -18,7 +18,7 @@ const Group = ({ setAuth }) => {
   const [selected_chat, setSelectedChat] = useState({
     group_name: "No Chat Selected",
     group_id: "",
-    chat_history: "",
+    chat_history: [],
   });
   const [user_info, setUserInfo] = useState({
     user_name: "",
@@ -142,6 +142,14 @@ const Group = ({ setAuth }) => {
       setMemberGroup(
         member_groups.filter((group) => group.group_id !== group_id)
       );
+
+      if (selected_chat.group_id === group_id) {
+        setSelectedChat({
+          group_name: "No Chat Selected",
+          group_id: "",
+          chat_history: [],
+        });
+      }
     } catch (err) {
       console.error(err.message);
     }
@@ -160,6 +168,14 @@ const Group = ({ setAuth }) => {
       setMemberGroup(
         member_groups.filter((group) => group.group_id !== group_id)
       );
+
+      if (selected_chat.group_id === group_id) {
+        setSelectedChat({
+          group_name: "No Chat Selected",
+          group_id: "",
+          chat_history: [],
+        });
+      }
     } catch (err) {
       console.error(err.message);
     }
@@ -171,13 +187,13 @@ const Group = ({ setAuth }) => {
 
   return (
     <Fragment>
-      <div>
-        <h1>Find Groups</h1>
-        <form className="d-flex" onSubmit={onSubmitSearch}>
+
+      <div className="searchContainer d-flex p-3">
+        <form className="d-flex p-3 bg-info" onSubmit={onSubmitSearch}>
           <input
             type="text"
             name="name"
-            placeholder="Enter group ..."
+            placeholder="Search for groups..."
             className="form-control"
             value={searched_groups}
             onChange={(e) => setSearchedGroup(e.target.value)}

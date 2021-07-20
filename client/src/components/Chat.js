@@ -32,7 +32,9 @@ function Chat({selected_chat, user_info }) {
     }
   };
 
-  useEffect(() => {    
+  useEffect(() => {
+    getAll();
+    
     socket = io(ENDPOINT);
     
     setMessages([]);
@@ -49,10 +51,6 @@ function Chat({selected_chat, user_info }) {
     };
   
   }, [ENDPOINT, group_id]);
-
-  useEffect(() => {
-    getAll()
-  }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();

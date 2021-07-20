@@ -40,8 +40,8 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", (message, user_id, group_id, user_name, callback) => {
     io.to(group_id).emit("message", { user_id: user_id, user_name: user_name, text: message });
     pool.query(
-      "INSERT INTO group_chat_history(group_id, user_id, message_contents) \
-      VALUES ($1, $2, $3)",
+      "INSERT INTO group_chat_history(group_id, user_id, message_contents, date_time) \
+      VALUES ($1, $2, $3, DEFAULT)",
       [group_id,user_id,message]
     )
     callback();
@@ -74,6 +74,9 @@ app.use("/group", require("./routes/group"));
 app.use("/discover", require("./routes/discover"));
 
 app.use("/profile", require("./routes/profile"));
+
+//Home route
+app.use("/home", require("./routes/home"));
 
 /*
 app.listen(port, () => {

@@ -1,25 +1,34 @@
-.container-md {
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 16px;
+.feedPicContainer{
+  height: 700px;
+}
 
-  h1 {
-    background-color: teal;
-  }
+.feedPic{
+  display: inline-block;
+  //min-height: 100%;
+  //max-width: 1250px;
+  //max-width: 1250px;
+  max-height: 700px;
+  //height: auto;
+  //width: auto;
+  //flex-grow: 1;
+  //flex-shrink: 1;
+  //flex-basis: auto;
+  //object-fit: cover;
+  //overflow: auto;
+}
 
-  //HAS PADDING
-  h4 {
-    // background-color: red;
-    text-align: center;
-  }
+.btn-teal {
+  background-color: #5F6670 !important;
+}
 
-  //DOESN'T HAVE PADDING
-  .row {
-    // background-color: green;
-  }
+.btn-teal:hover, .btn-teal:active, .btn-teal:visited {
+  background-color: #2f9898 !important;
+}
 
-  tr .btn {
-    color: red;
-  }
+.btn-orange {
+  background-color: #5F6670 !important;
+}
+
+.btn-orange:hover, .btn-orange:active, .btn-orange:visited {
+  background-color: #ec6323 !important;
 }

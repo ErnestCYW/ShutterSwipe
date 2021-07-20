@@ -6,8 +6,14 @@ function NavbarUnauth() {
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div className="container-fluid">
-          <a className="navbar-brand" href="/">
-            <img src={Logo} alt="" width="62.5" height="50"></img>
+          <a className="navbar-brand ms-4" href="/">
+            <img
+              src={Logo}
+              className="ms-4"
+              alt=""
+              width="62.5"
+              height="50"
+            ></img>
             ShutterSwipe
           </a>
           <button

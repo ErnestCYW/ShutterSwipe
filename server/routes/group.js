@@ -173,10 +173,16 @@ router.delete("/delete/:group_id", authorization, async (req, res) => {
       [group_id]
     );
 
+    const deleteChatHistory = await pool.query(
+      "DELETE FROM group_chat_history WHERE group_id = $1",
+      [group_id]
+    );
+
     const deleteGroup = await pool.query(
       "DELETE FROM groups WHERE group_id = $1",
       [group_id]
     );
+
 
     res.json("Group Deleted");
   } catch (err) {
@@ -189,7 +195,7 @@ router.get("/chat", authorization, async (req, res) => {
     const chat_history = await pool.query(
       "SELECT users.user_name, group_chat_history.message_contents FROM users \
       LEFT JOIN group_chat_history ON users.user_id = group_chat_history.user_id \
-      WHERE group_id = $1 LIMIT 100",
+      WHERE group_id = $1 ORDER BY date_time ASC LIMIT 100",
       [req.header("group_id")]
     );
 
