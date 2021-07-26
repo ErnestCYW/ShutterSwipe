@@ -1,7 +1,7 @@
 # ShutterSwipe (NUS Orbital 2021: Artemis)
 # Version: 2.3
 # Link To App: https://shutterswipe.herokuapp.com/
-# (DECPRECATED: See Google Doc for milestone 3 documentation)
+# (DEPRECATED: See Google Doc for milestone 3 documentation)
 
 ## Motivation
 
