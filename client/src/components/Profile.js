@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Post from "./Post";
-import Trait from "./Trait";
+import DiscoverNavbar from "./navbar/Discover_Navbar";
 
-const Profile = () => {
+const Profile = ({ setAuth }) => {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [pic_repo, setPicRepo] = useState([]);
@@ -48,6 +48,7 @@ const Profile = () => {
 
   return (
     <div class="dashboard">
+      <DiscoverNavbar setAuth={setAuth} />
       <div class="row">
         <nav
           id="sidebarMenu"

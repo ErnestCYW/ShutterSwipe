@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-//import { Link } from "react-router-dom";
+import LoginNavbar from "./navbar/Login_Navbar";
 import { toast } from "react-toastify";
 
 const Login = ({ setAuth }) => {
@@ -45,6 +45,7 @@ const Login = ({ setAuth }) => {
 
   return (
     <div className="authentication">
+      <LoginNavbar />
       <div className="form-container">
         <div className="form-content-left">
           <h1 className="text-center my-5">Login</h1>

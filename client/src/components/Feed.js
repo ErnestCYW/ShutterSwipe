@@ -1,10 +1,12 @@
-import React, { Fragment, useState, useEffect } from "react";
-import Post from "./Post";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import FeedNavbar from "./navbar/Feed_Navbar";
 
 const Feed = ({ setAuth }) => {
   const [name, setName] = useState("");
   const [pic_feed, setPicFeed] = useState([]);
   const [posted_by, setPostedBy] = useState("");
+  const [posted_by_username, setPostedByUsername] = useState("");
 
   const getAll = async () => {
     try {
@@ -20,6 +22,7 @@ const Feed = ({ setAuth }) => {
       setPicFeed(queue);
       setName(parseRes.user_name);
       setPostedBy(parseRes.posted_by);
+      setPostedByUsername(parseRes.posted_by_username);
     } catch (err) {
       console.error(err.message);
     }
@@ -37,6 +40,7 @@ const Feed = ({ setAuth }) => {
 
       setPicFeed(pic);
       setPostedBy(parseRes.posted_by);
+      setPostedByUsername(parseRes.posted_by_username);
     } catch (err) {
       console.error(err.message);
     }
@@ -76,7 +80,8 @@ const Feed = ({ setAuth }) => {
 
   return (
     <div className="feed">
-      <div className="text-center text-muted display-4 bg-light w-100 py-3">
+      <FeedNavbar setAuth={setAuth} />
+      <div className="text-center text-muted display-6 bg-light w-100 py-3">
         {name + "'s"} Feed
       </div>
 
@@ -90,7 +95,7 @@ const Feed = ({ setAuth }) => {
         pic_feed.map((pic) => (
           <div>
             <div
-              className="feedPicContainer d-flex justify-content-center bg-dark"
+              className="feedPicContainer d-flex justify-content-center bg-light"
               key={pic.pic_id}
             >
               <img
@@ -101,26 +106,43 @@ const Feed = ({ setAuth }) => {
                 alt="missing img"
               />
             </div>
-            <div className="pb-4 d-flex fixed-bottom justify-content-around text-center bg-white">
-              <button
-                className="btn btn-teal"
-                onClick={() => likePic(pic.pic_id)}
+
+            <div className="pb-6 d-flex fixed-bottom justify-content-around text-center bg-light">
+              {/* Button Group Test */}
+              <div
+                class="btn-group btn-group-lg"
+                role="group"
+                aria-label="Basic example"
               >
-                <i
-                  className="bi bi-hand-thumbs-up-fill"
-                  style={{ "font-size": "30px", color: "whitesmoke" }}
-                />
-              </button>
-              <div className="lead"> Posted By: {posted_by} </div>
-              <button
-                className="btn btn-orange"
-                onClick={() => dislikePic(pic.pic_id)}
-              >
-                <i
-                  className="bi bi-hand-thumbs-down-fill"
-                  style={{ "font-size": "30px", color: "whitesmoke" }}
-                />
-              </button>
+                <button
+                  className="btn btn-teal"
+                  onClick={() => likePic(pic.pic_id)}
+                >
+                  <i
+                    className="bi bi-hand-thumbs-up-fill"
+                    style={{ "font-size": "30px", color: "whitesmoke" }}
+                  />
+                </button>
+                <Link
+                  to={`profile/${posted_by_username}`}
+                  className="btn btn-posted-by"
+                  style={{ textDecoration: "none" }}
+                >
+                  <span id="posted-by-username" className="fw-bold">
+                    {posted_by_username}
+                  </span>
+                  <span className="text-muted">{posted_by}</span>
+                </Link>
+                <button
+                  className="btn btn-orange"
+                  onClick={() => dislikePic(pic.pic_id)}
+                >
+                  <i
+                    className="bi bi-hand-thumbs-down-fill"
+                    style={{ "font-size": "30px", color: "whitesmoke" }}
+                  />
+                </button>
+              </div>
             </div>
           </div>
         ))

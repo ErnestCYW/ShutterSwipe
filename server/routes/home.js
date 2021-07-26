@@ -5,11 +5,11 @@ router.get("/", async (req, res) => {
   try {
     //gets pics from a certain account
     const pic_repo = await pool.query(
-      "SELECT pic_id FROM pics WHERE user_id = '760a8b02-cf4b-47c5-9955-27e2f6cfb744' "
+      "SELECT pic_id FROM pics WHERE user_id = 'e66680e0-ccad-498a-8a54-64dd977cecd3' "
     );
 
     const toReturn = {
-      pic_repo: JSON.stringify(pic_repo.rows)
+      pic_repo: JSON.stringify(pic_repo.rows),
     };
     res.json(toReturn);
   } catch (err) {

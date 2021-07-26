@@ -21,9 +21,6 @@ import Group from "./components/Group";
 import Discover from "./components/Discover";
 import Profile from "./components/Profile";
 
-import NavbarAuth from "./components/Navbar_Auth";
-import NavbarUnauth from "./components/Navbar_Unauth";
-
 toast.configure();
 
 function App() {
@@ -55,11 +52,16 @@ function App() {
 
   return (
     <Fragment>
-      {isAuthenticated ? <NavbarAuth setAuth={setAuth} /> : <NavbarUnauth />}
       <Router>
         <div className="container-fluid">
           <Switch>
-            <Route exact path="/" render={(props) => <Home />} />
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <Home setAuth={setAuth} isAuthenticated={isAuthenticated} />
+              )}
+            />
             <Route
               exact
               path="/login"

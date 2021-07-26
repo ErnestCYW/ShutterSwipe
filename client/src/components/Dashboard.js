@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Post from "./Post";
-import Trait from "./Trait";
 import trait_options from "./Trait_Options";
+import DashboardNavbar from "./navbar/Dashboard_Navbar";
 
 import useForm from "./useForm";
 
 const Dashboard = ({ setAuth }) => {
-  //passing prop setAuth
-
-  //default use states
   const [name, setName] = useState("");
   const [file, setFile] = useState("");
   const [pic_repo, setPicRepo] = useState([]);
@@ -80,6 +77,7 @@ const Dashboard = ({ setAuth }) => {
 
       if (upload) {
         console.log("uploaded");
+        toast.success("Photo uploaded! Refresh to see change");
       }
 
       // getPicRepo();
@@ -185,7 +183,8 @@ const Dashboard = ({ setAuth }) => {
 
   return (
     <div class="dashboard">
-      <div class="row">
+      <DashboardNavbar setAuth={setAuth} />
+      <div class="row ps-2">
         <nav
           id="sidebarMenu"
           class="col-md-3 d-md-block sidebar collapse position-fixed shadow p-3 mb-5 rounded"
@@ -214,7 +213,6 @@ const Dashboard = ({ setAuth }) => {
           <div class="position-sticky pt-3">
             <ul class="nav flex-column">
               <p>{description}</p>
-
               <hr></hr>
 
               {/* Traits in side navbar */}
@@ -231,14 +229,12 @@ const Dashboard = ({ setAuth }) => {
                 <div class="collapse" id="traits-collapse">
                   <form className="d-flex" onSubmit={uploadTrait}>
                     <div className="mb-3 row">
-                      <label for="inputTrait" class="col-auto col-form-label">
-                        Add Trait
-                      </label>
                       <div class="col-auto">
                         <input
                           name="trait"
                           id="inputTrait"
                           className="form-control"
+                          placeholder="Add trait"
                           list="anrede"
                           onChange={handleTraitChange}
                         />
@@ -250,28 +246,27 @@ const Dashboard = ({ setAuth }) => {
                       </datalist>
 
                       <div className="col-auto">
-                        <button className="btn btn-success">Submit</button>
+                        <button className="btn btn-secondary">
+                          <i className="bi bi-upload"></i>
+                        </button>
                       </div>
                     </div>
                   </form>
+
                   <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     {traits.map((trait) => (
                       <tr id="user-trait" key={trait.trait_id}>
                         <td>
                           <span className="border border-secondary rounded-pill">
                             {trait.trait_name}
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
+                            <i
+                              className="bi bi-x"
                               width="18"
                               height="18"
-                              fill="currentColor"
-                              type="button"
-                              class="bi bi-x"
                               viewBox="0 0 16 16"
+                              type="button"
                               onClick={() => deleteTrait(trait.trait_id)}
-                            >
-                              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                            </svg>
+                            ></i>
                           </span>
                         </td>
                       </tr>
@@ -363,48 +358,68 @@ const Dashboard = ({ setAuth }) => {
             </div>
           </div>
 
-          <div className="container-sm col-md-7 ">
-            <form
-              id="uploadPicForm"
-              className="d-flex shadow p-3 mb-5 bg-body rounded"
-              onSubmit={uploadFile}
-            >
-              <div className="mb-3 row ">
-                <label htmlFor="formFile" className="col-auto col-form-label">
-                  Upload a photo
-                </label>
-                <div className="col-auto">
-                  <input
-                    className="form-control"
-                    type="file"
-                    id="formFile"
-                    multiple
-                    onChange={stageFile}
-                  />
-                </div>
-
-                <div className="col-auto">
-                  <button className="btn btn-primary btn-success">
-                    Upload
-                  </button>
-                </div>
+          {/* <div className="container-sm col-md-7 "> */}
+          <form
+            id="uploadPicForm"
+            className="d-flex shadow p-3 mb-5 bg-body rounded container-sm"
+            onSubmit={uploadFile}
+          >
+            <div className="row">
+              <div className="col-auto">
+                <input
+                  className="form-control"
+                  type="file"
+                  id="formFile"
+                  onChange={stageFile}
+                />
               </div>
-            </form>
-          </div>
 
-          <div className="container-fluid">
+              <div className="col-auto">
+                <i
+                  className="bi bi-upload pt-2"
+                  type="button"
+                  onClick={uploadFile}
+                ></i>
+              </div>
+            </div>
+          </form>
+          {/* </div> */}
+
+          {/* Photo Grid */}
+
+          <section>
+            {pic_repo.map((pic) => (
+              <div key={pic.pic_id} id="photograph" className="grid-img">
+                <Post pic_id={pic.pic_id} />
+              </div>
+            ))}
+          </section>
+
+          {/* Semi working example v1.2
+          <section>
+            {pic_repo.map((pic) => (
+              <div key={pic.pic_id} id="photograph" className="grid-img">
+                <Post pic_id={pic.pic_id} />
+              </div>
+            ))}
+          </section> */}
+
+          <hr></hr>
+
+          {/* <div className="photo-grid"> v1.1
             <div className="row gx-3 gy-4">
               {pic_repo.map((pic) => (
                 <div
                   key={pic.pic_id}
                   id="photograph"
-                  className="align-self-center col-sm-4"
+                  // className="align-self-center col-sm-4"
+                  className="column"
                 >
                   <Post pic_id={pic.pic_id} />
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Edit pics modal */}
           <div

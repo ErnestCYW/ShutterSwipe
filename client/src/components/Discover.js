@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import DiscoverNavbar from "./navbar/Discover_Navbar";
 
-const Discover = () => {
+const Discover = ({ setAuth }) => {
   const [name, setName] = useState("");
   const [users, setUsers] = useState([]);
 
@@ -22,6 +23,7 @@ const Discover = () => {
 
   return (
     <div className="discover">
+      <DiscoverNavbar setAuth={setAuth} />
       <div style={{ paddingTop: "30px" }}></div>
       <div className="container-md border rounded ">
         <h1>All Users</h1>

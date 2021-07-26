@@ -67,6 +67,7 @@ router.get("/", authorization, async (req, res) => {
     //Find highest score picture & who posted it
     var temp = [];
     var posted_by = "";
+    var posted_by_username = "";
     if (Object.keys(map).length !== 0) {
       const recommended_pic_id = Object.entries(map).reduce((a, b) =>
         a[1] > b[1] ? a : b
@@ -78,7 +79,16 @@ router.get("/", authorization, async (req, res) => {
         WHERE pics.pic_id = $1",
         [recommended_pic_id]
       );
-      posted_by = posted_by_temp.rows[0].user_name
+
+      const posted_by_username_temp = await pool.query(
+        "SELECT username FROM user_username \
+        LEFT JOIN pics ON user_username.user_id = pics.user_id \
+        WHERE pics.pic_id = $1",
+        [recommended_pic_id]
+      );
+
+      posted_by = posted_by_temp.rows[0].user_name;
+      posted_by_username = posted_by_username_temp.rows[0].username;
     }
 
     //console.log(map);
@@ -89,6 +99,7 @@ router.get("/", authorization, async (req, res) => {
       inQueue: JSON.stringify(temp),
       user_name: `${user.rows[0].user_name}`,
       posted_by: posted_by,
+      posted_by_username: posted_by_username,
     };
 
     res.json(toReturn);
@@ -161,27 +172,35 @@ router.get("/nextPhoto", authorization, async (req, res) => {
     //Find highest score picture & who posted it
     var temp = [];
     var posted_by = "";
+    var posted_by_username = "";
     if (Object.keys(map).length !== 0) {
       const recommended_pic_id = Object.entries(map).reduce((a, b) =>
         a[1] > b[1] ? a : b
       )[0];
       temp = [{ pic_id: recommended_pic_id }];
+
       const posted_by_temp = await pool.query(
         "SELECT users.user_name FROM users \
         LEFT JOIN pics ON users.user_id = pics.user_id \
         WHERE pics.pic_id = $1",
         [recommended_pic_id]
       );
-      posted_by = posted_by_temp.rows[0].user_name
-    }
 
-    //console.log(map);
-    //console.log(inQueue.rows);
-    //console.log(recommended_pic_id);
+      const posted_by_username_temp = await pool.query(
+        "SELECT username FROM user_username \
+        LEFT JOIN pics ON user_username.user_id = pics.user_id \
+        WHERE pics.pic_id = $1",
+        [recommended_pic_id]
+      );
+
+      posted_by = posted_by_temp.rows[0].user_name;
+      posted_by_username = posted_by_username_temp.rows[0].username;
+    }
 
     const toReturn = {
       nextPic: JSON.stringify(temp),
       posted_by: posted_by,
+      posted_by_username: posted_by_username,
     };
 
     res.json(toReturn);
@@ -193,9 +212,6 @@ router.get("/nextPhoto", authorization, async (req, res) => {
 //like route
 router.post("/like", authorization, async (req, res) => {
   try {
-    //console.log(req.user);
-    //console.log(req.headers.pic_id);
-
     const like_pic = await pool.query(
       "INSERT INTO likes (user_id, pic_id) VALUES ($1, $2) RETURNING *",
       [req.user, req.headers.pic_id]

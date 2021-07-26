@@ -1,8 +1,8 @@
 import React from "react";
 import { toast } from "react-toastify";
-import Logo from "../Logo.svg";
+import Logo from "../../Logo.svg";
 
-function NavbarAuth({ setAuth }) {
+function DashboardNavbar({ setAuth }) {
   const logout = (e) => {
     e.preventDefault();
     console.log("Triggered");
@@ -29,26 +29,25 @@ function NavbarAuth({ setAuth }) {
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
+            data-bs-target="#dashboardNavbar"
             aria-controls="navbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ml-auto">
+          <div className="collapse navbar-collapse" id="dashboardNavbar">
+            <ul className="navbar-nav ms-auto">
               <li className="nav-item">
                 <a className="nav-link" href="/feed">
                   Feed
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/dashboard">
-                  Home
+                <a className="nav-link active" href="/dashboard">
+                  Dashboard
                 </a>
               </li>
-
               <li className="nav-item">
                 <a className="nav-link" href="/group">
                   Groups
@@ -58,10 +57,10 @@ function NavbarAuth({ setAuth }) {
                 <a className="nav-link" href="/discover">
                   Discover
                 </a>
-              </li>
+              </li>{" "}
             </ul>
             <button
-              className="btn btn-primary btn-sm"
+              className="btn btn-primary btn-sm "
               onClick={(e) => logout(e)}
               id="logout"
             >
@@ -74,4 +73,4 @@ function NavbarAuth({ setAuth }) {
   );
 }
 
-export default NavbarAuth;
+export default DashboardNavbar;

@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Trait_Options from "./Trait_Options";
 import Chat from "./Chat";
+import GroupNavbar from "./navbar/Group_Navbar";
 
 const Group = ({ setAuth }) => {
   const [searched_groups, setSearchedGroup] = useState("");
@@ -184,7 +185,7 @@ const Group = ({ setAuth }) => {
 
   return (
     <div className="groups">
-
+      <GroupNavbar setAuth={setAuth} />
       <div className="searchContainer d-flex p-3">
         <form className="d-flex p-3 bg-info" onSubmit={onSubmitSearch}>
           <input

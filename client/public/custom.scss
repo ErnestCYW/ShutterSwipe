@@ -5,7 +5,8 @@
 @import "./groups";
 @import "./discover";
 @import "./authentication";
-
+@import "./post";
+@import "./navbar";
 html {
   overflow: hidden;
   height: 100%;
@@ -28,10 +29,6 @@ img {
   margin: 25px 0;
 }
 
-.dashboardImage {
-  color: red;
-}
-
 //Target a specific class
 .container-fluid {
   overflow: auto;
@@ -39,29 +36,8 @@ img {
   padding: 0 !important;
 }
 
-.myNavbar {
-  .container-fluid {
-  }
-
-  img {
-  }
+.modal-content {
+  height: auto;
 }
 
 @import "../node_modules/bootstrap/scss/bootstrap";
-
-//-----------
-//TRY
-//-----------
-
-/*
-<div className="blog-preview" key >
-    <h2> smt </h2>
-</div> 
-
---> .blog-preview h2 {}
---> .blog-preview a {}
-*/
-
-//-----------
-//TESTING
-//-----------

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-//import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import Logo from "../Logo.svg";
+import LoginNavbar from "./navbar/Login_Navbar";
+import RegisterNavbar from "./navbar/Register_Navbar";
 
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -49,6 +51,7 @@ const Register = ({ setAuth }) => {
 
   return (
     <div className="authentication">
+      <RegisterNavbar />
       <div className="form-container">
         <div className="form-content-left">
           <h1 className="text-center my-5">Register</h1>

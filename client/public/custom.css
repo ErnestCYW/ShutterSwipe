@@ -6,9 +6,49 @@ main {
   padding-top: 115px;
 }
 
+.dashboard .title {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  padding: 4px 6px;
+  font-size: 30px;
+  color: #000000;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  clear: both;
+}
+
+.dashboard .title .dashboardTitle {
+  float: left;
+}
+
+.dashboard .title span {
+  float: right;
+}
+
 .dashboard body {
   background-color: #f5f5f5;
   padding-bottom: 100px;
+}
+
+.dashboard body section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.dashboard body section::after {
+  content: "";
+  -webkit-box-flex: 999999999;
+      -ms-flex-positive: 999999999;
+          flex-grow: 999999999;
+}
+
+.dashboard body .grid-img {
+  margin: 2px;
+  position: relative;
 }
 
 .dashboard .btn-success {
@@ -16,10 +56,24 @@ main {
 }
 
 .dashboard #uploadPicForm {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   background-color: white;
+}
+
+.dashboard #sidebarMenu {
+  background-color: #f5f5f5;
+  height: 100vh;
+}
+
+.dashboard #sidebarMenu row h3, .dashboard #sidebarMenu row .h3 {
   padding-top: 15px;
 }
 
@@ -40,7 +94,7 @@ main {
           align-items: center;
   padding: 0.25rem 0.5rem;
   font-weight: 600;
-  color: rgba(106, 19, 146, 0.65);
+  color: #228b81;
   background-color: transparent;
   border: 0;
   margin-bottom: 14px;
@@ -91,33 +145,18 @@ main {
   color: black;
 }
 
-.dashboard #sidebarMenu {
-  background-color: #f5f5f5;
-  height: 100vh;
+.imgLink {
+  border: none;
+  background: none;
 }
 
-.dashboard #sidebarMenu row h3, .dashboard #sidebarMenu row .h3 {
-  padding-top: 30px;
+.imgLink img {
+  height: 8rem;
 }
 
-.dashboard .title {
-  display: block;
-  height: 30px;
-  line-height: 30px;
-  padding: 4px 6px;
-  font-size: 30px;
-  color: #000000;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  clear: both;
-}
-
-.dashboard .title .dashboardTitle {
-  float: left;
-}
-
-.dashboard .title span {
-  float: right;
+.imgLink:active img,
+.imgLink:focus img {
+  height: 50rem;
 }
 
 .feed {
@@ -133,19 +172,37 @@ main {
   max-height: 700px;
 }
 
-.feed .btn-teal {
-  background-color: #5F6670 !important;
+.feed .pb-6 {
+  padding-bottom: 110px;
 }
 
-.feed .btn-teal:hover, .feed .btn-teal:active, .feed .btn-teal:visited {
+.feed .btn-teal {
+  background-color: #5f6670 !important;
+}
+
+.feed .btn-teal:hover,
+.feed .btn-teal:active,
+.feed .btn-teal:visited {
   background-color: #2f9898 !important;
 }
 
-.feed .btn-orange {
-  background-color: #5F6670 !important;
+.feed .btn-posted-by {
+  background-color: #f5f5f5 !important;
+  width: 300px;
 }
 
-.feed .btn-orange:hover, .feed .btn-orange:active, .feed .btn-orange:visited {
+.feed #posted-by-username::after {
+  content: "\a";
+  white-space: pre;
+}
+
+.feed .btn-orange {
+  background-color: #5f6670 !important;
+}
+
+.feed .btn-orange:hover,
+.feed .btn-orange:active,
+.feed .btn-orange:visited {
   background-color: #ec6323 !important;
 }
 
@@ -398,6 +455,44 @@ main {
   font-weight: 600;
 }
 
+.dashboard-image img {
+  max-width: 100%;
+  min-width: 100%;
+  height: 300px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: bottom;
+}
+
+.dashboard-image:nth-last-child(8),
+.dashboard-image:nth-last-child(8) ~ div {
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+}
+
+.myNavbar ul {
+  margin-right: 20px;
+}
+
+.myNavbar #nav-header {
+  color: orange;
+}
+
+.myNavbar .nav-item :hover {
+  background-color: #666;
+}
+
+.myNavbar ul li .nav-link {
+  color: orange;
+}
+
+.myNavbar .btn-primary {
+  margin-right: 15px;
+}
+
 html {
   overflow: hidden;
   height: 100%;
@@ -421,14 +516,14 @@ img {
   margin: 25px 0;
 }
 
-.dashboardImage {
-  color: red;
-}
-
 .container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
   overflow: auto;
   display: table;
   padding: 0 !important;
+}
+
+.modal-content {
+  height: auto;
 }
 
 /*!
@@ -11891,13 +11986,4 @@ fieldset:disabled .btn {
     display: none !important;
   }
 }
-
-/*
-<div className="blog-preview" key >
-    <h2> smt </h2>
-</div> 
-
---> .blog-preview h2 {}
---> .blog-preview a {}
-*/
 /*# sourceMappingURL=custom.css.map */

@@ -1,9 +1,9 @@
 import React from "react";
-import Logo from "../Logo.svg";
+import Logo from "../../Logo.svg";
 
-function NavbarUnauth() {
+function LoginNavbar() {
   return (
-    <div>
+    <div className="myNavbar">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div className="container-fluid">
           <a className="navbar-brand ms-4" href="/">
@@ -20,17 +20,18 @@ function NavbarUnauth() {
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
+            data-bs-target="#loginNavbar"
             aria-controls="navbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ml-auto">
+
+          <div className="collapse navbar-collapse" id="loginNavbar">
+            <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <a className="nav-link" href="/login">
+                <a className="nav-link active" href="/login">
                   Login
                 </a>
               </li>
@@ -47,4 +48,4 @@ function NavbarUnauth() {
   );
 }
 
-export default NavbarUnauth;
+export default LoginNavbar;

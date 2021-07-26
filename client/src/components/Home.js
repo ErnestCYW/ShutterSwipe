@@ -1,6 +1,8 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import HomeNavbarUnauth from "./navbar/Home_Navbar_Unauth";
+import HomeNavbarAuth from "./navbar/Home_Navbar_Auth";
 
-function Main() {
+function Main({ isAuthenticated }) {
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
   const [pic_repo, setPicRepo] = useState([]);
@@ -46,6 +48,8 @@ function Main() {
 
   return (
     <div className="home">
+      {isAuthenticated ? <HomeNavbarAuth /> : <HomeNavbarUnauth />}
+      <div className="container-fluid" />
       <div className="d-flex align-items-center position-relative">
         <div className="slideshow">
           <div
