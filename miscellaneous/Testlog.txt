@@ -1,7 +1,8 @@
 Problems encountered (Testing) 
 
 v1.1:
-    - Room for optimization of photo display in "Dashboard". 
+    - Room for optimization of photo display in "Dashboard".
+    - Response error codes not displaying (Resolved) 
 
 v1.2:
     - Navbar was not fully functional. Dropdown menu could not work. (Resolved, included Bootstrap 5.0 script) 
@@ -20,4 +21,10 @@ v2.3
     - JWT authentication may not be correct. Frontend routing causes login route to be accessed everytime when navigating page. (Unresolved, Probably something to do with high level states and resetting, have to consult advisor). 
     - Feed displays same picture twice if multiple user likes / dislikes it, problem with get route in feed. (Semi-resolved, PSQL query)  
     - UI/UX design bugs and difficulties. E.g. Carousel on landing page incorrectly implemented. (Need to learn more)
-    - Google Cloud Vision API optimization. (Resolved, Done with Async) 
+    - UI/UX bugs regarding relative margin 
+    - Traits cannot delete rigt after upload
+    - Chat does not auto scroll to bottom after send message
+    - Chat displays all types of messages the same way, does not take into account user sent message
+    - Refresh on profile discover causes crashes
+    - Heroku deployment database issues
+    - Google Cloud Vision API optimization. (Resolved, Done with Async Refactoring) 
