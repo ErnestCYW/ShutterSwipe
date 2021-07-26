@@ -19,6 +19,7 @@
     height: 700px;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    transform: translate(0%, -10%);
   }
 
   .close-btn {
