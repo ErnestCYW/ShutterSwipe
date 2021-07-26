@@ -34,6 +34,7 @@ Version 1.2:
 - Instructions to run:
     1) Follow instructions above
     2) Use navbar to login / logout and navbar to navigate to homepage
+    3) Use traits on dashboard to add traits
 
 Version 1.3:
 - Prelimanary CSS styling using Bootstrap and SASS
@@ -50,6 +51,12 @@ Version 1.3:
 Version 2.1: 
 - Added "Group" to connect and message other users. 
 - Preliminary implementation of socket.io 
+- Instructions to run:
+    1) Follow instructions above
+    2) Use the groups tab to see current member groups, click on groups to select a current group
+    3) Add users to groups using PSQL
+    4) Open an incognito tab or seperate browser on localhost:3000 and login to a seperate account on ShutterSwipe
+    5) Use these two browser instances to communicate real time in a common chatroom
 
 Version 2.2:
 - CRUD operations on chat groups
@@ -57,8 +64,16 @@ Version 2.2:
 - User search and viewing of profiles 
 - Added double password, improve authentication
 - Improved profile features (username, description, traits)
+- Instructions to run:
+    1) Follow instructions above
+    2) Test double password by registering a new account
+    3) Test persistent chat history by chatting as before (v2.1), relogging and restarting app
+    4) Use discover tab to test user search and view profiles
 
 Version 2.3
 - Improved UI/UX
 - Testing 
 - Debugging
+- Instructions to run:
+    1) Follow instructions above
+    2) UI/UX impovements all around the app, look out for what changed :P

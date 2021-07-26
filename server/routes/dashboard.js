@@ -146,22 +146,22 @@ router.post("/upload", authorization, async (req, res) => {
   }
 
   //Tag file using cloud vision API
-  // const client = new vision.ImageAnnotatorClient({
-  //   keyFilename: "./APIKey.json",
-  // });
-  // const [result] = await client.labelDetection(
-  //   `${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`
-  // );
-  // const labels = result.labelAnnotations;
-  // await Promise.all(
-  //   labels.map(
-  //     async (label) =>
-  //       await pool.query(
-  //         "INSERT INTO labels (label_id, pic_id, label_name) VALUES (DEFAULT, $1, $2)",
-  //         [new_pic_id.rows[0].pic_id, label.description]
-  //       )
-  //   )
-  // );
+  const client = new vision.ImageAnnotatorClient({
+     keyFilename: "./APIKey.json",
+   });
+   const [result] = await client.labelDetection(
+     `${__dirname}/../../picture_server/${new_pic_id.rows[0].pic_id}.jpg`
+   );
+   const labels = result.labelAnnotations;
+   await Promise.all(
+     labels.map(
+       async (label) =>
+         await pool.query(
+           "INSERT INTO labels (label_id, pic_id, label_name) VALUES (DEFAULT, $1, $2)",
+           [new_pic_id.rows[0].pic_id, label.description]
+         )
+     )
+   );
 });
 
 router.get("/getPics", authorization, async (req, res) => {
