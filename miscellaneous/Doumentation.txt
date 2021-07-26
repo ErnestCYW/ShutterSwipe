@@ -1,5 +1,5 @@
 Version 1.0:
-- Login feature with JWT
+- Login feature with JWT authentication
 - Frontend and backend setup
 - Instructions to run:
     1) Install postgresSQL on your local machine and run a server on port 5432
@@ -19,6 +19,9 @@ Version 1.0:
 
 Version 1.1:
 - Added upload photos feature with viewing photos
+- Added CRUD operations on photos
+- Basic display of photos in "Dashboard" 
+- Basic routing
 - Instructions to run:
     1) Follow instructions above
     2) Register & Login with account
@@ -34,6 +37,7 @@ Version 1.2:
 
 Version 1.3:
 - Prelimanary CSS styling using Bootstrap and SASS
+- Added "Feed" to view other user's photos
 - Added "like" and "dislike" feature for photos
 - Implemented ranking algorithmn using photo score
 - Implemented Cloud Vision API with image recognition capabilities *
@@ -42,3 +46,19 @@ Version 1.3:
     2) Query postgres database (labels table) to get the Cloud Vision API labels after upload
     3) Use the feed tab and "like" / "dislike" buttons to rank photos.
 * Note that to access Cloud Vision API you need to have a APIKey.json file which contains a private key. Please contact us if you wish to try this out.
+
+Version 2.1: 
+- Added "Group" to connect and message other users. 
+- Preliminary implementation of socket.io 
+
+Version 2.2:
+- CRUD operations on chat groups
+- Chat history 
+- User search and viewing of profiles 
+- Added double password, improve authentication
+- Improved profile features (username, description, traits)
+
+Version 2.3
+- Improved UI/UX
+- Testing 
+- Debugging
