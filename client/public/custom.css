@@ -124,6 +124,16 @@ main {
   padding-top: 115px;
 }
 
+.feed .noImage {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-image: url("https://images.unsplash.com/photo-1487700160041-babef9c3cb55?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1335&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.7;
+}
+
 .feed .feedPicContainer {
   height: 700px;
 }
@@ -134,18 +144,22 @@ main {
 }
 
 .feed .btn-teal {
-  background-color: #5F6670 !important;
+  background-color: #5f6670 !important;
 }
 
-.feed .btn-teal:hover, .feed .btn-teal:active, .feed .btn-teal:visited {
+.feed .btn-teal:hover,
+.feed .btn-teal:active,
+.feed .btn-teal:visited {
   background-color: #2f9898 !important;
 }
 
 .feed .btn-orange {
-  background-color: #5F6670 !important;
+  background-color: #5f6670 !important;
 }
 
-.feed .btn-orange:hover, .feed .btn-orange:active, .feed .btn-orange:visited {
+.feed .btn-orange:hover,
+.feed .btn-orange:active,
+.feed .btn-orange:visited {
   background-color: #ec6323 !important;
 }
 
@@ -208,11 +222,44 @@ main {
 
 .groups .searchContainer {
   width: 100%;
-  background-color: blue;
+  background-color: #5F6670;
+}
+
+.groups .chatContainer {
+  height: 797px;
+}
+
+.groups .btn-teal {
+  background-color: white !important;
+}
+
+.groups .btn-teal:hover,
+.groups .btn-teal:active,
+.groups .btn-teal:visited {
+  background-color: #2f9898 !important;
+}
+
+.groups .btn-orange {
+  background-color: white !important;
+}
+
+.groups .btn-orange:hover,
+.groups .btn-orange:active,
+.groups .btn-orange:visited {
+  background-color: #ec6323 !important;
 }
 
 .discover {
   padding-top: 115px;
+}
+
+.authentication {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-image: url("https://images.unsplash.com/photo-1626285840323-788f8d8764a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1349&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .authentication .form-inputs p {
@@ -248,6 +295,7 @@ main {
   background: linear-gradient(90deg, #ff8725 0%, #3ff4f7 100%);
   border-radius: 10px 0 0 10px;
   position: relative;
+  opacity: 0.9;
 }
 
 .authentication .form-img {
@@ -396,6 +444,40 @@ main {
   text-decoration: none;
   color: #27cdff;
   font-weight: 600;
+}
+
+.chat {
+  height: 797px;
+  min-height: 797px;
+}
+
+.chat .temp {
+  height: 797px;
+}
+
+.chat .chatMessageBox {
+  border-radius: 20px;
+  border: 2px solid #2f9898;
+  color: black;
+  width: 900px;
+  height: 50px;
+  padding-left: 10px;
+}
+
+.chat .chatMessageBox:focus {
+  outline: none;
+  border: 2px solid #ec6323;
+  color: black;
+}
+
+.chat .messageBubble {
+  position: relative;
+  width: 750px;
+  height: auto;
+  background-color: whitesmoke;
+  border-radius: 50px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
 }
 
 html {

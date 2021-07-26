@@ -26,7 +26,7 @@ function NavbarAuth({ setAuth }) {
             ShutterSwipe
           </a>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler me-4"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"

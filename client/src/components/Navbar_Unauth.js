@@ -4,7 +4,7 @@ import Logo from "../Logo.svg";
 function NavbarUnauth() {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
           <a className="navbar-brand ms-4" href="/">
             <img
@@ -17,7 +17,7 @@ function NavbarUnauth() {
             ShutterSwipe
           </a>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler me-4"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"

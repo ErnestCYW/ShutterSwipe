@@ -23,17 +23,6 @@ io.on("connection", (socket) => {
 
     socket.join(group_id);
 
-    socket.emit("message", {
-      user_id: user_id,
-      user_name: user_name,
-      text: `You have joined ${group_name}`,
-    });
-    socket.broadcast.to(group_id).emit("message", {
-      user_id: user_id,
-      user_name: user_name,
-      text: `${user_name} has joined ${group_name}`,
-    });
-
     callback();
   });
 

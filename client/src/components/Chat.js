@@ -34,7 +34,7 @@ function Chat({ selected_chat, user_info }) {
 
   useEffect(() => {
     getAll();
-    
+
     socket = io(ENDPOINT);
 
     setMessages([]);
@@ -60,33 +60,35 @@ function Chat({ selected_chat, user_info }) {
     }
   };
 
-  console.log(chat_history);
-
   return (
-    <div className="outerContainer">
-      <h1>CHAT ROOM</h1>
-      <div className="container">
-        <h3> Selected: {group_name} </h3>
-        <h3>Previous Messages</h3>
-        <div>
+    <div className="chat d-flex flex-column w-100">
+      <div className="d-flex bg-white w-100 ps-3">
+        <div className="display-6">{group_name}</div>
+      </div>
+      <div className="d-flex flex-column bg-dark overflow-hidden justify-content-between">
+        <div className="temp overflow-auto h-100">
           {chat_history.map((message) => (
-            <div>
+            <div className="messageBubble m-1 p-2 shadow-sm">
               <strong>{message.user_name}</strong>: {message.message_contents}
             </div>
           ))}
           {messages.map((message) => (
-            <div>
+            <div className="messageBubble m-1 p-2 shadow-sm">
               <strong>{message.user_name}</strong>: {message.text}
             </div>
           ))}
         </div>
+        <div className="d-flex bg-light justify-content-center">
         <input
+          className="chatMessageBox my-2 me-4"
+          placeholder="Send a message here..."
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           onKeyPress={(event) =>
             event.key === "Enter" ? sendMessage(event) : null
           }
         />
+        </div>
       </div>
     </div>
   );

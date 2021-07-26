@@ -44,10 +44,15 @@ const Login = ({ setAuth }) => {
   };
 
   return (
-    <div className="authentication">
+    <div className="authentication d-flex align-items-center">
       <div className="form-container">
-        <div className="form-content-left">
-          <h1 className="text-center my-5">Login</h1>
+        <div className="d-flex form-content-left justify-content-center align-items-center">
+            <img
+              src={require(`../Logo.svg`).default}
+              alt="missing img"
+              className="h-25 me-5"
+            ></img>
+            <div className="text-center my-5 display-4">Login</div>
         </div>
 
         <div className="form-content-right">

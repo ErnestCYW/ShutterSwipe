@@ -3,6 +3,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Trait_Options from "./Trait_Options";
 import Chat from "./Chat";
+import { Button, Modal } from "react-bootstrap";
 
 const Group = ({ setAuth }) => {
   const [searched_groups, setSearchedGroup] = useState("");
@@ -22,6 +23,7 @@ const Group = ({ setAuth }) => {
     user_name: "",
     user_id: "",
   });
+  const [show, setShow] = useState(false);
 
   const getAll = async () => {
     try {
@@ -55,6 +57,7 @@ const Group = ({ setAuth }) => {
       const parseResponse = await response.json();
 
       setMatchedGroup(parseResponse.matched_groups);
+      handleShow();
     } catch (err) {
       console.error(err.message);
     }
@@ -86,6 +89,10 @@ const Group = ({ setAuth }) => {
   };
 
   const { group_name, group_trait } = inputs;
+
+  const handleClose = () => setShow(false);
+
+  const handleShow = () => setShow(true);
 
   const handleGroupChange = (event) => {
     setInputs({
@@ -184,9 +191,12 @@ const Group = ({ setAuth }) => {
 
   return (
     <div className="groups">
-
-      <div className="searchContainer d-flex p-3">
-        <form className="d-flex p-3 bg-info" onSubmit={onSubmitSearch}>
+      <div className="searchContainer justify-content-center d-flex p-3 shadow">
+        <form
+          className="p-3 d-flex w-75 bg-transparent"
+          onSubmit={onSubmitSearch}
+          data-bs-toggle="modal"
+        >
           <input
             type="text"
             name="name"
@@ -195,49 +205,82 @@ const Group = ({ setAuth }) => {
             value={searched_groups}
             onChange={(e) => setSearchedGroup(e.target.value)}
           />
-          <button className="btn btn-success">Submit</button>
+          <button className="btn d-flex btn-transparent ms-3 bg-white">
+            Search
+            <i
+              className="bi bi-search ms-2"
+              style={{ "font-size": "18px", color: "black" }}
+            />
+          </button>
+          <button
+            type="button"
+            className="btn d-flex btn-transparent ms-3 bg-white"
+            data-bs-toggle="modal"
+            data-bs-target="#createGroupModal"
+          >
+            Create
+            <i
+              className="bi bi-plus-circle ms-2"
+              style={{ "font-size": "18px", color: "black" }}
+            />
+          </button>
         </form>
       </div>
 
-      <table className="table my-5">
-        <thead>
-          <tr>
-            <th>Group Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {matched_groups.map((group) => (
-            <tr key={group.group_id}>
-              <td onClick={(e) => joinGroup(group.group_id, e)}>
-                {" "}
-                {group.group_name}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {matched_groups.length === 0 && <p>No Results Found</p>}
-
-      <button
-        type="button"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#createGroupModal"
-      >
-        Create Group
-      </button>
+      <Modal size="lg" show={show} onHide={handleClose} scollable="true">
+        <Modal.Header>
+          <Modal.Title>Search Results</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {matched_groups.length === 0 ? (
+            <div className="display-6">No Results Found</div>
+          ) : (
+            <table className="table my-5">
+              <thead>
+                <tr>
+                  <th>Group Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {matched_groups.map((group) => (
+                  <tr key={group.group_id}>
+                    <td
+                      className="d-flex justify-content-between"
+                      onClick={(e) => joinGroup(group.group_id, e)}
+                    >
+                      {" "}
+                      {group.group_name}
+                      <Button variant="secondary" onClick={handleClose}>
+                        <i
+                          className="bi bi-person-plus-fill"
+                          style={{ "font-size": "18px", color: "white" }}
+                        />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <div
-        class="modal fade"
+        className="modal fade"
         id="createGroupModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
                 Create Group
               </h5>
               <button
@@ -247,20 +290,35 @@ const Group = ({ setAuth }) => {
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <form id="createGroupForm" onSubmit={handleSubmit}>
-                <div>
-                  <label>Group Name</label>
-                  <input type="text" onChange={handleGroupChange} />
+                <div className="m-3 d-flex justify-content-between">
+                  <label>
+                    <h4>Group Name: </h4>
+                  </label>
+                  <input
+                    type="text"
+                    size="40"
+                    onChange={handleGroupChange}
+                    style={{ "font-size": "25px" }}
+                  />
                 </div>
-                <div>
-                  <label>Group Traits</label>
+                <div className="m-3 d-flex justify-content-between">
+                  <label>
+                    <h4>Group Traits: </h4>
+                  </label>
                   <input
                     name="trait"
-                    list="anrede"
+                    list="datalistOptions"
+                    size="40"
                     onChange={handleGroupTraitChange}
+                    style={{ "font-size": "25px" }}
+                    placeholder="Search for traits ..."
                   />
-                  <datalist id="anrede">
+                  <datalist
+                    id="datalistOptions"
+                    style={{ height: "200px", overflow: "hidden" }}
+                  >
                     {Trait_Options.map((trait) => {
                       return <option value={trait}></option>;
                     })}
@@ -268,10 +326,11 @@ const Group = ({ setAuth }) => {
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
+
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
@@ -279,7 +338,7 @@ const Group = ({ setAuth }) => {
               <button
                 type="submit"
                 form="createGroupForm"
-                class="btn btn-primary"
+                className="btn btn-primary"
               >
                 Submit
               </button>
@@ -288,39 +347,74 @@ const Group = ({ setAuth }) => {
         </div>
       </div>
 
-      <h1>Member Groups</h1>
-      {member_groups.map((group) => (
-        <tr key={group.group_id}>
-          <h3 onClick={() => setSelectedChat(group)}> {group.group_name} </h3>
-          <td>
-            <button
-              className="btn btn-danger"
-              onClick={() => leaveGroup(group.group_id)}
-            >
-              {" "}
-              Leave Group
-            </button>
-          </td>
-          <td>
-            <button
-              className="btn btn-warning"
-              onClick={() => deleteGroup(group.group_id)}
-            >
-              {" "}
-              Delete Group
-            </button>
-          </td>
-        </tr>
-      ))}
+      <div className="d-flex">
+        <div className="bg-light d-flex flex-column shadow">
+          <div className="card">
+            <div className="cardHeader display-6 mx-4 my-1">Member Groups</div>
+            <ul className="list-group list-group-flush">
+              {member_groups.map((group) => (
+                <li
+                  className="list-group-item d-flex justify-content-between my-2"
+                  key={group.group_id}
+                  onClick={() => setSelectedChat(group)}
+                >
+                  <h4 className="ms-2"> {group.group_name} </h4>
+                  <div>
+                    <td>
+                      <button
+                        className="mx-2 btn btn-orange"
+                        onClick={() => leaveGroup(group.group_id)}
+                      >
+                        {" "}
+                        <i
+                          className="bi bi-box-arrow-left m-2"
+                          style={{ "font-size": "15px", color: "black" }}
+                        />
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-teal"
+                        onClick={() => deleteGroup(group.group_id)}
+                      >
+                        {" "}
+                        <i
+                          className="bi bi-trash m-2"
+                          style={{ "font-size": "15px", color: "black" }}
+                        />
+                      </button>
+                    </td>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="card">
+            <div className="cardHeader display-6 mx-4 my-1">
+              Recommended Groups
+            </div>
+            <ul className="list-group list-group-flush">
+              {recommended_groups.map((group) => (
+                <h3>{group.group_name}</h3>
+              ))}
+            </ul>
+          </div>
+        </div>
 
-      <h1>Recommended Groups</h1>
-      {recommended_groups.map((group) => (
-        <h3>{group.group_name}</h3>
-      ))}
-
-      {selected_chat.group_id != "" ? (
-        <Chat selected_chat={selected_chat} user_info={user_info} />
-      ) : null}
+        <div className="d-flex chatContainer w-100">
+          {selected_chat.group_id !== "" ? (
+            <Chat
+              selected_chat={selected_chat}
+              user_info={user_info}
+            />
+          ) : (
+            <div className="noChatSelected d-flex justify-content-center align-items-center w-100 display-1">
+              {" "}
+              Select a chat to get started
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

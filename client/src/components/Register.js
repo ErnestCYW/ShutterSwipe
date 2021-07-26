@@ -48,15 +48,15 @@ const Register = ({ setAuth }) => {
   };
 
   return (
-    <div className="authentication">
+    <div className="authentication d-flex align-items-center">
       <div className="form-container">
-        <div className="form-content-left">
-          <h1 className="text-center my-5">Register</h1>
-          <img
-            className="form-img"
-            // src={require("miscellaneous/sslogo.png").default}
-            alt="spaceship"
-          ></img>
+        <div className="d-flex form-content-left justify-content-center align-items-center">
+            <img
+              src={require(`../Logo.svg`).default}
+              alt="missing img"
+              className="h-25 me-5"
+            ></img>
+            <div className="text-center my-5 display-4">Register</div>
         </div>
 
         <div className="form-content-right">

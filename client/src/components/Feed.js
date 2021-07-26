@@ -81,10 +81,13 @@ const Feed = ({ setAuth }) => {
       </div>
 
       {pic_feed.length === 0 ? (
-        <div className="text-center display-1 mt-5">
-          {" "}
-          No Pictures To Display
-          <div className="display-5"> Check Back Later! </div>{" "}
+        <div className="d-flex justify-content-center">
+          <div className="noImage"></div>
+          <div className="text-center display-1 mt-5">
+            {" "}
+            No Pictures To Display
+            <div className="display-5"> Check Back Later! </div>{" "}
+          </div>
         </div>
       ) : (
         pic_feed.map((pic) => (

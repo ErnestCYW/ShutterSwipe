@@ -1,39 +1,42 @@
-.feed{
+.feed {
   padding-top: 115px;
 
-.feedPicContainer{
-  height: 700px;
-}
+  .noImage {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-image: url("https://images.unsplash.com/photo-1487700160041-babef9c3cb55?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1335&q=80");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.7;
+  }
 
-.feedPic{
-  display: inline-block;
-  //min-height: 100%;
-  //max-width: 1250px;
-  //max-width: 1250px;
-  max-height: 700px;
-  //height: auto;
-  //width: auto;
-  //flex-grow: 1;
-  //flex-shrink: 1;
-  //flex-basis: auto;
-  //object-fit: cover;
-  //overflow: auto;
-}
+  .feedPicContainer {
+    height: 700px;
+  }
 
-.btn-teal {
-  background-color: #5F6670 !important;
-}
+  .feedPic {
+    display: inline-block;
+    max-height: 700px;
+  }
 
-.btn-teal:hover, .btn-teal:active, .btn-teal:visited {
-  background-color: #2f9898 !important;
-}
+  .btn-teal {
+    background-color: #5f6670 !important;
+  }
 
-.btn-orange {
-  background-color: #5F6670 !important;
-}
+  .btn-teal:hover,
+  .btn-teal:active,
+  .btn-teal:visited {
+    background-color: #2f9898 !important;
+  }
 
-.btn-orange:hover, .btn-orange:active, .btn-orange:visited {
-  background-color: #ec6323 !important;
-}
+  .btn-orange {
+    background-color: #5f6670 !important;
+  }
 
+  .btn-orange:hover,
+  .btn-orange:active,
+  .btn-orange:visited {
+    background-color: #ec6323 !important;
+  }
 }
