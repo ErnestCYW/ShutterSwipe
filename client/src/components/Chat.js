@@ -79,15 +79,15 @@ function Chat({ selected_chat, user_info }) {
           ))}
         </div>
         <div className="d-flex bg-light justify-content-center">
-        <input
-          className="chatMessageBox my-2 me-4"
-          placeholder="Send a message here..."
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-          onKeyPress={(event) =>
-            event.key === "Enter" ? sendMessage(event) : null
-          }
-        />
+          <input
+            className="chatMessageBox my-2 me-4"
+            placeholder="Send a message here..."
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+            onKeyPress={(event) =>
+              event.key === "Enter" ? sendMessage(event) : null
+            }
+          />
         </div>
       </div>
     </div>

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import Logo from "../Logo.svg";
-import LoginNavbar from "./navbar/Login_Navbar";
 import RegisterNavbar from "./navbar/Register_Navbar";
 
 const Register = ({ setAuth }) => {
@@ -27,7 +25,7 @@ const Register = ({ setAuth }) => {
     try {
       const body = { email, username, password, password2, name };
 
-      const response = await fetch("http://localhost:5000/auth/register", {
+      const response = await fetch("/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

@@ -33,17 +33,13 @@ const useForm = () => {
     formData.append("description", description);
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/dashboard/edit",
-        formData,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "multipart/form-data",
-            token: localStorage.token,
-          },
-        }
-      );
+      const response = await axios.post("/dashboard/edit", formData, {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+          token: localStorage.token,
+        },
+      });
     } catch (err) {
       console.error(err.message);
     }

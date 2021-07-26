@@ -16,12 +16,9 @@ const Profile = ({ setAuth }) => {
     try {
       console.log(input_username);
 
-      const response = await fetch(
-        `http://localhost:5000/profile/${input_username}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch(`/profile/${input_username}`, {
+        method: "GET",
+      });
 
       const parseRes = await response.json();
       const pic_repo = JSON.parse(parseRes.pic_repo);

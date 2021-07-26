@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import LoginNavbar from "./navbar/Login_Navbar";
 import { toast } from "react-toastify";
 
@@ -20,7 +20,7 @@ const Login = ({ setAuth }) => {
     try {
       const body = { email, password };
 
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch("/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
