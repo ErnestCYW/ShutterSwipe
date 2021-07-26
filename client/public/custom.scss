@@ -1,8 +1,44 @@
-// $theme-colors: ( "primary": #fcba03,);
+@import "./main";
+@import "./dashboard";
+@import "./feed";
+@import "./home";
+@import "./groups";
+@import "./discover";
+@import "./authentication";
+@import "./post";
+@import "./navbar";
+@import "./chat";
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  //Makes body only scrollable
+  height: 100%;
+  overflow: auto;
+}
 
 img {
   display: block;
   max-width: 100%;
+  height: auto;
+}
+
+.pic_in_a_row {
+  display: flex;
+  margin: 25px 0;
+}
+
+//Target a specific class
+.container-fluid {
+  overflow: auto;
+  display: table;
+  padding: 0 !important;
+}
+
+.modal-content {
   height: auto;
 }
 

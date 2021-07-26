@@ -1,0 +1,27 @@
+.myNavbar {
+  .container-fluid {
+  }
+
+  ul {
+    margin-right: 20px;
+  }
+
+  #nav-header {
+    color: orange;
+  }
+
+  .nav-item {
+    :hover {
+      background-color: #666;
+    }
+  }
+
+  ul li .nav-link {
+    color: orange;
+    // background-color: burlywood;
+  }
+
+  .btn-primary {
+    margin-right: 15px;
+  }
+}

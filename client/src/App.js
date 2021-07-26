@@ -17,9 +17,9 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Feed from "./components/Feed";
-
-import NavbarAuth from "./components/Navbar_Auth";
-import NavbarUnauth from "./components/Navbar_Unauth";
+import Group from "./components/Group";
+import Discover from "./components/Discover";
+import Profile from "./components/Profile";
 
 toast.configure();
 
@@ -52,11 +52,16 @@ function App() {
 
   return (
     <Fragment>
-      {isAuthenticated ? <NavbarAuth setAuth={setAuth} /> : <NavbarUnauth />}
       <Router>
-        <div className="container">
+        <div className="container-fluid">
           <Switch>
-            <Route exact path="/" render={(props) => <Home />} />
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <Home setAuth={setAuth} isAuthenticated={isAuthenticated} />
+              )}
+            />
             <Route
               exact
               path="/login"
@@ -64,7 +69,7 @@ function App() {
                 !isAuthenticated ? (
                   <Login {...props} setAuth={setAuth} />
                 ) : (
-                  <Redirect to="/dashboard" />
+                  <Redirect to="/feed" />
                 )
               }
             />
@@ -97,6 +102,40 @@ function App() {
               render={(props) =>
                 localStorage.token ? (
                   <Feed {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/group"
+              // render={(props) => <Feed {...props} />}
+              render={(props) =>
+                localStorage.token ? (
+                  <Group {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/discover"
+              render={(props) =>
+                localStorage.token ? (
+                  <Discover {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/profile/:input_username"
+              render={(props) =>
+                localStorage.token ? (
+                  <Profile {...props} setAuth={setAuth} />
                 ) : (
                   <Redirect to="/login" />
                 )

@@ -1,0 +1,33 @@
+.groups {
+  padding-top: 115px;
+
+  .searchContainer {
+    width: 100%;
+    background-color: #5F6670;
+  }
+
+  .chatContainer {
+    height: 797px;
+  }
+
+  .btn-teal {
+    background-color: white !important;
+  }
+
+  .btn-teal:hover,
+  .btn-teal:active,
+  .btn-teal:visited {
+    background-color: #2f9898 !important;
+  }
+
+  .btn-orange {
+    background-color: white !important;
+  }
+
+  .btn-orange:hover,
+  .btn-orange:active,
+  .btn-orange:visited {
+    background-color: #ec6323 !important;
+  }
+
+}
