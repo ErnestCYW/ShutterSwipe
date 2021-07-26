@@ -44,51 +44,58 @@ const Login = ({ setAuth }) => {
   };
 
   return (
-    <div className="authentication">
+    <div>
       <LoginNavbar />
-      <div className="form-container">
-        <div className="form-content-left">
-          <h1 className="text-center my-5">Login</h1>
-        </div>
+      <div className="authentication d-flex align-items-center">
+        <div className="form-container">
+          <div className="d-flex form-content-left justify-content-center align-items-center">
+            <img
+              src={require(`../Logo.svg`).default}
+              alt="missing img"
+              className="h-25 me-5"
+            ></img>
+            <div className="text-center my-5 display-4">Login</div>
+          </div>
 
-        <div className="form-content-right">
-          <form onSubmit={onSubmitForm} className="form">
-            <div className="form-inputs">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input
-                className="form-input"
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => onChange(e)} //allows you to type!
-              />
-              {errors.email && <p>{errors.email}</p>}
-            </div>
+          <div className="form-content-right">
+            <form onSubmit={onSubmitForm} className="form">
+              <div className="form-inputs">
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
+                <input
+                  className="form-input"
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => onChange(e)} //allows you to type!
+                />
+                {errors.email && <p>{errors.email}</p>}
+              </div>
 
-            <div className="form-inputs">
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
-              <input
-                className="form-input"
-                type="password"
-                name="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => onChange(e)}
-              />
-              {errors.password && <p>{errors.password}</p>}
-            </div>
-            <button className="form-input-btn" type="submit">
-              Submit
-            </button>
-            <span className="form-input-login">
-              New to ShutterSwipe? Register <a href="/register">here</a>
-            </span>
-          </form>
+              <div className="form-inputs">
+                <label htmlFor="password" className="form-label">
+                  Password
+                </label>
+                <input
+                  className="form-input"
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => onChange(e)}
+                />
+                {errors.password && <p>{errors.password}</p>}
+              </div>
+              <button className="form-input-btn" type="submit">
+                Submit
+              </button>
+              <span className="form-input-login">
+                New to ShutterSwipe? Register <a href="/register">here</a>
+              </span>
+            </form>
+          </div>
         </div>
       </div>
     </div>

@@ -183,7 +183,6 @@ router.delete("/delete/:group_id", authorization, async (req, res) => {
       [group_id]
     );
 
-
     res.json("Group Deleted");
   } catch (err) {
     console.error(err.message);

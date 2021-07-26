@@ -50,108 +50,110 @@ const Register = ({ setAuth }) => {
   };
 
   return (
-    <div className="authentication">
+    <div>
       <RegisterNavbar />
-      <div className="form-container">
-        <div className="form-content-left">
-          <h1 className="text-center my-5">Register</h1>
-          <img
-            className="form-img"
-            // src={require("miscellaneous/sslogo.png").default}
-            alt="spaceship"
-          ></img>
-        </div>
+      <div className="authentication d-flex align-items-center">
+        <div className="form-container">
+          <div className="d-flex form-content-left justify-content-center align-items-center">
+            <img
+              src={require(`../Logo.svg`).default}
+              alt="missing img"
+              className="h-25 me-5"
+            ></img>
+            <div className="text-center my-5 display-4">Register</div>
+          </div>
 
-        <div className="form-content-right">
-          <form onSubmit={onSubmitForm} className="form">
-            <div className="form-inputs">
-              <label htmlFor="username" className="form-label">
-                Username
-              </label>
-              <input
-                className="form-input"
-                id="username"
-                type="text"
-                name="username"
-                placeholder="Enter your username"
-                value={username}
-                onChange={(e) => onChange(e)}
-              />
-              {errors.username && <p>{errors.username}</p>}
-            </div>
+          <div className="form-content-right">
+            <form onSubmit={onSubmitForm} className="form">
+              <div className="form-inputs">
+                <label htmlFor="username" className="form-label">
+                  Username
+                </label>
+                <input
+                  className="form-input"
+                  id="username"
+                  type="text"
+                  name="username"
+                  placeholder="Enter your username"
+                  value={username}
+                  onChange={(e) => onChange(e)}
+                />
+                {errors.username && <p>{errors.username}</p>}
+              </div>
 
-            <div className="form-inputs">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input
-                className="form-input"
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => onChange(e)}
-              />
-              {errors.email && <p>{errors.email}</p>}
-            </div>
+              <div className="form-inputs">
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
+                <input
+                  className="form-input"
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => onChange(e)}
+                />
+                {errors.email && <p>{errors.email}</p>}
+              </div>
 
-            <div className="form-inputs">
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
-              <input
-                className="form-input"
-                id="password"
-                type="password"
-                name="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => onChange(e)}
-              />
-              {errors.password && <p>{errors.password}</p>}
-            </div>
+              <div className="form-inputs">
+                <label htmlFor="password" className="form-label">
+                  Password
+                </label>
+                <input
+                  className="form-input"
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => onChange(e)}
+                />
+                {errors.password && <p>{errors.password}</p>}
+              </div>
 
-            <div className="form-inputs">
-              <label htmlFor="password2" className="form-label">
-                Confirm Password
-              </label>
-              <input
-                className="form-input"
-                id="password2"
-                type="password2"
-                name="password2"
-                placeholder="Confirm your password"
-                value={password2}
-                onChange={(e) => onChange(e)}
-              />
-              {errors.password2 && <p>{errors.password2}</p>}
-            </div>
+              <div className="form-inputs">
+                <label htmlFor="password2" className="form-label">
+                  Confirm Password
+                </label>
+                <input
+                  className="form-input"
+                  id="password2"
+                  type="password2"
+                  name="password2"
+                  placeholder="Confirm your password"
+                  value={password2}
+                  onChange={(e) => onChange(e)}
+                />
+                {errors.password2 && <p>{errors.password2}</p>}
+              </div>
 
-            <div className="form-inputs">
-              <label htmlFor="name" className="form-label">
-                Name
-              </label>
-              <input
-                className="form-input"
-                id="name"
-                type="text"
-                name="name"
-                placeholder="Enter your name"
-                value={name}
-                onChange={(e) => onChange(e)}
-              />
-              {errors.name && <p>{errors.name}</p>}
-            </div>
+              <div className="form-inputs">
+                <label htmlFor="name" className="form-label">
+                  Name
+                </label>
+                <input
+                  className="form-input"
+                  id="name"
+                  type="text"
+                  name="name"
+                  placeholder="Enter your name"
+                  value={name}
+                  onChange={(e) => onChange(e)}
+                />
+                {errors.name && <p>{errors.name}</p>}
+              </div>
 
-            <button className="form-input-btn" type="submit">
-              Submit
-            </button>
+              <button className="form-input-btn" type="submit">
+                Submit
+              </button>
 
-            <span className="form-input-login">
-              Already have an account? Login <a href="/login">here</a>
-            </span>
-          </form>
+              <span className="form-input-login">
+                Already have an account? Login <a href="/login">here</a>
+              </span>
+            </form>
+          </div>
         </div>
       </div>
     </div>

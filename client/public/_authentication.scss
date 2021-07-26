@@ -1,4 +1,11 @@
 .authentication {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-image: url("https://images.unsplash.com/photo-1626285840323-788f8d8764a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1349&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
+
   .form-inputs p {
     color: red;
   }
@@ -32,6 +39,7 @@
     );
     border-radius: 10px 0 0 10px;
     position: relative;
+    opacity: 0.9;
   }
 
   .form-img {
