@@ -10,7 +10,7 @@ const Feed = ({ setAuth }) => {
 
   const getAll = async () => {
     try {
-      const response = await fetch("http://localhost:5000/feed/", {
+      const response = await fetch("/feed/", {
         method: "GET",
         headers: { token: localStorage.token },
       });
@@ -30,7 +30,7 @@ const Feed = ({ setAuth }) => {
 
   const nextPic = async (e) => {
     try {
-      const response = await fetch("http://localhost:5000/feed/nextPhoto/", {
+      const response = await fetch("/feed/nextPhoto/", {
         method: "GET",
         headers: { token: localStorage.token },
       });
@@ -48,7 +48,7 @@ const Feed = ({ setAuth }) => {
 
   const likePic = async (pic_id) => {
     try {
-      const likePic = await fetch("http://localhost:5000/feed/like/", {
+      const likePic = await fetch("/feed/like/", {
         method: "POST",
         headers: { token: localStorage.token, pic_id: pic_id },
       });
@@ -62,7 +62,7 @@ const Feed = ({ setAuth }) => {
 
   const dislikePic = async (pic_id) => {
     try {
-      const dislikePic = await fetch("http://localhost:5000/feed/dislike/", {
+      const dislikePic = await fetch("/feed/dislike/", {
         method: "POST",
         headers: { token: localStorage.token, pic_id: pic_id },
       });

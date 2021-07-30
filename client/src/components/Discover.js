@@ -9,9 +9,7 @@ const Discover = ({ setAuth }) => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `http://localhost:5000/discover/?name=${name}`
-      );
+      const response = await fetch(`/discover/?name=${name}`);
 
       const parseResponse = await response.json();
 

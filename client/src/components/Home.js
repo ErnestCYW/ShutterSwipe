@@ -10,7 +10,7 @@ function Main({ isAuthenticated }) {
 
   const getAll = async () => {
     try {
-      const response = await fetch("http://localhost:5000/home", {
+      const response = await fetch("/home", {
         method: "GET",
       });
 

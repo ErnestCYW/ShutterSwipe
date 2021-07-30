@@ -7,7 +7,7 @@ function Chat({ selected_chat, user_info }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [chat_history, setChatHistory] = useState([]);
-  const ENDPOINT = "http://localhost:5000";
+  const ENDPOINT = "/";
   const group_id = selected_chat.group_id;
   const group_name = selected_chat.group_name;
   const user_id = user_info.user_id;
@@ -15,7 +15,7 @@ function Chat({ selected_chat, user_info }) {
 
   const getAll = async () => {
     try {
-      const response = await fetch("http://localhost:5000/group/chat", {
+      const response = await fetch("/group/chat", {
         method: "GET",
         headers: {
           token: localStorage.token,
@@ -79,15 +79,15 @@ function Chat({ selected_chat, user_info }) {
           ))}
         </div>
         <div className="d-flex bg-light justify-content-center">
-        <input
-          className="chatMessageBox my-2 me-4"
-          placeholder="Send a message here..."
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-          onKeyPress={(event) =>
-            event.key === "Enter" ? sendMessage(event) : null
-          }
-        />
+          <input
+            className="chatMessageBox my-2 me-4"
+            placeholder="Send a message here..."
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+            onKeyPress={(event) =>
+              event.key === "Enter" ? sendMessage(event) : null
+            }
+          />
         </div>
       </div>
     </div>

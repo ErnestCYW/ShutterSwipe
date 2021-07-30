@@ -28,7 +28,7 @@ const Group = ({ setAuth }) => {
 
   const getAll = async () => {
     try {
-      const response = await fetch("http://localhost:5000/group/", {
+      const response = await fetch("/group/", {
         method: "GET",
         headers: { token: localStorage.token },
       });
@@ -53,7 +53,7 @@ const Group = ({ setAuth }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:5000/group/search/?searched_groups=${searched_groups}`
+        `/group/search/?searched_groups=${searched_groups}`
       );
       const parseResponse = await response.json();
 
@@ -67,7 +67,7 @@ const Group = ({ setAuth }) => {
   const joinGroup = async (group_id, e) => {
     e.preventDefault();
     console.log("Join Group Clicked");
-    const join = await fetch(`http://localhost:5000/group/join/${group_id}`, {
+    const join = await fetch(`/group/join/${group_id}`, {
       method: "POST",
       headers: {
         user_id: user_info.user_id,
@@ -118,17 +118,13 @@ const Group = ({ setAuth }) => {
     console.log(formData.get("group_name"));
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/group/create",
-        formData,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "multipart/form-data",
-            token: localStorage.token,
-          },
-        }
-      );
+      const response = await axios.post("/group/create", formData, {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+          token: localStorage.token,
+        },
+      });
     } catch (err) {
       console.error(err.message);
     }
@@ -136,13 +132,10 @@ const Group = ({ setAuth }) => {
 
   const leaveGroup = async (group_id) => {
     try {
-      const leaveGroup = await fetch(
-        `http://localhost:5000/group/leave/${group_id}`,
-        {
-          method: "DELETE",
-          headers: { token: localStorage.token },
-        }
-      );
+      const leaveGroup = await fetch(`/group/leave/${group_id}`, {
+        method: "DELETE",
+        headers: { token: localStorage.token },
+      });
 
       setMemberGroup(
         member_groups.filter((group) => group.group_id !== group_id)
@@ -162,13 +155,10 @@ const Group = ({ setAuth }) => {
 
   const deleteGroup = async (group_id) => {
     try {
-      const deleteGroup = await fetch(
-        `http://localhost:5000/group/delete/${group_id}`,
-        {
-          method: "DELETE",
-          headers: { token: localStorage.token },
-        }
-      );
+      const deleteGroup = await fetch(`/group/delete/${group_id}`, {
+        method: "DELETE",
+        headers: { token: localStorage.token },
+      });
 
       setMemberGroup(
         member_groups.filter((group) => group.group_id !== group_id)

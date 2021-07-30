@@ -20,7 +20,7 @@ const Dashboard = ({ setAuth }) => {
 
   const getAll = async () => {
     try {
-      const response = await fetch("http://localhost:5000/dashboard/", {
+      const response = await fetch("/dashboard/", {
         method: "GET",
         headers: { token: localStorage.token }, //from middleware
       });
@@ -34,13 +34,10 @@ const Dashboard = ({ setAuth }) => {
       setName(parseRes.user_name);
       setUsername(parseRes.username);
 
-      const getDescription = await fetch(
-        "http://localhost:5000/dashboard/description",
-        {
-          method: "GET",
-          headers: { token: localStorage.token },
-        }
-      );
+      const getDescription = await fetch("/description", {
+        method: "GET",
+        headers: { token: localStorage.token },
+      });
 
       const descRes = await getDescription.json();
 
@@ -64,16 +61,12 @@ const Dashboard = ({ setAuth }) => {
     formData.append("file", file);
 
     try {
-      const upload = await axios.post(
-        "http://localhost:5000/dashboard/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            token: localStorage.token,
-          },
-        }
-      );
+      const upload = await axios.post("/dashboard/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          token: localStorage.token,
+        },
+      });
 
       if (upload) {
         console.log("uploaded");
@@ -95,7 +88,7 @@ const Dashboard = ({ setAuth }) => {
 
   const getPicRepo = async () => {
     // e.preventDefault();
-    const res = await fetch("http://localhost:5000/dashboard/getPics", {
+    const res = await fetch("/dashboard/getPics", {
       method: "GET",
       headers: {
         token: localStorage.token,
@@ -115,7 +108,7 @@ const Dashboard = ({ setAuth }) => {
   const deletePic = async (id) => {
     try {
       //make a delete fetch request
-      const deletePic = await fetch(`http://localhost:5000/dashboard/${id}`, {
+      const deletePic = await fetch(`/dashboard/${id}`, {
         method: "DELETE",
       });
       //makes you not need to refresh!
@@ -133,7 +126,7 @@ const Dashboard = ({ setAuth }) => {
   const uploadTrait = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:5000/dashboard/uploadTrait`, {
+      const res = await fetch(`/dashboard/uploadTrait`, {
         method: "GET",
         headers: {
           uploadedTrait: staged_trait,
@@ -161,12 +154,9 @@ const Dashboard = ({ setAuth }) => {
 
   const deleteTrait = async (id) => {
     try {
-      const deleteTrait = await fetch(
-        `http://localhost:5000/dashboard/traits/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const deleteTrait = await fetch(`/dashboard/traits/${id}`, {
+        method: "DELETE",
+      });
       setTraits(traits.filter((trait) => trait.trait_id !== id));
       console.log(deleteTrait);
     } catch (err) {

@@ -1,4 +1,9 @@
-
-server/APIKey.json
+APIKey.json
 
 picture_server/
+
+node_modules/
+
+.vscode/
+
+.env
