@@ -97,6 +97,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client/build/index.html"));
 });
 
-server.listen(PORT, () => {
+//change to app ? ? ?
+app.listen(PORT, () => {
   console.log(`server has started on port ${PORT}`);
 });
