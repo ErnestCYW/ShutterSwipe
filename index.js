@@ -12,7 +12,7 @@ const path = require("path");
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "/",
     methods: ["GET", "POST"],
   },
 });
@@ -98,6 +98,6 @@ app.get("*", (req, res) => {
 });
 
 //change to app ? ? ?
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`server has started on port ${PORT}`);
 });
