@@ -7,7 +7,7 @@ function Chat({ selected_chat, user_info }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [chat_history, setChatHistory] = useState([]);
-  const ENDPOINT = "/";
+  const ENDPOINT = "https://shutterswipe.herokuapp.com/";
   const group_id = selected_chat.group_id;
   const group_name = selected_chat.group_name;
   const user_id = user_info.user_id;
