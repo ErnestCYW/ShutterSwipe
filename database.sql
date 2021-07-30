@@ -1,4 +1,4 @@
-CREATE DATABASE shutterswipe;
+-- CREATE DATABASE shutterswipe;
 
 --BASED OF DATABASE SCHEMA
 
@@ -25,10 +25,10 @@ CREATE TABLE user_description (
 );
 
 --Profile picture table
-CREATE TABLE profile_pics (
-  pic_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES users(user_id) NOT NULL
-);
+-- CREATE TABLE profile_pics (
+--   pic_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+--   user_id UUID REFERENCES users(user_id) NOT NULL
+-- );
 
 --Picture table
 CREATE TABLE pics (
