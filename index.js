@@ -98,6 +98,6 @@ app.get("*", (req, res) => {
 });
 
 //change to app ? ? ?
-server.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`server has started on port ${PORT}`);
 });
