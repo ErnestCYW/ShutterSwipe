@@ -10,6 +10,22 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const path = require("path");
 const server = http.createServer(app);
+
+//middleware
+app.use(express.json()); //req.body
+app.use(cors());
+app.use(fileUpload());
+
+// app.use(express.static(path.join(__dirname, "client/build")));
+
+if (process.env.NODE_ENV === "production") {
+  //server static content
+  //npm run build
+  app.use(express.static(path.join(__dirname, "client/build")));
+
+  //or app.use(express.static("client/build")) or ./client/build
+}
+
 const io = require("socket.io")(server, {
   cors: {
     origin: PORT,
@@ -51,20 +67,20 @@ io.on("connection", (socket) => {
   });
 });
 
-//middleware
-app.use(express.json()); //req.body
-app.use(cors());
-app.use(fileUpload());
+// //middleware
+// app.use(express.json()); //req.body
+// app.use(cors());
+// app.use(fileUpload());
 
-// app.use(express.static(path.join(__dirname, "client/build")));
+// // app.use(express.static(path.join(__dirname, "client/build")));
 
-if (process.env.NODE_ENV === "production") {
-  //server static content
-  //npm run build
-  app.use(express.static(path.join(__dirname, "client/build")));
+// if (process.env.NODE_ENV === "production") {
+//   //server static content
+//   //npm run build
+//   app.use(express.static(path.join(__dirname, "client/build")));
 
-  //or app.use(express.static("client/build")) or ./client/build
-}
+//   //or app.use(express.static("client/build")) or ./client/build
+// }
 
 //ROUTES//
 
