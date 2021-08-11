@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import io from "socket.io-client";
+require("dotenv").config();
 
 let socket;
 
@@ -7,7 +8,13 @@ function Chat({ selected_chat, user_info }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [chat_history, setChatHistory] = useState([]);
-  const ENDPOINT = window.location.hostname;
+  // const ENDPOINT = "http://localhost:5000";
+  // Testing
+  const ENDPOINT =
+    process.env.NODE_ENV === "production"
+      ? window.location.hostname
+      : "http://localhost:5000"; //CANNOT BE https???
+
   const group_id = selected_chat.group_id;
   const group_name = selected_chat.group_name;
   const user_id = user_info.user_id;
@@ -35,7 +42,7 @@ function Chat({ selected_chat, user_info }) {
   useEffect(() => {
     getAll();
 
-    socket = io(ENDPOINT);
+    socket = io(ENDPOINT, { secure: true }); //added secure: true
 
     setMessages([]);
 
