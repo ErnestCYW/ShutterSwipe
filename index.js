@@ -10,47 +10,47 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const path = require("path");
 
-// const server = http.createServer(app);
-// const io = require("socket.io")(server, {
-//   cors: {
-//     origin: PORT,
-//     methods: ["GET", "POST"],
-//   },
-// });
+const server = http.createServer(app);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: PORT,
+    methods: ["GET", "POST"],
+  },
+});
 
-// io.on("connection", (socket) => {
-//   console.log("Connection Occurred");
+io.on("connection", (socket) => {
+  console.log("Connection Occurred");
 
-//   socket.on(
-//     "join",
-//     ({ user_id, group_id, user_name, group_name }, callback) => {
-//       socket.join(group_id);
+  socket.on(
+    "join",
+    ({ user_id, group_id, user_name, group_name }, callback) => {
+      socket.join(group_id);
 
-//       callback();
-//     }
-//   );
+      callback();
+    }
+  );
 
-//   socket.on(
-//     "sendMessage",
-//     (message, user_id, group_id, user_name, callback) => {
-//       io.to(group_id).emit("message", {
-//         user_id: user_id,
-//         user_name: user_name,
-//         text: message,
-//       });
-//       pool.query(
-//         "INSERT INTO group_chat_history(group_id, user_id, message_contents, date_time) \
-//       VALUES ($1, $2, $3, DEFAULT)",
-//         [group_id, user_id, message]
-//       );
-//       callback();
-//     }
-//   );
+  socket.on(
+    "sendMessage",
+    (message, user_id, group_id, user_name, callback) => {
+      io.to(group_id).emit("message", {
+        user_id: user_id,
+        user_name: user_name,
+        text: message,
+      });
+      pool.query(
+        "INSERT INTO group_chat_history(group_id, user_id, message_contents, date_time) \
+      VALUES ($1, $2, $3, DEFAULT)",
+        [group_id, user_id, message]
+      );
+      callback();
+    }
+  );
 
-//   socket.on("disconnect", () => {
-//     console.log("Disconnection Occured");
-//   });
-// });
+  socket.on("disconnect", () => {
+    console.log("Disconnection Occured");
+  });
+});
 
 //middleware
 app.use(express.json()); //req.body
@@ -99,6 +99,6 @@ app.get("*", (req, res) => {
 });
 
 //change to app ? ? ?
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`server has started on port ${PORT}`);
 });

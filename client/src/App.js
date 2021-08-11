@@ -17,7 +17,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Feed from "./components/Feed";
-// import Group from "./components/Group";
+import Group from "./components/Group";
 import Discover from "./components/Discover";
 import Profile from "./components/Profile";
 
@@ -107,7 +107,7 @@ function App() {
                 )
               }
             />
-            {/* <Route
+            <Route
               exact
               path="/group"
               // render={(props) => <Feed {...props} />}
@@ -118,7 +118,7 @@ function App() {
                   <Redirect to="/login" />
                 )
               }
-            /> */}
+            />
             <Route
               exact
               path="/discover"
